@@ -188,16 +188,16 @@ public class ConfigureTool extends AnAction {
             panel3.setBorder(BorderFactory.createTitledBorder(
                     BorderFactory.createEtchedBorder(), "Extract Variable"));
 
-            JPanel panel3a = new JPanel(new GridLayout(1, 2));
-            panel3a.add(label_minValParameters, BorderLayout.WEST);
-            panel3a.add(label_minValParameters, BorderLayout.EAST);
-            panel3a.setBorder(BorderFactory.createTitledBorder(
+            JPanel panel4 = new JPanel(new GridLayout(1, 2));
+            panel4.add(label_minValParameters, BorderLayout.WEST);
+            panel4.add(label_minValParameters, BorderLayout.EAST);
+            panel4.setBorder(BorderFactory.createTitledBorder(
                     BorderFactory.createEtchedBorder(), "Introduce Parameter Object"));
 
-            JPanel panel3b = new JPanel(new GridLayout(1, 2));
-            panel3b.add(label_minValParameters, BorderLayout.WEST);
-            panel3b.add(label_minValParameters, BorderLayout.EAST);
-            panel3b.setBorder(BorderFactory.createTitledBorder(
+            JPanel panel5 = new JPanel(new GridLayout(1, 2));
+            panel5.add(label_minValParameters, BorderLayout.WEST);
+            panel5.add(label_minValParameters, BorderLayout.EAST);
+            panel5.setBorder(BorderFactory.createTitledBorder(
                     BorderFactory.createEtchedBorder(), "Move Method"));
 
             ChangeListener listener = event -> {
@@ -205,8 +205,8 @@ public class ConfigureTool extends AnAction {
                 panel1.setVisible(false);
                 panel2.setVisible(false);
                 panel3.setVisible(false);
-                panel3a.setVisible(false);
-                panel3b.setVisible(false);
+                panel4.setVisible(false);
+                panel5.setVisible(false);
 
                 if(selectAll.isSelected()){
                     if(!source.equals(selectAll)){
@@ -216,8 +216,8 @@ public class ConfigureTool extends AnAction {
                         panel1.setVisible(true);
                         panel2.setVisible(true);
                         panel3.setVisible(true);
-                        panel3a.setVisible(true);
-                        panel3b.setVisible(true);
+                        panel4.setVisible(true);
+                        panel5.setVisible(true);
                     }
                 }
 
@@ -244,15 +244,17 @@ public class ConfigureTool extends AnAction {
                     panel3.setVisible(true);
                 }
                 if(source.getText().equals("Introduce Parameter Object") || selectIPO.isSelected()){
-                    panel3a.setVisible(true);
+                    panel4.setVisible(true);
                 }
                 if(source.getText().equals("Move Method") || selectMoveMethod.isSelected()){
-                    panel3b.setVisible(true);
+                    panel5.setVisible(true);
                 }
                 if(source.getText().equals("All Refactorings")){
                     panel1.setVisible(true);
                     panel2.setVisible(true);
                     panel3.setVisible(true);
+                    panel4.setVisible(true);
+                    panel5.setVisible(true);
                 }
             };
 
@@ -305,9 +307,9 @@ public class ConfigureTool extends AnAction {
             boxWithExecutors.add(panel2);
             //boxWithExecutors.add(panel3);
 
-            JPanel panel4 = new JPanel(new GridLayout(2, 2));
+            JPanel panel6 = new JPanel(new GridLayout(2, 2));
 
-            panel4.add(label_colorBlind, BorderLayout.WEST);
+            panel6.add(label_colorBlind, BorderLayout.WEST);
 
             selectedColorBlindYes.setText("Yes");
             selectedColorBlindNo.setText("No");
@@ -326,13 +328,13 @@ public class ConfigureTool extends AnAction {
             selectedColorBlindYes.addChangeListener(changeListener);
             selectedColorBlindNo.addChangeListener(changeListener);
 
-            panel4.add(selectedColorBlindYes);
-            panel4.add(selectedColorBlindNo);
+            panel6.add(selectedColorBlindYes);
+            panel6.add(selectedColorBlindNo);
 
-            panel4.add(label_username, BorderLayout.WEST);
-            panel4.add(textField_username, BorderLayout.EAST);
+            panel6.add(label_username, BorderLayout.WEST);
+            panel6.add(textField_username, BorderLayout.EAST);
 
-            panel4.setBorder(BorderFactory.createTitledBorder(
+            panel6.setBorder(BorderFactory.createTitledBorder(
                     BorderFactory.createEtchedBorder(), "Further Details"));
             boxWithExecutors.add(panel4);
             box.add(boxWithExecutors);
