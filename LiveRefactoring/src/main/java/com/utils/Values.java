@@ -35,7 +35,6 @@ public class Values {
     public static boolean withColors = true;
     public static ArrayList<FileMetrics> openedFiles = new ArrayList<>();
     public static HashMap<String, ArrayList<Severity>> openedRefactorings = new HashMap<>();
-    public static HashMap<String, ArrayList<ArrayList<Double>>> metricsFile = new HashMap<>();
 
     public Values(Editor editor, AnActionEvent event, DatabaseReference db) {
         Values.editor = editor;

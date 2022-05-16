@@ -9,14 +9,7 @@ import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.command.CommandEvent;
-import com.intellij.openapi.command.CommandListener;
-import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.event.CaretEvent;
-import com.intellij.openapi.editor.event.CaretListener;
-import com.intellij.openapi.editor.event.VisibleAreaEvent;
-import com.intellij.openapi.editor.event.VisibleAreaListener;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.openapi.fileEditor.*;
 import com.intellij.openapi.project.Project;
@@ -37,10 +30,7 @@ import com.intellij.util.messages.MessageBus;
 import com.metrics.ClassMetrics;
 import com.metrics.FileMetrics;
 import com.metrics.MethodMetrics;
-import com.refactorings.candidates.*;
 import com.refactorings.candidates.utils.LastRefactoring;
-import com.refactorings.candidates.utils.Severity;
-import com.ui.ExtractClassRefactoring;
 import com.ui.VisualRepresentation;
 import com.utils.MetricsUtils;
 import com.utils.ThresholdsCandidates;
@@ -50,8 +40,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
@@ -60,12 +48,9 @@ public class StartAnalysis extends AnAction {
     public boolean enable = false;
     public boolean started = false;
     private final Utilities utils = new Utilities();
-    //private final String urlFirebase = this.utils.getURL() + "firebaseConfig/ServiceAccount.json";
     private boolean done = false;
     private DatabaseReference database = null;
     private int codingCounter = 0;
-    private int undoCounter = 0;
-    private int scrollCounter = 0;
     public int refactoringCounter = 0;
     public int counter = 0;
     public int active = 0;
@@ -75,7 +60,6 @@ public class StartAnalysis extends AnAction {
     public MethodMetrics newMethod = null;
     public boolean afterActivated = false;
     public boolean undoActivated = false;
-    public Date dateStartScrolling = null;
     public Instant startCoding = null;
     public Instant endCoding = null;
     public Instant endRefactoring = null;
@@ -89,63 +73,6 @@ public class StartAnalysis extends AnAction {
 
             activateFirebase();
             ThresholdsCandidates.username = randomString();
-            addActions(editor);
-
-            CommandListener listener = new CommandListener() {
-                @Override
-                public void commandFinished(@NotNull CommandEvent event) {
-                    CommandListener.super.commandFinished(event);
-                    if(event.getCommandName().equals("Undo last operation")){
-                        if(Values.db != null && Values.currentFile != null && Values.lastRefactoring != null && Values.isRefactoring && afterActivated) {
-                            undoActivated = true;
-                            afterActivated = false;
-                            System.out.println("Undo Action");
-                            if (Values.lastRefactoring != null) {
-                                if (Values.allRefactorings.size() > 0)
-                                    Values.allRefactorings.remove(Values.allRefactorings.size() - 1);
-
-                                undoCounter++;
-
-                                Date dateNow = new Date();
-                                String date = dateNow.toString();
-                                Instant now = Instant.now();
-                                String projectName = Values.editor.getProject().getName();
-                                String endPoint = projectName + "/version " + version + "/" + removeExtension(Values.currentFile.javaFile.getName()) + "/" + ThresholdsCandidates.username + "/"+
-                                        Values.lastRefactoring.type + " " + refactoringCounter + "/Undo Refactoring " + undoCounter;
-
-                                Duration betweenCoding = Duration.between(endRefactoring, now);
-                                HashMap<String, Object> codingTime = new HashMap<>();
-                                codingTime.put("Seconds Since Refactoring", betweenCoding.getSeconds());
-                                Values.db.child(endPoint + "/Time").setValueAsync(codingTime);
-
-                                MetricsUtils metricsUtils = new MetricsUtils();
-                                FileMetrics old = new FileMetrics(Values.before);
-                                Values.before = new FileMetrics(Values.after);
-                                Values.after = new FileMetrics(old);
-
-                                boolean exists = false;
-                                for (int i = 0; i < Values.openedFiles.size(); i++) {
-                                    if (Values.openedFiles.get(i).fileName.equals(Values.after.fileName)) {
-                                        exists = true;
-                                        Values.openedFiles.set(i, new FileMetrics(Values.after));
-                                        break;
-                                    }
-                                }
-                                if (!exists)
-                                    Values.openedFiles.add(new FileMetrics(Values.after));
-
-
-                                HashMap<String, Object> itemsAfter = metricsUtils.getValuesMetrics(new FileMetrics(Values.after));
-                                Values.db.child(endPoint + "/after").setValueAsync(itemsAfter);
-                                Values.lastRefactoring = null;
-                                utils.startActions(Values.after.javaFile);
-                            }
-                        }
-                    }
-                }
-            };
-            CommandProcessor.getInstance().addCommandListener(listener);
-
             done = true;
         }
 
@@ -227,8 +154,6 @@ public class StartAnalysis extends AnAction {
                                             String date = dateNow.toString();
                                             String projectName = editor.getProject().getName();
                                             String endPoint = projectName + "/version " + version + "/" + removeExtension(psiJavaFile.getName()) + "/" + ThresholdsCandidates.username + "/" + Values.lastRefactoring.type + " " + refactoringCounter;
-                                            //String endPoint = "robot/" + projectName + "/" + removeExtension(psiJavaFile.getName()) + "/" + Values.lastRefactoring.type + " " + refactoringCounter;
-
                                             Instant now = Instant.now();
 
                                             if(codingCounter > 0){
@@ -323,17 +248,6 @@ public class StartAnalysis extends AnAction {
                                                 Values.before = new FileMetrics(Values.after);
                                             }
 
-                                            if(Values.metricsFile.containsKey(psiJavaFile.getName())){
-                                                ArrayList<ArrayList<Double>> arrayMetrics = Values.metricsFile.get(psiJavaFile.getName());
-                                                arrayMetrics.get(0).add(Values.after.lines);
-                                                arrayMetrics.get(1).add(Values.after.complexity);
-                                                arrayMetrics.get(2).add(Values.after.cognitiveComplexity);
-                                                arrayMetrics.get(3).add(Values.after.halsteadVolume);
-                                                arrayMetrics.get(4).add(Values.after.halsteadEffort);
-                                                arrayMetrics.get(5).add(Values.after.halsteadDifficulty);
-                                                arrayMetrics.get(6).add(Values.after.halsteadMaintainability);
-                                            }
-
                                             boolean exists = false;
                                             for (int i = 0; i < Values.openedFiles.size(); i++) {
                                                 if (Values.openedFiles.get(i).fileName.equals(Values.after.fileName)) {
@@ -390,213 +304,7 @@ public class StartAnalysis extends AnAction {
                 });
 
                 MessageBus messageBus = Objects.requireNonNull(editor.getProject()).getMessageBus();
-                /*messageBus.connect().subscribe(VirtualFileManager.VFS_CHANGES, new BulkFileListener() {
-                    public Project project = getActiveProject();
-                    public PsiJavaFile lastFile = null;
-
-                    @Override
-                    public void before(@NotNull List<? extends VFileEvent> events) {
-
-                        if (project != null && enable && !undoActivated) {
-                            System.out.println("=========== New Event (Before) ===========");
-
-                            for (RangeHighlighter rangeHighlighter : Values.gutters) {
-                                rangeHighlighter.setGutterIconRenderer(null);
-                            }
-                            VirtualFile file = events.get(0).getFile();
-                            if (file != null) {
-                                PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-                                if (psiFile instanceof PsiJavaFile) {
-                                    PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-                                    if (lastFile == null)
-                                        lastFile = psiJavaFile;
-
-                                    if (!lastFile.getName().equals(psiJavaFile.getName())) {
-                                        lastFile = psiJavaFile;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void after(@NotNull List<? extends VFileEvent> events) {
-                        if (project != null && enable && !undoActivated) {
-                            System.out.println("=========== New Event (After) ===========");
-
-                            for (RangeHighlighter rangeHighlighter : Values.gutters) {
-                                rangeHighlighter.setGutterIconRenderer(null);
-                            }
-                            VirtualFile file = events.get(0).getFile();
-                            if (file != null) {
-                                PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-                                if (psiFile instanceof PsiJavaFile) {
-                                    PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-                                    Utilities utils = new Utilities();
-                                    if (utils.isPsiFileInProject(project, psiFile)) {
-                                        Values.editor = ((TextEditor) Objects.requireNonNull(FileEditorManager.getInstance(project).getSelectedEditor())).getEditor();
-                                        if (Values.db != null) {
-                                            Date dateNow = new Date();
-                                            String date = dateNow.toString();
-                                            String projectName = editor.getProject().getName();
-                                            String endPoint = ThresholdsCandidates.username + "/" + projectName + "/version " + version + "/" + removeExtension(psiJavaFile.getName()) + "/" + date + "/" + Values.lastRefactoring.type;
-                                            Instant now = Instant.now();
-
-                                            codingCounter++;
-                                            if(Values.betweenCoding == null)
-                                                Values.betweenCoding = now;
-                                            Duration betweenCoding = Duration.between(Values.betweenCoding, now);
-                                            HashMap<String, Object> codingTime = new HashMap<>();
-                                            codingTime.put("Seconds Stopped", betweenCoding.getSeconds());
-                                            codingTime.put("Hour Started", (dateNow.getHours() + ":" + dateNow.getMinutes()));
-                                            Values.db.child(endPoint + "/Coding Actions/" + "Coding " + codingCounter).setValueAsync(codingTime);
-                                            Values.betweenCoding = now;
-
-                                            if (Values.lastRefactoring != null) {
-                                                System.out.println("A refactoring was applied!!!");
-                                                Values.allRefactorings.add(Values.lastRefactoring);
-                                                afterActivated = true;
-                                                Duration timeElapsed = Duration.between(Values.startTime, now);
-                                                if(Values.betweenRefactorings == null)
-                                                    Values.betweenRefactorings = now;
-                                                Duration betweenTime = Duration.between(Values.betweenRefactorings, now);
-
-                                                HashMap<String, Object> time = new HashMap<>();
-                                                time.put("Seconds", timeElapsed.getSeconds());
-                                                Values.db.child(endPoint + "/timeElapsed").setValueAsync(time);
-                                                HashMap<String, Object> timeBetween = new HashMap<>();
-                                                time.put("Seconds", betweenTime.getSeconds());
-                                                Values.db.child(endPoint + "/timeBetween").setValueAsync(timeBetween);
-                                                Values.betweenRefactorings = now;
-
-                                                MetricsUtils metricsUtils = new MetricsUtils();
-
-                                                if (Values.lastRefactoring.type == "Extract Method") {
-                                                    HashMap<String, Object> itemsFileBefore = metricsUtils.getValuesMetricsFile(Values.before);
-                                                    Values.db.child(endPoint + "/FileBefore").setValueAsync(itemsFileBefore);
-                                                    HashMap<String, Object> itemsBefore = metricsUtils.getValuesMetrics(Values.before);
-                                                    Values.db.child(endPoint + "/before").setValueAsync(itemsBefore);
-                                                    changeMetrics(Values.lastRefactoring, psiJavaFile);
-                                                    HashMap<String, Object> itemsAfter = metricsUtils.getValuesMetrics(Values.after);
-                                                    Values.db.child(endPoint + "/after").setValueAsync(itemsAfter);
-                                                    HashMap<String, Object> itemsFileAfter = metricsUtils.getValuesMetricsFile(Values.after);
-                                                    Values.db.child(endPoint + "/FileAfter").setValueAsync(itemsFileAfter);
-                                                    HashMap<String, Object> itemsNew = metricsUtils.getValuesMetricsNewMethod(Values.newMethod);
-                                                    Values.db.child(endPoint + "/new").setValueAsync(itemsNew);
-                                                } else if (Values.lastRefactoring.type == "Extract Variable") {
-                                                    HashMap<String, Object> itemsFileBefore = metricsUtils.getValuesMetricsFile(Values.before);
-                                                    Values.db.child(endPoint + "/FileBefore").setValueAsync(itemsFileBefore);
-                                                    HashMap<String, Object> itemsBefore = metricsUtils.getValuesMetrics(Values.before);
-                                                    Values.db.child(endPoint + "/before").setValueAsync(itemsBefore);
-                                                    changeMetrics(Values.lastRefactoring, psiJavaFile);
-                                                    HashMap<String, Object> itemsAfter = metricsUtils.getValuesMetrics(Values.after);
-                                                    Values.db.child(endPoint + "/after").setValueAsync(itemsAfter);
-                                                    HashMap<String, Object> itemsFileAfter = metricsUtils.getValuesMetricsFile(Values.after);
-                                                    Values.db.child(endPoint + "/FileAfter").setValueAsync(itemsFileAfter);
-                                                } else if (Values.lastRefactoring.type == "Extract Class") {
-                                                    HashMap<String, Object> itemsFileBefore = metricsUtils.getValuesMetricsFile(Values.before);
-                                                    Values.db.child(endPoint + "/FileBefore").setValueAsync(itemsFileBefore);
-                                                    HashMap<String, Object> itemsBefore = metricsUtils.getValuesMetrics(Values.before);
-                                                    Values.db.child(endPoint + "/before").setValueAsync(itemsBefore);
-                                                    changeMetrics(Values.lastRefactoring, psiJavaFile);
-                                                    HashMap<String, Object> itemsAfter = metricsUtils.getValuesMetrics(Values.after);
-                                                    Values.db.child(endPoint + "/after").setValueAsync(itemsAfter);
-                                                    HashMap<String, Object> itemsFileAfter = metricsUtils.getValuesMetricsFile(Values.after);
-                                                    Values.db.child(endPoint + "/FileAfter").setValueAsync(itemsFileAfter);
-                                                } else if (Values.lastRefactoring.type == "Move Method") {
-                                                    HashMap<String, Object> itemsFileBefore = metricsUtils.getValuesMetricsFile(Values.before);
-                                                    Values.db.child(endPoint + "/FileBefore").setValueAsync(itemsFileBefore);
-                                                    HashMap<String, Object> itemsBefore = metricsUtils.getValuesMetrics(Values.before);
-                                                    Values.db.child(endPoint + "/before").setValueAsync(itemsBefore);
-                                                    changeMetrics(Values.lastRefactoring, psiJavaFile);
-                                                    HashMap<String, Object> itemsAfter = metricsUtils.getValuesMetrics(Values.after);
-                                                    Values.db.child(endPoint + "/after").setValueAsync(itemsAfter);
-                                                    HashMap<String, Object> itemsFileAfter = metricsUtils.getValuesMetricsFile(Values.after);
-                                                    Values.db.child(endPoint + "/FileAfter").setValueAsync(itemsFileAfter);
-                                                    HashMap<String, Object> itemsNew = metricsUtils.getValuesMetricsNewMethod(Values.newMethod);
-                                                    Values.db.child(endPoint + "/newMethod").setValueAsync(itemsNew);
-                                                    HashMap<String, Object> itemsTarget = metricsUtils.getValuesMetricsNewClass(Values.newClass);
-                                                    Values.db.child(endPoint + "/targetClass").setValueAsync(itemsTarget);
-                                                } else if (Values.lastRefactoring.type == "Introduce Parameter Object") {
-                                                    HashMap<String, Object> itemsFileBefore = metricsUtils.getValuesMetricsFile(Values.before);
-                                                    Values.db.child(endPoint + "/FileBefore").setValueAsync(itemsFileBefore);
-                                                    HashMap<String, Object> itemsBefore = metricsUtils.getValuesMetrics(Values.before);
-                                                    Values.db.child(endPoint + "/before").setValueAsync(itemsBefore);
-                                                    changeMetrics(Values.lastRefactoring, psiJavaFile);
-                                                    HashMap<String, Object> itemsAfter = metricsUtils.getValuesMetrics(Values.after);
-                                                    Values.db.child(endPoint + "/after").setValueAsync(itemsAfter);
-                                                    HashMap<String, Object> itemsFileAfter = metricsUtils.getValuesMetricsFile(Values.after);
-                                                    Values.db.child(endPoint + "/FileAfter").setValueAsync(itemsFileAfter);
-                                                    HashMap<String, Object> itemsNew = metricsUtils.getValuesMetricsNewClass(Values.newClass);
-                                                    Values.db.child(endPoint + "/newClass").setValueAsync(itemsNew);
-                                                }
-                                            } else {
-                                                Values.after = new FileMetrics(Values.editor, psiJavaFile);
-                                                Values.before = new FileMetrics(Values.after);
-                                            }
-
-                                            boolean exists = false;
-                                            for (int i = 0; i < Values.openedFiles.size(); i++) {
-                                                if (Values.openedFiles.get(i).fileName.equals(Values.after.fileName)) {
-                                                    exists = true;
-                                                    Values.openedFiles.set(i, Values.after);
-                                                    break;
-                                                }
-                                            }
-                                            if (!exists)
-                                                Values.openedFiles.add(Values.after);
-
-                                            utils.startActions(psiJavaFile);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });*/
-
                 messageBus.connect().subscribe(FileEditorManagerListener.FILE_EDITOR_MANAGER, new FileEditorManagerAdapter() {
-                    /*@Override
-                    public void fileOpened(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
-                        System.out.println("---------------File Changed---------------");
-                        for (RangeHighlighter rangeHighlighter : Values.gutters) {
-                            rangeHighlighter.setGutterIconRenderer(null);
-                        }
-
-                        if (enable) {
-                            PsiDocumentManager manager = PsiDocumentManager.getInstance(source.getProject());
-                            Editor selectedEditor = ((TextEditor) Objects.requireNonNull(FileEditorManager.getInstance(source.getProject()).getSelectedEditor())).getEditor();
-                            Values.editor = selectedEditor;
-                            PsiFile psiFile = manager.getCachedPsiFile(selectedEditor.getDocument());
-                            PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-
-                            Values.before = null;
-                            Values.after = null;
-                            addActions(Values.editor);
-
-                            if (Values.openedRefactorings.containsKey(psiJavaFile.getName())) {
-                                if (Values.openedRefactorings.get(psiJavaFile.getName()).size() > 0) {
-                                    VisualRepresentation representation = new VisualRepresentation();
-                                    try {
-                                        representation.startVisualAnalysis(Values.editor, Values.openedRefactorings.get(psiJavaFile.getName()));
-                                    } catch (IOException ex) {
-                                        ex.printStackTrace();
-                                    }
-                                } else {
-                                    JBPopupFactory factory = JBPopupFactory.getInstance();
-
-                                    BalloonBuilder builder =
-                                            factory.createHtmlTextBalloonBuilder("<b>No refactoring candidates found...</b>", MessageType.INFO, null);
-                                    Balloon b = builder.createBalloon();
-
-                                    b.show(RelativePoint.getSouthEastOf(WindowManager.getInstance().getStatusBar(Values.editor.getProject()).getComponent()), Balloon.Position.above);
-
-                                    Values.editor.getMarkupModel().removeAllHighlighters();
-                                }
-                            } else
-                                utils.startActions(psiJavaFile);
-                        }
-                    }*/
 
                     @Override
                     public void selectionChanged(@NotNull FileEditorManagerEvent event) {
@@ -616,20 +324,15 @@ public class StartAnalysis extends AnAction {
                             active = 0;
                             codingCounter = 0;
                             counter = 0;
-                            startCoding = null;
-                            undoCounter = 0;
                             refactoringCounter = 0;
                             Values.isRefactoring = false;
                             Values.betweenRefactorings = null;
                             Values.lastRefactoring = null;
                             afterActivated = false;
                             undoActivated = false;
-                            dateStartScrolling = null;
                             startCoding = null;
                             endCoding = null;
                             endRefactoring = null;
-                            scrollCounter = 0;
-                            addActions(Values.editor);
                             if (Values.openedRefactorings.containsKey(psiJavaFile.getName())) {
                                 if (Values.openedRefactorings.get(psiJavaFile.getName()).size() > 0) {
                                     VisualRepresentation representation = new VisualRepresentation();
@@ -658,16 +361,6 @@ public class StartAnalysis extends AnAction {
 
                 started = true;
             }
-
-            //Version >= 4
-            CaretListener caretListener =
-                    new CaretListener() {
-                        @Override
-                        public void caretPositionChanged(@NotNull CaretEvent event) {
-                            //utils.startActions(psiJavaFile);
-                        }
-                    };
-
             PsiDocumentManager documentManager = PsiDocumentManager.getInstance(Objects.requireNonNull(e.getProject()));
             Values.isActive = true;
             Values.editor = editor;
@@ -974,23 +667,6 @@ public class StartAnalysis extends AnAction {
         return null;
     }
 
-    private String calculateHash(String name) {
-        String hashedString = "";
-        MessageDigest md;
-
-        try {
-            md = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Invalid algorithm!");
-            return "";
-        }
-
-        byte[] hash = md.digest(name.getBytes());
-        hashedString = new String(hash);
-
-        return hashedString;
-    }
-
     private String randomString(){
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
@@ -1007,45 +683,5 @@ public class StartAnalysis extends AnAction {
     private String removeExtension(String fileName){
         fileName = fileName.substring(0, fileName.lastIndexOf('.'));
         return fileName;
-    }
-
-    private void addActions(Editor editor){
-        VisibleAreaListener scroll = new VisibleAreaListener() {
-            @Override
-            public void visibleAreaChanged(@NotNull VisibleAreaEvent e) {
-                Instant now = Instant.now();
-                Date date = new Date();
-                if(Values.betweenScrolls == null) {
-                    Values.betweenScrolls = now;
-                }
-                if(dateStartScrolling == null){
-                    dateStartScrolling = date;
-                }
-
-                Duration betweenScrolls = Duration.between(Values.betweenScrolls, now);
-                if(betweenScrolls.getSeconds() >= 7.5){
-                    if(Values.db != null && Values.lastRefactoring != null && Values.isRefactoring && refactoringCounter != 0) {
-                        System.out.println("Scrolling Action");
-                        scrollCounter++;
-                        PsiDocumentManager manager = PsiDocumentManager.getInstance(editor.getProject());
-                        PsiFile psiFile = manager.getCachedPsiFile(editor.getDocument());
-                        PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-
-                        String dateString = date.toString();
-                        String projectName = Values.editor.getProject().getName();
-                        String endPoint = projectName + "/version " + version + "/" + removeExtension(psiJavaFile.getName()) + "/" + ThresholdsCandidates.username + "/"+
-                                Values.lastRefactoring.type + " " + refactoringCounter + "/Scrolling " + scrollCounter;
-
-                        HashMap<String, Object> scrollingTime = new HashMap<>();
-                        scrollingTime.put("Scroll Time", betweenScrolls.getSeconds());
-                        Values.db.child(endPoint + "/Time " + codingCounter).setValueAsync(scrollingTime);
-                    }
-                    Values.betweenScrolls = null;
-                    dateStartScrolling = null;
-                }
-            }
-        };
-
-        editor.getScrollingModel().addVisibleAreaListener(scroll);
     }
 }
