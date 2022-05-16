@@ -10,6 +10,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.ui.JDeodorant.IntelliJDeodorantBundle;
 import com.utils.JDeodorant.PlainVariable;
 import com.utils.JDeodorant.RefactoringUtility;
 import com.utils.JDeodorant.math.AdjacencyList;

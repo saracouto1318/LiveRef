@@ -1,4 +1,4 @@
-package com.ui;
+package com.ui.JDeodorant;
 
 import com.intellij.CommonBundle;
 import com.intellij.reference.SoftReference;

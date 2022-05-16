@@ -25,10 +25,8 @@ public class Values {
     public static FileMetrics currentFile = null;
     public static DatabaseReference db = null;
     public static ArrayList<Severity> candidates = new ArrayList<>();
-    public static int numRefactorings = 10;
     public static FileMetrics before = null;
     public static FileMetrics after = null;
-    public static boolean alreadyDone = false;
     public static MethodMetrics newMethod = null;
     public static ClassMetrics newClass = null;
     public static Instant startTime = null;
@@ -48,9 +46,5 @@ public class Values {
 
     public Values() {
 
-    }
-
-    public void setLastRefactoring(LastRefactoring refactoring) {
-        Values.lastRefactoring = refactoring;
     }
 }
