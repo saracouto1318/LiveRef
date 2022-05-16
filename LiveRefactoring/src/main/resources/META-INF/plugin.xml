@@ -1,0 +1,30 @@
+<idea-plugin>
+    <id>org.liverefactoring.LiveRefactoring</id>
+    <name>Live Refactoring</name>
+    <vendor email="saracouto1318@gmail.com">Sara Fernandes</vendor>
+
+    <description><![CDATA[
+    This plugin aims to assess code quality metrics, in real-time, to detect and apply refactoring opportunities on the source code,
+    to improve its quality, faster
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!--<toolWindow id="Live Refactoring" anchor="left"
+                    factoryClass="com.ui.MyToolWindowFactory"/>-->
+        <toolWindow id="CatViewer" anchor="right" factoryClass="com.ui.WindowFactory"/>
+        <projectService id="metricsService" serviceImplementation="com.ui.MetricsWindowService"/>
+    </extensions>
+
+    <actions>
+        <group id="LiveRefactoring.Start" text="Live Refactoring" description="Live refactoring menu">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="com.StartAnalysis" id="LiveRefactoring.Start.Action" text="Start Analysis"/>
+            <action class="com.ConfigureTool" id="LiveRefactoring.Config.Tool" text="Configure Tool"/>
+            <!--<action class="com.utils.Robot" id="LiveRefactoring.Start.Robot" text="Robot"/>-->
+            <!--<action class="com.SaveMetrics" id="LiveRefactoring.Start.Save" text="Save Metrics"/>-->
+        </group>
+    </actions>
+</idea-plugin>

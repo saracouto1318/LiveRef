@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.7.2'
+}
+
+group 'org.liverefactoring'
+version '1.0'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    compile 'com.google.firebase:firebase-admin:6.2.0'
+    compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
+    compile group: 'ch.qos.logback', name:'logback-classic', version: '1.0.9'
+    compile group: 'ch.qos.logback', name:'logback-core', version: '1.0.9'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.4.2.201908231537-r'
+}
+
+apply plugin: 'java'
+apply plugin: 'org.jetbrains.intellij'
+
+intellij {
+    version = '2021.1.1'
+    plugins 'java'
+    pluginName 'LiveRefactoring'
+    downloadSources true
+    intellij.updateSinceUntilBuild false
+}
+patchPluginXml {
+    changeNotes = """
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>"""
+}
+compileJava   {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+test {
+    useJUnitPlatform()
+}

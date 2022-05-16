@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="ajt-2.9">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/javaml-0.1.7/lib/ajt-2.9.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javaml-0.1.7/lib/commons-math-1.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javaml-0.1.7/lib/Jama-1.0.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javaml-0.1.7/lib/libsvm.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/javaml-0.1.7/lib/weka.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
