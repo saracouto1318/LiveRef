@@ -120,46 +120,13 @@ public class FileMetrics {
     public void initializeComponents(PsiJavaFile sourceFile) {
 
        for (PsiMethod psiMethod : PsiTreeUtil.findChildrenOfType(sourceFile, PsiMethod.class)) {
-           //if(psiMethod.getContainingClass() != null && !psiMethod.getContainingClass().isInterface() && !psiMethod.getContainingClass().isEnum())
            this.methodMetrics.add(new MethodMetrics(psiMethod.getContainingClass(), psiMethod,
                        sourceFile.getName().equals(psiMethod.getName() + ".java") ?  true : false));
-           /*else if(psiMethod.getContainingClass() == null){
-               this.methodMetrics.add(new MethodMetrics(null, psiMethod, false));
-           }*/
        }
 
-        /*for (PsiClass aClass : sourceFile.getClasses()) {
-            //this.classMetrics.add(new ClassMetrics(aClass));
-            System.out.println(aClass.getName());
-            for (PsiMethod method : refactorUtilities.getMethods(aClass)) {
-                for (PsiClass psiClass : PsiTreeUtil.findChildrenOfType(method, PsiClass.class)) {
-                    for (PsiMethod method2 : refactorUtilities.getMethods(psiClass)) {
-                        this.methodMetrics.add(new MethodMetrics(psiClass, method2, false));
-                    }
-                }
-                this.methodMetrics.add(new MethodMetrics(aClass, method, false));
-            }
-
-            for (PsiClass innerClass : aClass.getInnerClasses()) {
-                for (PsiMethod method : refactorUtilities.getMethods(innerClass)) {
-                    this.methodMetrics.add(new MethodMetrics(innerClass, method, false));
-                }
-            }
-            for (PsiClass anInterface : aClass.getInterfaces()) {
-                if(refactorUtilities.getMethods(anInterface).size() > 0)
-                    for (PsiMethod method : refactorUtilities.getMethods(anInterface)) {
-                        this.methodMetrics.add(new MethodMetrics(anInterface, method, false));
-                    }
-            }
-
-            for (PsiMethod constructor : aClass.getConstructors()) {
-                this.methodMetrics.add(new MethodMetrics(aClass, constructor, true));
-            }
+        for (PsiClass psiClass : PsiTreeUtil.findChildrenOfType(sourceFile, PsiClass.class)) {
+            this.classMetrics.add(new ClassMetrics(psiClass));
         }
-
-        for (MethodMetrics m : this.methodMetrics) {
-            System.out.println(m.methodName);
-        }*/
 
         this.numberOfClasses = this.classMetrics.size();
         this.numberOfMethods = this.methodMetrics.size();

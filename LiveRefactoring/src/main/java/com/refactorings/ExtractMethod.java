@@ -27,13 +27,11 @@ public class ExtractMethod implements Runnable{
     public PsiJavaFile psiJavaFile = null;
     public Editor editor;
     public List<ExtractMethodCandidate> candidates;
-    public int version = 0;
 
-    public ExtractMethod(Editor editor, PsiJavaFile file, int version) {
+    public ExtractMethod(Editor editor, PsiJavaFile file) {
         this.editor = editor;
         this.psiJavaFile = file;
         this.candidates = new ArrayList<>();
-        this.version = version;
     }
 
     public ExtractMethod(Editor editor) {
@@ -46,8 +44,7 @@ public class ExtractMethod implements Runnable{
 
         for (MethodMetrics metrics : Values.before.methodMetrics) {
             if(!sourceFile.getName().contains(metrics.methodName)) {
-                    //if (metrics.isLong || metrics.complexityOfMethod >= 15 || metrics.cognitiveComplexity >= 15 || metrics.halsteadEffort >= 300) {
-                    ArrayList<PsiStatement> statements = refactorUtils.getAllStatements(metrics.method);
+               ArrayList<PsiStatement> statements = refactorUtils.getAllStatements(metrics.method);
                 if (statements.size() >= 2 * ThresholdsCandidates.minNumStatements) {
                     for (PsiStatement statement : statements) {
                         if (!(statement instanceof PsiReturnStatement) && !refactorUtils.containsBreakOrContinueOrReturn(statement)) {
@@ -58,43 +55,9 @@ public class ExtractMethod implements Runnable{
                         }
                     }
                 }
-                //}
             }
         }
 
-        return fragments;
-    }
-
-    public ArrayList<Fragment> getExtractableFragments(PsiJavaFile sourceFile, Editor editor) {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        LogicalPosition cursor = editor.getCaretModel().getLogicalPosition();
-
-        for (PsiClass aClass : sourceFile.getClasses()) {
-            if(!aClass.isEnum() && !aClass.isInterface()){
-                for (PsiMethod method : refactorUtils.getMethods(aClass)) {
-                    LogicalPosition startMethod = editor.offsetToLogicalPosition(method.getTextRange().getStartOffset());
-                    LogicalPosition endMethod = editor.offsetToLogicalPosition(method.getTextRange().getEndOffset());
-                    if(startMethod.line <= cursor.line && cursor.line <= endMethod.line){
-                        MethodMetrics metrics = Values.before.getMethodMetrics(method);
-                        if (metrics != null) {
-                            if (metrics.isLong || metrics.complexityOfMethod > 5 || metrics.halsteadEffort > 15) {
-                                if(method.getBody().getStatementCount() >= 2 * ThresholdsCandidates.minNumStatements) {
-                                    for (PsiStatement statement : refactorUtils.getAllStatements(method)) {
-                                        if (!(statement instanceof PsiReturnStatement) && !refactorUtils.containsBreakOrContinueOrReturn(statement)) {
-                                            LogicalPosition start = editor.offsetToLogicalPosition(statement.getTextRange().getStartOffset());
-                                            LogicalPosition end = editor.offsetToLogicalPosition(statement.getTextRange().getEndOffset());
-                                            Fragment fragment = new Fragment(statement, new MyRange(start, end), method);
-                                            fragments.add(fragment);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                       break;
-                    }
-                }
-            }
-        }
         return fragments;
     }
 
@@ -157,21 +120,7 @@ public class ExtractMethod implements Runnable{
         Values.currentFile = new FileMetrics(metrics);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
-        if(this.version < 4) {
-            fragments = getExtractableFragments(this.psiJavaFile);
-        }
-        else {
-            fragments = getExtractableFragments(this.psiJavaFile, this.editor);
-            if(this.version == 5 || this.version == 7){
-                if(fragments.size() > 0) {
-                    ArrayList<Fragment> auxFragments = getExtractableFragments(this.psiJavaFile);
-                    for (Fragment auxFragment : auxFragments) {
-                        if (!fragments.contains(auxFragment))
-                            fragments.add(auxFragment);
-                    }
-                }
-            }
-        }
+        fragments = getExtractableFragments(this.psiJavaFile);
 
         fragments.forEach(fragment -> {
             _nodes.add(fragment.node);
@@ -226,14 +175,6 @@ public class ExtractMethod implements Runnable{
                 totalNumStatements += PsiTreeUtil.findChildrenOfType(node, PsiStatement.class).size();
             }
 
-            /*if(candidate.numberOfStatementsToExtract >= minStatements && candidate.numberOfStatementsToExtract <= (double)(maximumOriginalMethodPercentage * candidate.oldNumberStatements)) {
-                candidates.add(candidate);
-            }*/
-
-            /*int totalNumStatementsMethod = 0;
-            for (PsiStatement node : candidate.method.getBody().getStatements()) {
-                totalNumStatementsMethod += PsiTreeUtil.findChildrenOfType(node, PsiStatement.class).size();
-            }*/
             int startLine = editor.offsetToLogicalPosition(candidate.nodes.get(0).getTextRange().getStartOffset()).line;
             int endLine = editor.offsetToLogicalPosition(candidate.nodes.get(candidate.nodes.size()-1).getTextRange().getEndOffset()).line + 1;
             int linesCandidate = endLine - startLine;
@@ -241,11 +182,11 @@ public class ExtractMethod implements Runnable{
             String regex = "//.*|(\"(?:\\\\[^\"]|\\\\\"|.)*?\")|(?s)/\\*.*?\\*/";
             String[] lines = candidate.method.getBody().getText().split("\n");
             int linesMethod = 0;
-           for (String s : lines) {
-                        String line = s.trim();
-                        if (!(line.length() == 0) && !line.matches(regex))
-                            linesMethod++;
-                    }
+            for (String s : lines) {
+                String line = s.trim();
+                if (!(line.length() == 0) && !line.matches(regex))
+                    linesMethod++;
+            }
            linesMethod-=2;
            if(candidate.numberOfStatementsToExtract >= minStatements && candidate.numberOfStatementsToExtract <= (double)(maximumOriginalMethodPercentage * candidate.oldNumberStatements) && linesCandidate <= (double)(maximumOriginalMethodPercentage * linesMethod)) {
                 candidates.add(candidate);
@@ -326,41 +267,6 @@ public class ExtractMethod implements Runnable{
                 candidates.add(aux);
             }
         }
-
-        if(this.version == 7) {
-            LogicalPosition cursor = editor.getCaretModel().getLogicalPosition();
-            PsiMethod currentMethod = null;
-            for (ExtractMethodCandidate candidate: candidatesAux) {
-                if(candidate.range.start.line <= cursor.line && candidate.range.end.line >= cursor.line){
-                    if(currentMethod == null)
-                        currentMethod = candidate.method;
-                    else{
-                        if(currentMethod.getName().equals(candidate.method.getName())){
-                            this.candidates.remove(candidate);
-                        }
-                    }
-                }
-            }
-        }
-
-
-        /*for (ExtractMethodCandidate c : candidates) {
-            PsiMethod candidateMethod = c.method;
-            if (candidateMethod != null) {
-                String nameCandidate = candidateMethod.getName();
-                MethodMetrics candidateMetrics = null;
-                for (int i = 0; i < c.metrics.methodMetrics.size(); i++) {
-                    if (c.metrics.methodMetrics.get(i).methodName == nameCandidate) {
-                        candidateMetrics = c.metrics.methodMetrics.get(i);
-                    }
-
-                    if (candidateMetrics != null) {
-                        if (c.numberOfStatementsToExtract >= minStatements && (c.oldNumberStatements - c.numberOfStatementsToExtract) <= (maximumOriginalMethodPercentage * c.oldNumberStatements))
-                            filteredCandidates.add(c);
-                    }
-                }
-            }
-        }*/
 
         System.out.println("Extract Method: " + this.candidates.size() +"\n");
     }

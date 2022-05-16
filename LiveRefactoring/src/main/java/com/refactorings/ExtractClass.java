@@ -24,13 +24,11 @@ public class ExtractClass implements Runnable {
     public PsiJavaFile sourceFile;
     public List<ExtractClassCandidate> candidates;
     public Editor editor;
-    public int version = 0;
 
-    public ExtractClass(PsiJavaFile sourceFile, Editor editor, int version) {
+    public ExtractClass(PsiJavaFile sourceFile, Editor editor) {
         this.sourceFile = sourceFile;
         this.editor = editor;
         this.candidates = new ArrayList<>();
-        this.version = version;
     }
 
     public ExtractClass() {

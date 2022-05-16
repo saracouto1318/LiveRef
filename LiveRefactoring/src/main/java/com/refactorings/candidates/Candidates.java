@@ -36,8 +36,7 @@ public class Candidates {
 
         if (SelectedRefactorings.selectedRefactoring == Refactorings.All) {
             long start = System.nanoTime();
-            //version 1
-            this.extractMethod = new ExtractMethod(editor, psiJavaFile, 1);
+            this.extractMethod = new ExtractMethod(editor, psiJavaFile);
             this.extractMethod.run();
 
             /*this.extractClass = new ExtractClass(psiJavaFile);
@@ -46,88 +45,33 @@ public class Candidates {
             /*this.extractVariable = new ExtractVariable(psiJavaFile, editor);
             this.extractVariable.run();*/
 
-            //version 2 - best
-            //this.extractMethod.candidates = this.extractMethod.candidates.stream().limit(1).collect(Collectors.toList());
-
-            /*this.extractClass = new ExtractClass(psiJavaFile);
-            this.extractClass.run();
-            this.extractClass.candidates = this.extractClass.candidates.stream().limit(1).collect(Collectors.toList());*/
-
-            /*this.extractVariable = new ExtractVariable(psiJavaFile, editor);
-            this.extractVariable.run();
-            this.extractVariable.candidates = this.extractVariable.candidates.stream().limit(1).collect(Collectors.toList());
-            */
-
-            //version 3 - 10 best
-            //this.extractMethod.candidates = this.extractMethod.candidates.stream().limit(10).collect(Collectors.toList());
-
-            /*this.extractClass = new ExtractClass(psiJavaFile);
-            this.extractClass.run();
-            this.extractClass.candidates = this.extractClass.candidates.stream().limit(10).collect(Collectors.toList());
-
-            /*this.extractVariable = new ExtractVariable(psiJavaFile, editor);
-            this.extractVariable.run();
-            this.extractVariable.candidates = this.extractVariable.candidates.stream().limit(10).collect(Collectors.toList());
-            */
-
-            //version 4 - cursor
-            //this.extractMethod = new ExtractMethod(editor, psiJavaFile, 4);
-            //this.extractMethod.run();
-
-            /*this.extractVariable = new ExtractVariable(psiJavaFile, editor, 4);
-            this.extractVariable.run();*/
-
-            //version 5 - cursor + around
-            //this.extractMethod = new ExtractMethod(editor, psiJavaFile, 5);
-            //this.extractMethod.run();
-
-            //version 6 - best cursor
-            //this.extractMethod = new ExtractMethod(editor, psiJavaFile, 6);
-            //this.extractMethod.run();
-            //this.extractMethod.candidates = this.extractMethod.candidates.stream().limit(1).collect(Collectors.toList());
-
-            /*this.extractVariable = new ExtractVariable(psiJavaFile, editor, 6);
-            this.extractVariable.run();
-            this.extractVariable.candidates = this.extractVariable.candidates.stream().limit(1).collect(Collectors.toList());
-             */
-
-            //version 7 - best cursor + around
-            //this.extractMethod = new ExtractMethod(editor, psiJavaFile, 7);
-            //this.extractMethod.run();
-
-
-
             /*this.moveMethod = new MoveMethod(editor, psiJavaFile);
             this.moveMethod.run();*/
 
             /*this.paramObj = new IntroduceParameterObject(editor, psiJavaFile);
             this.paramObj.run();*/
-
-          /*this.extractVariable = new ExtractVariable(psiJavaFile, editor);
-            this.extractVariable.run();
-            this.extractVariable.candidates = this.extractVariable.candidates.stream().limit(Values.numRefactorings).collect(Collectors.toList());
-            */
-            long end = System.nanoTime();
-            long elapsedTime = end - start;
-            System.out.println("Time: " + elapsedTime);
         } else if (SelectedRefactorings.selectedRefactorings.size() > 0) {
             long start = System.nanoTime();
             for (Refactorings selectedRefactoring : SelectedRefactorings.selectedRefactorings) {
                 if (selectedRefactoring == Refactorings.ExtractVariable) {
-                    this.extractVariable = new ExtractVariable(psiJavaFile, editor, 1);
+                    this.extractVariable = new ExtractVariable(psiJavaFile, editor);
                     this.extractVariable.run();
-                    this.extractVariable.candidates = this.extractVariable.candidates.stream().limit(Values.numRefactorings).collect(Collectors.toList());
-
                 } else if (selectedRefactoring == Refactorings.ExtractClass) {
-                    this.extractClass = new ExtractClass(psiJavaFile, editor, 1);
+                    this.extractClass = new ExtractClass(psiJavaFile, editor);
                     this.extractClass.run();
-                    this.extractClass.candidates = this.extractClass.candidates.stream().limit(Values.numRefactorings).collect(Collectors.toList());
-
                 } else if (selectedRefactoring == Refactorings.ExtractMethod) {
-                    this.extractMethod = new ExtractMethod(editor, psiJavaFile, 1);
+                    this.extractMethod = new ExtractMethod(editor, psiJavaFile);
                     this.extractMethod.run();
-                    this.extractMethod.candidates = this.extractMethod.candidates.stream().limit(Values.numRefactorings).collect(Collectors.toList());
                 }
+                else if (selectedRefactoring == Refactorings.MoveMethod) {
+                    this.moveMethod = new MoveMethod(editor, psiJavaFile);
+                    this.moveMethod.run();
+                }
+                else if (selectedRefactoring == Refactorings.IntroduceParamObj) {
+                    this.paramObj = new IntroduceParameterObject(editor, psiJavaFile);
+                    this.paramObj.run();
+                }
+
             }
 
             long end = System.nanoTime();

@@ -23,13 +23,11 @@ public class ExtractVariable implements Runnable{
     public Editor editor;
     public PsiJavaFile sourceFile;
     public List<ExtractVariableCandidate> candidates;
-    public int version = 0;
 
-    public ExtractVariable(PsiJavaFile sourceFile, Editor editor, int version) {
+    public ExtractVariable(PsiJavaFile sourceFile, Editor editor) {
         this.editor = editor;
         this.sourceFile = sourceFile;
         this.candidates = new ArrayList<>();
-        this.version = version;
     }
 
     public ExtractVariable(Editor editor) {
@@ -94,22 +92,14 @@ public class ExtractVariable implements Runnable{
             LogicalPosition cursor = editor.getCaretModel().getLogicalPosition();
             LogicalPosition startMethod = editor.offsetToLogicalPosition(psiMethod.getTextRange().getStartOffset());
             LogicalPosition endMethod = editor.offsetToLogicalPosition(psiMethod.getTextRange().getEndOffset());
-            boolean doIt = false;
-            if(this.version > 4){
-                if(startMethod.line <= cursor.line && cursor.line <= endMethod.line) {
-                    doIt = true;
+            getNonVoidCalls(refactorUtils.getCallExpressions(psiMethod)).forEach(nvc -> {
+                if (nvc.getText().trim().length() >= minimumLength) {
+                    LogicalPosition nvcStart = this.editor.offsetToLogicalPosition(nvc.getTextRange().getStartOffset());
+                    LogicalPosition nvcEnd = this.editor.offsetToLogicalPosition(nvc.getTextRange().getEndOffset());
+                    MyRange range = new MyRange(nvcStart, nvcEnd);
+                    aux.add(new ExtractVariableCandidate(range, nvc, nvc.getText().trim().length(), psiMethod, this.editor));
                 }
-            }
-            if(doIt || version < 4){
-                getNonVoidCalls(refactorUtils.getCallExpressions(psiMethod)).forEach(nvc -> {
-                    if (nvc.getText().trim().length() >= minimumLength) {
-                        LogicalPosition nvcStart = this.editor.offsetToLogicalPosition(nvc.getTextRange().getStartOffset());
-                        LogicalPosition nvcEnd = this.editor.offsetToLogicalPosition(nvc.getTextRange().getEndOffset());
-                        MyRange range = new MyRange(nvcStart, nvcEnd);
-                        aux.add(new ExtractVariableCandidate(range, nvc, nvc.getText().trim().length(), psiMethod, this.editor));
-                    }
-                });
-            }
+            });
         }
 
 
