@@ -676,40 +676,6 @@ public class Utilities {
             Candidates candidates = new Candidates();
             ArrayList<Severity> severities = candidates.getCandidates(Values.editor, psiJavaFile);
             Values.candidates = severities;
-            if(!Values.metricsFile.containsKey(psiJavaFile.getName())) {
-                ArrayList<ArrayList<Double>> array = new ArrayList<>();
-                ArrayList<Double> metrics = new ArrayList<>();
-                metrics.add(Values.before.lines);
-                array.add(metrics);
-                metrics = new ArrayList<>();
-                metrics.add(Values.before.complexity);
-                array.add(metrics);
-                metrics = new ArrayList<>();
-                metrics.add(Values.before.cognitiveComplexity);
-                array.add(metrics);
-                metrics = new ArrayList<>();
-                metrics.add(Values.before.halsteadVolume);
-                array.add(metrics);
-                metrics = new ArrayList<>();
-                metrics.add(Values.before.halsteadEffort);
-                array.add(metrics);
-                metrics = new ArrayList<>();
-                metrics.add(Values.before.halsteadDifficulty);
-                array.add(metrics);
-                metrics = new ArrayList<>();
-                metrics.add(Values.before.halsteadMaintainability);
-                array.add(metrics);
-
-                Values.metricsFile.put(psiJavaFile.getName(), array);
-            }
-
-            /*Date dateNow = new Date();
-            String date = dateNow.toString();
-
-            String endPoint = Values.editor.getProject().getName() + "/version 1/" + date + "/";
-            HashMap<String, Object> numRefactorings = new HashMap<>();
-            numRefactorings.put("Num Refactorings", Values.candidates.size());
-            Values.db.child(endPoint).setValueAsync(numRefactorings);*/
 
             boolean found = false;
             if(Values.openedRefactorings.size() == 0)
@@ -725,33 +691,6 @@ public class Utilities {
                 if (!found)
                     Values.openedRefactorings.put(psiJavaFile.getName(), Values.candidates);
             }
-
-            /*if(Values.candidates.size() > 0) {
-                CaretModel caretModel = Values.editor.getCaretModel();
-                //Moving caret to line number
-                ExtractMethodCandidate candidate = ((ExtractMethodCandidate) Values.candidates.get(0).candidate);
-                caretModel.moveToLogicalPosition(new LogicalPosition(candidate.range.start.line - 1, 0));
-
-                //Scroll to the caret
-                ScrollingModel scrollingModel = Values.editor.getScrollingModel();
-                scrollingModel.scrollToCaret(ScrollType.CENTER);
-                Values.withColors = true;
-                //version 8
-                //Values.withColors = false;
-                VisualRepresentation representation = new VisualRepresentation();
-                representation.startVisualAnalysis(Values.editor, severities);
-            }
-            else{
-                JBPopupFactory factory = JBPopupFactory.getInstance();
-
-                BalloonBuilder builder =
-                        factory.createHtmlTextBalloonBuilder("<b>No refactoring candidates found...</b>", MessageType.INFO, null);
-                Balloon b = builder.createBalloon();
-
-                b.show(RelativePoint.getSouthEastOf(WindowManager.getInstance().getStatusBar(Values.editor.getProject()).getComponent()), Balloon.Position.above);
-                MarkupModel markupModel = Values.editor.getMarkupModel();
-                markupModel.removeAllHighlighters();
-            }*/
 
             try {
                 if(Values.candidates.size() > 0) {
@@ -773,122 +712,6 @@ public class Utilities {
                     MarkupModel markupModel = Values.editor.getMarkupModel();
                     markupModel.removeAllHighlighters();
                 }
-
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-
-            String pathName = Values.editor.getProject().getBasePath()+"/index.html";
-            System.out.println(pathName);
-            File f = new File(pathName);
-            try {
-                f.createNewFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            PrintWriter writer = null;
-            try {
-                writer = new PrintWriter(f);
-                writer.print("");
-                writer.close();
-                writer = new PrintWriter(f);
-                writer.println("<html>\n <style>\n" +
-                        "  .styled-table {\n" +
-                        "    border-collapse: collapse;\n" +
-                        "    margin: 25px 0;\n" +
-                        "    font-size: 0.9em;\n" +
-                        "    font-family: sans-serif;\n" +
-                        "    min-width: 400px;\n" +
-                        "    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);\n" +
-                        "  }\n" +
-                        ".styled-table thead tr {\n" +
-                        "    background-color: #009879;\n" +
-                        "    color: #ffffff;\n" +
-                        "    text-align: left;\n" +
-                        "}\n" +
-                        "styled-table th,\n" +
-                        ".styled-table td {\n" +
-                        "    padding: 12px 15px;\n" +
-                        "}\n.styled-table tbody tr {\n" +
-                        "    border-bottom: 1px solid #dddddd;\n" +
-                        "}\n" +
-                        "\n" +
-                        ".styled-table tbody tr:nth-of-type(even) {\n" +
-                        "    background-color: #f3f3f3;\n" +
-                        "}\n" +
-                        "\n" +
-                        ".styled-table tbody tr:last-of-type {\n" +
-                        "    border-bottom: 2px solid #009879;\n" +
-                        "}" +
-                        " </style>\n<body><h1>Refactoring candidates</h1>");
-                writer.println("<table class='styled-table'>\n" +
-                        "  <thead><tr>\n" +
-                        "    <th>Refactoring</th>\n" +
-                        "    <th>Lines</th>\n" +
-                        "    <th>Severity</th>\n" +
-                        "    <th>Elements</th>\n" +
-                        "  </tr></thead><tbody>\n");
-
-                for (Severity candidate : Values.candidates) {
-                    String type = "";
-
-                    if(candidate.candidate instanceof ExtractMethodCandidate) {
-                        type = "Extract Method";
-                        ExtractMethodCandidate em = (ExtractMethodCandidate) candidate.candidate;
-                        writer.println("<tr>\n" +
-                                "    <td>"+type+"</td>\n" +
-                                "    <td>"+em.range+"</td> \n" +
-                                "    <td>"+candidate.severity+"</td> \n" +
-                                "    <td>"+em.numberOfStatementsToExtract+"</td> \n" +
-                                "  </tr>");
-                    }
-                    else if(candidate.candidate instanceof ExtractVariableCandidate) {
-                        type = "Extract Variable";
-                        ExtractVariableCandidate ev = (ExtractVariableCandidate) candidate.candidate;
-                        writer.println("<tr>\n" +
-                                "    <td>"+type+"</td>\n" +
-                                "    <td>"+ev.range+"</td> \n" +
-                                "    <td>"+candidate.severity+"</td> \n" +
-                                "    <td>1</td> \n" +
-                                "  </tr>");
-                    }
-                    else if(candidate.candidate instanceof ExtractClassCandidate) {
-                        type = "Extract Class";
-                        ExtractClassCandidate ec = (ExtractClassCandidate) candidate.candidate;
-                        writer.println("<tr>\n" +
-                                "    <td>"+type+"</td>\n" +
-                                "    <td>-</td> \n" +
-                                "    <td>"+candidate.severity+"</td> \n" +
-                                "    <td>"+ec.targetEntities+"</td> \n" +
-                                "  </tr>");
-                    }
-                    else if(candidate.candidate instanceof MoveMethodCandidate) {
-                        type = "Move Method";
-                        MoveMethodCandidate mm = (MoveMethodCandidate) candidate.candidate;
-                        writer.println("<tr>\n" +
-                                "    <td>"+type+"</td>\n" +
-                                "    <td>"+mm.range+"</td> \n" +
-                                "    <td>"+candidate.severity+"</td> \n" +
-                                "    <td>"+mm.nodes.size()+"</td> \n" +
-                                "  </tr>");
-                    }
-                    else if(candidate.candidate instanceof IntroduceParamObjCandidate){
-                        type = "Introduce Parameter Object";
-                        IntroduceParamObjCandidate intro = (IntroduceParamObjCandidate) candidate.candidate;
-                        int start = Values.editor.offsetToLogicalPosition(intro.method.getTextRange().getStartOffset()).line;
-                        int end = Values.editor.offsetToLogicalPosition(intro.method.getTextRange().getEndOffset()).line;
-                        writer.println("<tr>\n" +
-                                "    <td>"+type+"</td>\n" +
-                                "    <td>("+start + " -> " + end +")</td> \n" +
-                                "    <td>"+candidate.severity+"</td> \n" +
-                                "    <td>"+intro.originalParameters.size()+"</td> \n" +
-                                "  </tr>");
-                    }
-                }
-                writer.println("</tbody></table>");
-                writer.println("</body></html>");
-                writer.close();
-
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
