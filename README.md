@@ -45,4 +45,4 @@ The following video summarizes the main actions of our tool.
 
 Folder [LiveRefactoring](/LiveRefactoring) contains the source code of our ***LiveRefactoring Environment***.
 
-Folder [Results](/Experiment) contains the main artifacts used by the participants our empirical experimental and the main results collected from it.
+Folder [Empirical Experiment](/Empirical Experiment) contains the main artifacts used by the participants our empirical experimental and the main results collected from it.
