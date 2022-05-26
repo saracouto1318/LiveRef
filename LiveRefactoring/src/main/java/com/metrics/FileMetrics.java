@@ -124,9 +124,9 @@ public class FileMetrics {
                        sourceFile.getName().equals(psiMethod.getName() + ".java") ?  true : false));
        }
 
-        for (PsiClass psiClass : PsiTreeUtil.findChildrenOfType(sourceFile, PsiClass.class)) {
+        /*for (PsiClass psiClass : PsiTreeUtil.findChildrenOfType(sourceFile, PsiClass.class)) {
             this.classMetrics.add(new ClassMetrics(psiClass));
-        }
+        }*/
 
         this.numberOfClasses = this.classMetrics.size();
         this.numberOfMethods = this.methodMetrics.size();

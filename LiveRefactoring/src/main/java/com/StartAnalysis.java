@@ -39,7 +39,8 @@ import com.utils.Values;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
@@ -63,7 +64,7 @@ public class StartAnalysis extends AnAction {
     public Instant startCoding = null;
     public Instant endCoding = null;
     public Instant endRefactoring = null;
-    public int version = 1;
+    public String version = "test";
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -150,8 +151,6 @@ public class StartAnalysis extends AnAction {
                                     Utilities utils = new Utilities();
                                     if (utils.isPsiFileInProject(project, psiFile)) {
                                         if (Values.db != null) {
-                                            Date dateNow = new Date();
-                                            String date = dateNow.toString();
                                             String projectName = editor.getProject().getName();
                                             String endPoint = projectName + "/version " + version + "/" + removeExtension(psiJavaFile.getName()) + "/" + ThresholdsCandidates.username + "/" + Values.lastRefactoring.type + " " + refactoringCounter;
                                             Instant now = Instant.now();
@@ -368,7 +367,6 @@ public class StartAnalysis extends AnAction {
             Values.db = database;
             PsiFile psiFile = documentManager.getCachedPsiFile(Values.editor.getDocument());
             PsiJavaFile psiJavaFile = (PsiJavaFile) psiFile;
-
             utils.startActions(psiJavaFile);
 
         } else {

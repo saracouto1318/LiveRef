@@ -695,8 +695,6 @@ public class Utilities {
             try {
                 if(Values.candidates.size() > 0) {
                     Values.withColors = true;
-                    //version 8
-                    //Values.withColors = false;
                     VisualRepresentation representation = new VisualRepresentation();
                     representation.startVisualAnalysis(Values.editor, severities);
                 }

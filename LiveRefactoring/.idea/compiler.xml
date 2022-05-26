@@ -15,8 +15,6 @@
       <entry name="!?*.txt" />
       <entry name="!?*.json" />
     </wildcardResourcePatterns>
-    <bytecodeTargetLevel>
-      <module name="LiveRefactoring.main" target="1.8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="15" />
   </component>
 </project>

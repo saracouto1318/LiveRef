@@ -1,0 +1,222 @@
+==================== RESULTS INDEPENDENT T-TEST ====================
+
+
+
+
+====== Lines of Code ======
+
+
+*** A1 VS A2 ***
+
+               T        dof alternative     p-val           CI95%   cohen-d  BF10     power
+T-test -2.245758  25.769074   two-sided  0.033522  [-4.25, -0.19]  0.848817  2.13  0.580212
+
+
+*** A1 VS B ***
+
+              T        dof alternative     p-val          CI95%   cohen-d     BF10     power
+T-test -4.82485  23.003897   two-sided  0.000072  [-8.9, -3.56]  1.823622  355.047  0.996321
+
+
+*** A2 VS B ***
+
+               T       dof alternative     p-val           CI95%  cohen-d    BF10     power
+T-test -3.198527  21.77469   two-sided  0.004183  [-6.62, -1.41]  1.20893  11.103  0.868305
+
+
+
+====== Cyclomatic Complexity ======
+
+
+*** A1 VS A2 ***
+
+               T        dof alternative     p-val          CI95%   cohen-d   BF10     power
+T-test -1.677306  25.890057   two-sided  0.105517  [-0.71, 0.07]  0.633962  0.987  0.365399
+
+
+*** A1 VS B ***
+
+              T       dof alternative         p-val          CI95%   cohen-d       BF10  power
+T-test -7.60284  18.39523   two-sided  4.365045e-07  [-3.16, -1.8]  2.873604  1.927e+05    1.0
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val           CI95%   cohen-d       BF10  power
+T-test -6.705394  17.784651   two-sided  0.000003  [-2.84, -1.49]  2.534401  2.609e+04    1.0
+
+
+
+====== Cognitive Complexity ======
+
+
+*** A1 VS A2 ***
+
+               T        dof alternative     p-val          CI95%   cohen-d   BF10     power
+T-test -1.238479  25.578187   two-sided  0.226785  [-2.57, 0.64]  0.468101  0.624  0.222368
+
+
+*** A1 VS B ***
+
+               T        dof alternative     p-val           CI95%   cohen-d   BF10     power
+T-test -2.269855  23.921123   two-sided  0.032515  [-3.76, -0.18]  0.857924  2.209  0.589247
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val          CI95%   cohen-d   BF10     power
+T-test -1.100099  25.245085   two-sided  0.281669  [-2.88, 0.87]  0.415798  0.554  0.185278
+
+
+
+====== Effort to Understand ======
+
+
+*** A1 VS A2 ***
+
+               T        dof alternative     p-val           CI95%   cohen-d  BF10     power
+T-test -1.546996  25.984767   two-sided  0.133958  [-64.99, 9.18]  0.584709  0.85  0.319477
+
+
+*** A1 VS B ***
+
+               T        dof alternative     p-val              CI95%   cohen-d     BF10    power
+T-test -4.470507  22.127143   two-sided  0.000189  [-152.91, -56.02]  1.689693  160.231  0.99036
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val             CI95%   cohen-d    BF10     power
+T-test -3.252752  22.441839   two-sided  0.003584  [-125.31, -27.8]  1.229425  12.332  0.879105
+
+
+
+====== Length of Implementation ======
+
+
+*** A1 VS A2 ***
+
+              T        dof alternative     p-val            CI95%   cohen-d   BF10     power
+T-test -2.16342  25.967814   two-sided  0.039894  [-10.22, -0.26]  0.817696  1.884  0.549047
+
+
+*** A1 VS B ***
+
+               T        dof alternative     p-val            CI95%   cohen-d      BF10     power
+T-test -5.495929  25.999793   two-sided  0.000009  [-18.59, -8.47]  2.077266  1643.375  0.999556
+
+
+*** A2 VS B ***
+
+               T        dof alternative    p-val            CI95%   cohen-d    BF10     power
+T-test -3.425535  25.972759   two-sided  0.00205  [-13.26, -3.31]  1.294731  17.342  0.909315
+
+
+
+====== Time to Understand ======
+
+
+*** A1 VS A2 ***
+
+               T        dof alternative     p-val          CI95%   cohen-d  BF10     power
+T-test -1.546996  25.984767   two-sided  0.133958  [-3.61, 0.51]  0.584709  0.85  0.319477
+
+
+*** A1 VS B ***
+
+               T        dof alternative     p-val           CI95%   cohen-d     BF10    power
+T-test -4.470507  22.127143   two-sided  0.000189  [-8.49, -3.11]  1.689693  160.231  0.99036
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val           CI95%   cohen-d    BF10     power
+T-test -3.252752  22.441839   two-sided  0.003584  [-6.96, -1.54]  1.229425  12.332  0.879105
+
+
+
+====== Volume of Implementation ======
+
+
+*** A1 VS A2 ***
+
+           T        dof alternative     p-val           CI95%   cohen-d   BF10     power
+T-test -2.13  25.988158   two-sided  0.042805  [-38.2, -0.68]  0.805064  1.794  0.536299
+
+
+*** A1 VS B ***
+
+               T        dof alternative    p-val             CI95%   cohen-d     BF10     power
+T-test -5.481594  25.928818   two-sided  0.00001  [-71.41, -32.46]  2.071848  1590.18  0.999534
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val             CI95%   cohen-d    BF10     power
+T-test -3.464407  25.859692   two-sided  0.001866  [-51.78, -13.21]  1.309423  18.749  0.915263
+
+
+
+====== Maintainability ======
+
+
+*** A1 VS A2 ***
+
+               T        dof alternative    p-val         CI95%  cohen-d   BF10     power
+T-test  2.510261  25.387054   two-sided  0.01879  [0.51, 5.12]  0.94879  3.233  0.676089
+
+
+*** A1 VS B ***
+
+               T        dof alternative     p-val        CI95%   cohen-d      BF10     power
+T-test  5.757543  25.859108   two-sided  0.000005  [4.3, 9.08]  2.176147  2996.762  0.999825
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val         CI95%   cohen-d    BF10     power
+T-test  3.608206  25.824165   two-sided  0.001297  [1.67, 6.09]  1.363774  25.116  0.934739
+
+
+
+====== Time Elapsed ======
+
+
+*** A1 VS A2 ***
+
+               T         dof alternative     p-val           CI95%   cohen-d      BF10    power
+T-test -4.715257  501.968366   two-sided  0.000003  [-2.01, -0.83]  0.398157  4051.996  0.99565
+
+
+*** A1 VS B ***
+
+               T        dof alternative     p-val              CI95%   cohen-d      BF10  power
+T-test -4.850343  96.017877   two-sided  0.000005  [-143.01, -59.95]  1.048969  7821.366    1.0
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val              CI95%   cohen-d      BF10  power
+T-test -4.782392  96.021942   two-sided  0.000006  [-141.59, -58.53]  0.876586  5322.733    1.0
+
+
+
+====== Number of Refactorings Applied ======
+
+
+*** A1 VS A2 ***
+
+               T        dof alternative    p-val          CI95%   cohen-d   BF10     power
+T-test  2.588514  24.439567   two-sided  0.01599  [1.79, 15.78]  0.978366  3.682  0.702648
+
+
+*** A1 VS B ***
+
+               T        dof alternative     p-val           CI95%   cohen-d     BF10    power
+T-test  5.750686  17.551991   two-sided  0.000021  [10.64, 22.93]  2.173555  2949.94  0.99982
+
+
+*** A2 VS B ***
+
+               T        dof alternative     p-val          CI95%   cohen-d   BF10     power
+T-test  3.377872  20.216805   two-sided  0.002956  [3.06, 12.94]  1.276716  15.77  0.901605

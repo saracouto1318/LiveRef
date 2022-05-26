@@ -35,7 +35,6 @@ public class Candidates {
             SelectedRefactorings.selectedRefactoring = Refactorings.All;
 
         if (SelectedRefactorings.selectedRefactoring == Refactorings.All) {
-            long start = System.nanoTime();
             this.extractMethod = new ExtractMethod(editor, psiJavaFile);
             this.extractMethod.run();
 
@@ -73,10 +72,6 @@ public class Candidates {
                 }
 
             }
-
-            long end = System.nanoTime();
-            long elapsedTime = end - start;
-            System.out.println("Time: " + elapsedTime);
         }
 
         return this.getSeverities();
