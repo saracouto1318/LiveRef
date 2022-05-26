@@ -39,3 +39,8 @@ The following video summarizes the main actions of our tool.
 6. Then, if users want to perform a refactoring, they just need to select the respective refactoring and click on the ___“Refactor”___ button on that menu;
 7. Since we are analyzing ***Extract Method*** refactorings, a new menu appears where the users have to write a name for the new method to which the code included in that refactoring action will be extracted. Then, they just need to click on the ___“Refactor”___ button;
 8. After this action, the refactoring is automatically applied to the code, and a new analysis is automatically started.
+
+
+## Further Information
+
+Folder *Results* contains the main artifacts used by the participants our empirical experimental and the main results collected from it.
