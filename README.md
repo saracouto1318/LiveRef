@@ -43,6 +43,6 @@ The following video summarizes the main actions of our tool.
 
 ## Further Information
 
-Folder [LiveRefactoring]([other_file.md](https://github.com/saracouto1318/LiveRef/LiveRefactoring)) contains the source code of our ***LiveRefactoring Environment***.
+Folder [LiveRefactoring](/LiveRefactoring) contains the source code of our ***LiveRefactoring Environment***.
 
-Folder [Results]([other_file.md](https://github.com/saracouto1318/LiveRef/Results)) contains the main artifacts used by the participants our empirical experimental and the main results collected from it.
+Folder [Results](/Results) contains the main artifacts used by the participants our empirical experimental and the main results collected from it.
