@@ -110,7 +110,7 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/refactorings/candidates/utils/jdeodorant" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.LiveRefactoring">
+  <component name="RunManager" selected="Gradle.BuildPlugin">
     <configuration name="BuildPlugin" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -337,6 +337,7 @@
       <workItem from="1653296181031" duration="3129000" />
       <workItem from="1653582049284" duration="177000" />
       <workItem from="1653582247371" duration="172000" />
+      <workItem from="1653582581218" duration="295000" />
     </task>
     <task id="LOCAL-00001" summary="Correcting some bugs">
       <created>1644489737967</created>

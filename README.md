@@ -11,17 +11,17 @@ At the moment, the code quality metrics considered by our tool are:
 | Number of Lines of Code, Number of Comments, Number of Classes, Number of Methods, Average Number of Long Methods, Average Lack of Cohesion, Average Cyclomatic Complexity |  Number of Fields, Number of Public Fields, Number of Methods, Number of Long Methods, Class Lack of Cohesion, Average Cyclomatic Complexity | Number of Parameters, Number of Lines of Code, Number of Comments, Number of Statements, Method Lack of Cohesion, Cyclomatic Complexity, Halstead Complexity Metrics, Maintainability Degree|
 
  
-## How to intall
+## How to install
 
 To use this tool, first we need to install it on IntelliJ IDE by following the next steps:
 
 1. Launch the **IntelliJ IDE**;
 2. Select your IDE's preferences. There you will find the ***“Plugins”*** menu;
 3. Select the option of ___“Install Plugin from Disk”___ (see the following image);
-4. Search the folder where you saved the attached files and select the **.zip** folder that is inside it;
+4. Search the folder where you place the plugin distribution and select the **.zip** folder (LiveRef.zip);
 5. Then, IntelliJ will install the plugin. 
 
-<img src="./LiveRefactoring/images/Intall Tool.png"
+<img src="./LiveRefactoring/images/Install Tool.png"
      alt="how to install the tool" />
      
 
