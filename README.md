@@ -21,8 +21,10 @@ To use this tool, first we need to install it on IntelliJ IDE by following the n
 4. Search the folder where you place the **plugin distribution** and select its **.zip** folder ([LiveRef.zip](/LiveRef.zip));
 5. Then, IntelliJ will install the plugin. 
 
+<p align="center">
 <img src="./LiveRefactoring/images/Install Tool.png"
      alt="how to install the tool" />
+ </p>
      
 
 ## Tool in action
@@ -33,10 +35,22 @@ To use this tool, first we need to install it on IntelliJ IDE by following the n
 1. There is a menu on the top bar called ***“Live Refactoring”***. In this menu, there are several options;
 2. To start the analysis of the code open in the text editor, users need to select the option ___“Start Analysis”___;
 3. After the analysis starts, the possible ***Extract Methods*** are shown in the text editor. These are painted with different colors within a range between green and red. Green represents code that doesn’t need to be immediately refactored, and red represents code with less quality, that should be refactored as soon as possible;
+
+<p align="center">
+<img src="./LiveRefactoring/images/tool1.png"
+     alt="tool example" />
+ </p>
+      
 4. By selecting a color in a given line of code, users have access to a menu, called ___“Refactoring Menu”___, which shows all the ***Extract Methods*** related to that line of code. The color presented next to the code is the color of the worst refactoring found on that line. In this menu, the user can verify all the refactorings in descending order of severity and check all the lines of code associated with it;
-6. Then, if users want to perform a refactoring, they just need to select the respective refactoring and click on the ___“Refactor”___ button on that menu;
-7. Since we are analyzing ***Extract Method*** refactorings, a new menu appears where the users have to write a name for the new method to which the code included in that refactoring action will be extracted. Then, they just need to click on the ___“Refactor”___ button;
-8. After this action, the refactoring is automatically applied to the code, and a new analysis is automatically started.
+
+<p align="center">
+<img src="./LiveRefactoring/images/tool2.png"
+     alt="refactoring menu" />
+ </p>
+     
+5. Then, if users want to perform a refactoring, they just need to select the respective refactoring and click on the ___“Refactor”___ button on that menu;
+6. Since we are analyzing ***Extract Method*** refactorings, a new menu appears where the users have to write a name for the new method to which the code included in that refactoring action will be extracted. Then, they just need to click on the ___“Refactor”___ button;
+7. After this action, the refactoring is automatically applied to the code, and a new analysis is automatically started.
 
 
 ## Further Information
