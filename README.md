@@ -18,7 +18,7 @@ To use this tool, first we need to install it on IntelliJ IDE by following the n
 1. Launch the **IntelliJ IDE**;
 2. Select your IDE's preferences. There you will find the ***“Plugins”*** menu;
 3. Select the option of ___“Install Plugin from Disk”___ (see the following image);
-4. Search the folder where you place the plugin distribution and select the **.zip** folder (LiveRef.zip);
+4. Search the folder where you place the **plugin distribution** and select its **.zip** folder ([LiveRef.zip](/LiveRef.zip));
 5. Then, IntelliJ will install the plugin. 
 
 <img src="./LiveRefactoring/images/Install Tool.png"
