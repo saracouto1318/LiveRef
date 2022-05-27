@@ -27,9 +27,7 @@ To use this tool, first we need to install it on IntelliJ IDE by following the n
 
 ## Tool in action
 
-The following video summarizes the main actions of our tool.
-
-<img src="./LiveRefactoring/images/Tool.gif" width="40" height="40" alt="Tool demonstration video"/>
+[Here](https://youtu.be/_jxx21ZiQ0o) you can find a demonstration video that summarizes the main actions of our tool.
 
 
 1. There is a menu on the top bar called ***“Live Refactoring”***. In this menu, there are several options;
