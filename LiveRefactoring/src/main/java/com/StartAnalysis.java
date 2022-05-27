@@ -393,6 +393,7 @@ public class StartAnalysis extends AnAction {
 
     public void activateFirebase(){
         Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+        //Won't work, because we didn't publish our private service account
         InputStream serviceAccount =Thread.currentThread().getContextClassLoader().getResourceAsStream("firebaseConfig/ServiceAccount.json");
 
         FirebaseOptions options = null;
