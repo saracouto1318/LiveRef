@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e95f9c-08bc-4f13-b6e9-2c042c25a44f" name="Changes" comment="Changing .gitignore">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="f7e95f9c-08bc-4f13-b6e9-2c042c25a44f" name="Changes" comment="Changing .gitignore" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -110,7 +108,7 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/refactorings/candidates/utils/jdeodorant" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.BuildPlugin">
+  <component name="RunManager" selected="Gradle.LiveRefactoring">
     <configuration name="BuildPlugin" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -339,6 +337,7 @@
       <workItem from="1653582247371" duration="172000" />
       <workItem from="1653582581218" duration="295000" />
       <workItem from="1653638902069" duration="742000" />
+      <workItem from="1653911829138" duration="451000" />
     </task>
     <task id="LOCAL-00001" summary="Correcting some bugs">
       <created>1644489737967</created>
