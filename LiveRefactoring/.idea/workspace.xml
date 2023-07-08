@@ -9,11 +9,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7e95f9c-08bc-4f13-b6e9-2c042c25a44f" name="Changes" comment="Changing .gitignore" />
+    <list default="true" id="f7e95f9c-08bc-4f13-b6e9-2c042c25a44f" name="Changes" comment="correcting bot">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.8/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.8/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/Bot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/Bot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/analysis/candidates/ExtractMethodCandidate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/analysis/candidates/ExtractMethodCandidate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/analysis/candidates/ExtractVariableCandidate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/analysis/candidates/ExtractVariableCandidate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/analysis/refactorings/ExtractClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/analysis/refactorings/ExtractClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/analysis/refactorings/ExtractMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/analysis/refactorings/ExtractMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utils/MetricsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utils/MetricsUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utils/RefactorUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utils/RefactorUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/utils/UtilitiesOverall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/utils/UtilitiesOverall.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="CodeStyleSettingsInfer">
     <option name="done" value="true" />
@@ -36,11 +56,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="LiveRefactoring" type="f1a62948:ProjectNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="LiveRefactoring" type="f1a62948:ProjectNode" />
-                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -52,13 +67,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -69,43 +84,55 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/metrics/MethodMetrics.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/analysis/metrics/MethodMetrics.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
   <component name="ProjectId" id="23pKHhfg7SI7h0w4xPP8G0zgOyD" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/com/utils/importantValues" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.gutterIcons" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.analysis.refactorings" />
       <recent name="com.ui" />
+      <recent name="com.analysis.candidates" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/com/utils" />
-      <recent name="$PROJECT_DIR$/src/main/resources/images" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/utils/importantValues" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/core" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/images/colors" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/refactorings/candidates/utils" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/ui" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/utils/JDeodorant" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/utils/Halstead" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/java/com/refactorings/candidates/utils/jdeodorant" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.utils" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ui.icons" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.LiveRefactoring">
@@ -157,6 +184,9 @@
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="f7e95f9c-08bc-4f13-b6e9-2c042c25a44f" name="Changes" comment="" />
@@ -325,294 +355,524 @@
       <workItem from="1652433640916" duration="2105000" />
       <workItem from="1652446078908" duration="1673000" />
       <workItem from="1652515514939" duration="8189000" />
-      <workItem from="1652689330046" duration="1539000" />
-      <workItem from="1652697724744" duration="125000" />
-      <workItem from="1652704419548" duration="1705000" />
-      <workItem from="1652789447651" duration="107000" />
-      <workItem from="1653119707086" duration="2722000" />
-      <workItem from="1653293007814" duration="606000" />
-      <workItem from="1653293994377" duration="315000" />
-      <workItem from="1653296181031" duration="3129000" />
-      <workItem from="1653582049284" duration="177000" />
-      <workItem from="1653582247371" duration="172000" />
-      <workItem from="1653582581218" duration="295000" />
-      <workItem from="1653638902069" duration="742000" />
-      <workItem from="1653911829138" duration="451000" />
+      <workItem from="1652689300822" duration="24000" />
+      <workItem from="1652789563931" duration="94000" />
+      <workItem from="1652789809812" duration="73000" />
+      <workItem from="1652790771998" duration="31000" />
+      <workItem from="1653209881180" duration="198000" />
+      <workItem from="1654165111590" duration="1011000" />
+      <workItem from="1654172592143" duration="21000" />
+      <workItem from="1654762466870" duration="1686000" />
+      <workItem from="1654935657715" duration="1031000" />
+      <workItem from="1654958143043" duration="1242000" />
+      <workItem from="1655023409440" duration="1333000" />
+      <workItem from="1655539388753" duration="22000" />
+      <workItem from="1655716047680" duration="3841000" />
+      <workItem from="1655747401840" duration="38000" />
+      <workItem from="1655797749987" duration="18511000" />
+      <workItem from="1655883692832" duration="3512000" />
+      <workItem from="1655893884568" duration="607000" />
+      <workItem from="1655909469414" duration="74000" />
+      <workItem from="1655971584351" duration="1454000" />
+      <workItem from="1656000624413" duration="599000" />
+      <workItem from="1656011564452" duration="259000" />
+      <workItem from="1656011897166" duration="4993000" />
+      <workItem from="1656081089050" duration="637000" />
+      <workItem from="1656921642527" duration="7610000" />
+      <workItem from="1657095358250" duration="840000" />
+      <workItem from="1657637757322" duration="25000" />
+      <workItem from="1657698825349" duration="1487000" />
+      <workItem from="1657702995226" duration="1084000" />
+      <workItem from="1659436056132" duration="4907000" />
+      <workItem from="1660205534031" duration="100000" />
+      <workItem from="1660205704871" duration="654000" />
+      <workItem from="1660208553054" duration="477000" />
+      <workItem from="1660209092747" duration="9280000" />
+      <workItem from="1660231246891" duration="2698000" />
+      <workItem from="1660293838530" duration="6977000" />
+      <workItem from="1660309619244" duration="1719000" />
+      <workItem from="1660321481595" duration="5104000" />
+      <workItem from="1660553038795" duration="384000" />
+      <workItem from="1660569574431" duration="3690000" />
+      <workItem from="1660631130465" duration="3363000" />
+      <workItem from="1660803643939" duration="9513000" />
+      <workItem from="1660835322526" duration="1655000" />
+      <workItem from="1661242333577" duration="452000" />
+      <workItem from="1661413009789" duration="4712000" />
+      <workItem from="1661429830865" duration="2641000" />
+      <workItem from="1661502458509" duration="4733000" />
+      <workItem from="1662192505968" duration="933000" />
+      <workItem from="1662193666629" duration="203000" />
+      <workItem from="1662364691577" duration="10782000" />
+      <workItem from="1662455943674" duration="10676000" />
+      <workItem from="1663331673032" duration="381000" />
+      <workItem from="1663332596357" duration="159000" />
+      <workItem from="1664895761119" duration="552000" />
+      <workItem from="1664896777405" duration="863000" />
+      <workItem from="1665670873559" duration="225000" />
+      <workItem from="1666254703815" duration="7161000" />
+      <workItem from="1666338380087" duration="11345000" />
+      <workItem from="1666426752254" duration="19719000" />
+      <workItem from="1666859012883" duration="3649000" />
+      <workItem from="1666944484193" duration="10691000" />
+      <workItem from="1667204941541" duration="9947000" />
+      <workItem from="1667296760835" duration="3674000" />
+      <workItem from="1667381738964" duration="18335000" />
+      <workItem from="1667467124010" duration="18851000" />
+      <workItem from="1667552582331" duration="11259000" />
+      <workItem from="1667638248534" duration="11235000" />
+      <workItem from="1667723175787" duration="8721000" />
+      <workItem from="1667993245940" duration="8297000" />
+      <workItem from="1668025969808" duration="3922000" />
+      <workItem from="1668070881739" duration="13443000" />
+      <workItem from="1668151312553" duration="34669000" />
+      <workItem from="1668240536715" duration="36515000" />
+      <workItem from="1668321885877" duration="673000" />
+      <workItem from="1668323649847" duration="17621000" />
+      <workItem from="1668361770532" duration="316000" />
+      <workItem from="1668369978356" duration="680000" />
+      <workItem from="1668371003519" duration="5396000" />
+      <workItem from="1668593874354" duration="5708000" />
+      <workItem from="1668675289393" duration="2444000" />
+      <workItem from="1668679979352" duration="1499000" />
+      <workItem from="1669028412775" duration="3502000" />
+      <workItem from="1669041672277" duration="601000" />
+      <workItem from="1669042373254" duration="346000" />
+      <workItem from="1669042780800" duration="74000" />
+      <workItem from="1669042869601" duration="248000" />
+      <workItem from="1669050269480" duration="2675000" />
+      <workItem from="1669053109732" duration="19000" />
+      <workItem from="1669053173590" duration="8000" />
+      <workItem from="1669053444743" duration="7108000" />
+      <workItem from="1669070829344" duration="76000" />
+      <workItem from="1669098794621" duration="4879000" />
+      <workItem from="1669117120266" duration="4768000" />
+      <workItem from="1669200455365" duration="224000" />
+      <workItem from="1669200946803" duration="470000" />
+      <workItem from="1669203904668" duration="4400000" />
+      <workItem from="1669220678104" duration="1047000" />
+      <workItem from="1669284793972" duration="828000" />
+      <workItem from="1669288645988" duration="424000" />
+      <workItem from="1669474782269" duration="281000" />
+      <workItem from="1669547751403" duration="1630000" />
+      <workItem from="1670665023341" duration="963000" />
+      <workItem from="1671273000502" duration="1475000" />
+      <workItem from="1671726065162" duration="158000" />
+      <workItem from="1672135238338" duration="2851000" />
+      <workItem from="1672138629015" duration="73000" />
+      <workItem from="1672311492487" duration="4084000" />
+      <workItem from="1672320675836" duration="131000" />
+      <workItem from="1672321131663" duration="1821000" />
+      <workItem from="1672741754345" duration="1855000" />
+      <workItem from="1672911476881" duration="2001000" />
+      <workItem from="1672916682243" duration="647000" />
+      <workItem from="1672925451763" duration="1064000" />
+      <workItem from="1672938068707" duration="1694000" />
+      <workItem from="1672996687269" duration="3629000" />
+      <workItem from="1673375409456" duration="201000" />
+      <workItem from="1673427968830" duration="1836000" />
+      <workItem from="1675933558028" duration="15607000" />
+      <workItem from="1677489797310" duration="351000" />
+      <workItem from="1677681223706" duration="962000" />
+      <workItem from="1682500524286" duration="1858000" />
+      <workItem from="1686941798404" duration="1893000" />
+      <workItem from="1686989323458" duration="113000" />
+      <workItem from="1686991597348" duration="6360000" />
+      <workItem from="1687008792464" duration="4727000" />
+      <workItem from="1687158950052" duration="5017000" />
+      <workItem from="1687180187721" duration="5240000" />
+      <workItem from="1687202292934" duration="2491000" />
+      <workItem from="1687204817521" duration="12000" />
+      <workItem from="1687248961338" duration="31641000" />
+      <workItem from="1687332614963" duration="17335000" />
+      <workItem from="1687418610408" duration="18536000" />
+      <workItem from="1687504962778" duration="5433000" />
+      <workItem from="1687525665007" duration="96000" />
+      <workItem from="1687526291468" duration="43000" />
+      <workItem from="1687526547160" duration="4456000" />
+      <workItem from="1687535022114" duration="220000" />
+      <workItem from="1687535516567" duration="48000" />
+      <workItem from="1687536515519" duration="2489000" />
+      <workItem from="1687593339423" duration="332000" />
+      <workItem from="1687594205420" duration="695000" />
+      <workItem from="1687764113364" duration="802000" />
+      <workItem from="1687765358480" duration="353000" />
+      <workItem from="1687766552228" duration="1175000" />
+      <workItem from="1687769723559" duration="10155000" />
+      <workItem from="1687787720802" duration="3996000" />
+      <workItem from="1687797525759" duration="43000" />
+      <workItem from="1687861315193" duration="426000" />
+      <workItem from="1688021078482" duration="721000" />
+      <workItem from="1688029433697" duration="559000" />
+      <workItem from="1688030069987" duration="3000" />
+      <workItem from="1688030972018" duration="22319000" />
+      <workItem from="1688107180227" duration="3903000" />
+      <workItem from="1688214893512" duration="2832000" />
+      <workItem from="1688368860687" duration="994000" />
+      <workItem from="1688370208487" duration="99000" />
+      <workItem from="1688374972770" duration="25000" />
+      <workItem from="1688376552113" duration="8248000" />
+      <workItem from="1688392426236" duration="39000" />
+      <workItem from="1688392699174" duration="698000" />
+      <workItem from="1688393819262" duration="271000" />
+      <workItem from="1688394137946" duration="51000" />
+      <workItem from="1688395374557" duration="1620000" />
+      <workItem from="1688402931437" duration="281000" />
+      <workItem from="1688455731363" duration="9040000" />
+      <workItem from="1688465826465" duration="3433000" />
+      <workItem from="1688480512053" duration="3210000" />
+      <workItem from="1688541137301" duration="1269000" />
+      <workItem from="1688544914245" duration="6390000" />
+      <workItem from="1688566535191" duration="3241000" />
+      <workItem from="1688588058343" duration="3349000" />
+      <workItem from="1688627927934" duration="14779000" />
+      <workItem from="1688714804430" duration="18983000" />
+      <workItem from="1688803807347" duration="4300000" />
     </task>
-    <task id="LOCAL-00001" summary="Correcting some bugs">
-      <created>1644489737967</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00095" summary="Correcting bug metrics firebase">
+      <created>1667732551197</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
       <option name="project" value="LOCAL" />
-      <updated>1644489737967</updated>
+      <updated>1667732551198</updated>
     </task>
-    <task id="LOCAL-00002" summary="Correcting some bugs">
-      <created>1644659465558</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+    <task id="LOCAL-00096" summary="Correcting bug metrics firebase">
+      <created>1667732708034</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
       <option name="project" value="LOCAL" />
-      <updated>1644659465558</updated>
+      <updated>1667732708034</updated>
     </task>
-    <task id="LOCAL-00003" summary="Correcting extract method">
-      <created>1645272273268</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
+    <task id="LOCAL-00097" summary="Checking sorting mechanism">
+      <created>1667732738197</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
       <option name="project" value="LOCAL" />
-      <updated>1645272273268</updated>
+      <updated>1667732738197</updated>
     </task>
-    <task id="LOCAL-00004" summary="Firebase Working!!!">
-      <created>1645537277807</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+    <task id="LOCAL-00098" summary="Reading git info automatically">
+      <created>1668072774243</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
       <option name="project" value="LOCAL" />
-      <updated>1645537277807</updated>
+      <updated>1668072774244</updated>
     </task>
-    <task id="LOCAL-00005" summary="Firebase Working!!!">
-      <created>1645546528595</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
+    <task id="LOCAL-00099" summary="Correcting metrics table">
+      <created>1668087043226</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
       <option name="project" value="LOCAL" />
-      <updated>1645546528595</updated>
+      <updated>1668087043226</updated>
     </task>
-    <task id="LOCAL-00006" summary="Firebase Working!!!">
-      <created>1645608713315</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
+    <task id="LOCAL-00100" summary="Cleaning code">
+      <created>1668101970664</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
       <option name="project" value="LOCAL" />
-      <updated>1645608713315</updated>
+      <updated>1668101970664</updated>
     </task>
-    <task id="LOCAL-00007" summary="Changing the refactoring panel">
-      <created>1645784552562</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
+    <task id="LOCAL-00101" summary="Changing threads system">
+      <created>1668164464375</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
       <option name="project" value="LOCAL" />
-      <updated>1645784552562</updated>
+      <updated>1668164464376</updated>
     </task>
-    <task id="LOCAL-00008" summary="Adding code to implement move method refactoring">
-      <created>1646504274766</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
+    <task id="LOCAL-00102" summary="Changing threads system">
+      <created>1668164489917</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
       <option name="project" value="LOCAL" />
-      <updated>1646504274767</updated>
+      <updated>1668164489917</updated>
     </task>
-    <task id="LOCAL-00009" summary="Adding code to implement introduce parameter object refactoring">
-      <created>1646563784466</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
+    <task id="LOCAL-00103" summary="Changing threads system">
+      <created>1668175588416</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
       <option name="project" value="LOCAL" />
-      <updated>1646563784466</updated>
+      <updated>1668175588417</updated>
     </task>
-    <task id="LOCAL-00010" summary="Adding code to implement introduce parameter object refactoring">
-      <created>1646570949422</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
+    <task id="LOCAL-00104" summary="Changing threads system">
+      <created>1668187510563</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
       <option name="project" value="LOCAL" />
-      <updated>1646570949422</updated>
+      <updated>1668187510564</updated>
     </task>
-    <task id="LOCAL-00011" summary="Adding code to implement introduce parameter object refactoring">
-      <created>1646920871974</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
+    <task id="LOCAL-00105" summary="Changing metrics table">
+      <created>1668191035860</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
       <option name="project" value="LOCAL" />
-      <updated>1646920871974</updated>
+      <updated>1668191035862</updated>
     </task>
-    <task id="LOCAL-00012" summary="Correcting the code">
-      <created>1647098783876</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
+    <task id="LOCAL-00106" summary="More details">
+      <created>1668198711775</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
       <option name="project" value="LOCAL" />
-      <updated>1647098783876</updated>
+      <updated>1668198711775</updated>
     </task>
-    <task id="LOCAL-00013" summary="Starting to implement cognitive complexity">
-      <created>1647344236486</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
+    <task id="LOCAL-00107" summary="More details">
+      <created>1668201776144</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
       <option name="project" value="LOCAL" />
-      <updated>1647344236486</updated>
+      <updated>1668201776144</updated>
     </task>
-    <task id="LOCAL-00014" summary="Starting to implement cognitive complexity">
-      <created>1647430815887</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
+    <task id="LOCAL-00108" summary="correcting little bugs">
+      <created>1668242323823</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
       <option name="project" value="LOCAL" />
-      <updated>1647430815887</updated>
+      <updated>1668242323823</updated>
     </task>
-    <task id="LOCAL-00015" summary="With refactorings and metrics saved in cache">
-      <created>1647685619621</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
+    <task id="LOCAL-00109" summary="reducing time to find refactorings">
+      <created>1668243682862</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
       <option name="project" value="LOCAL" />
-      <updated>1647685619621</updated>
+      <updated>1668243682862</updated>
     </task>
-    <task id="LOCAL-00016" summary="With refactorings and metrics saved in cache">
-      <created>1648289188890</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
+    <task id="LOCAL-00110" summary="Improving extract class">
+      <created>1668246694905</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
       <option name="project" value="LOCAL" />
-      <updated>1648289188891</updated>
+      <updated>1668246694905</updated>
     </task>
-    <task id="LOCAL-00017" summary="Changing code and some usability issues">
-      <created>1648307200611</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
+    <task id="LOCAL-00111" summary="Improving move method">
+      <created>1668260772281</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
       <option name="project" value="LOCAL" />
-      <updated>1648307200612</updated>
+      <updated>1668260772281</updated>
     </task>
-    <task id="LOCAL-00018" summary="Changing code and some usability issues">
-      <created>1648307218903</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
+    <task id="LOCAL-00112" summary="Improving extract variable">
+      <created>1668261744184</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
       <option name="project" value="LOCAL" />
-      <updated>1648307218903</updated>
+      <updated>1668261744184</updated>
     </task>
-    <task id="LOCAL-00019" summary="Optimizing imports">
-      <created>1648378876448</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
+    <task id="LOCAL-00113" summary="Improving undo action">
+      <created>1668263586999</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
       <option name="project" value="LOCAL" />
-      <updated>1648378876448</updated>
+      <updated>1668263586999</updated>
     </task>
-    <task id="LOCAL-00020" summary="Changing code because of the experiments">
-      <created>1648458199948</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
+    <task id="LOCAL-00114" summary="Move method finally 1000% correct">
+      <created>1668273056533</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
       <option name="project" value="LOCAL" />
-      <updated>1648458199948</updated>
+      <updated>1668273056533</updated>
     </task>
-    <task id="LOCAL-00021" summary="New metrics to be used in the experiments">
-      <created>1648563957073</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
+    <task id="LOCAL-00115" summary="configuration menu done">
+      <created>1668279556090</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
       <option name="project" value="LOCAL" />
-      <updated>1648563957073</updated>
+      <updated>1668279556090</updated>
     </task>
-    <task id="LOCAL-00022" summary="New metrics to be used in the experiments">
-      <created>1648652268415</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
+    <task id="LOCAL-00116" summary="configuration menu done">
+      <created>1668287203906</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
       <option name="project" value="LOCAL" />
-      <updated>1648652268415</updated>
+      <updated>1668287203907</updated>
     </task>
-    <task id="LOCAL-00023" summary="Correcting metrics">
-      <created>1648817433043</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
+    <task id="LOCAL-00117" summary="correcting small details">
+      <created>1668340232462</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
       <option name="project" value="LOCAL" />
-      <updated>1648817433043</updated>
+      <updated>1668340232463</updated>
     </task>
-    <task id="LOCAL-00024" summary="Adding more details">
-      <created>1649154479292</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
+    <task id="LOCAL-00118" summary="correcting bug">
+      <created>1668341083823</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
       <option name="project" value="LOCAL" />
-      <updated>1649154479292</updated>
+      <updated>1668341083823</updated>
     </task>
-    <task id="LOCAL-00025" summary="Adding more details">
-      <created>1649280197640</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
+    <task id="LOCAL-00119" summary="Improving tool">
+      <created>1668361583359</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
       <option name="project" value="LOCAL" />
-      <updated>1649280197640</updated>
+      <updated>1668361583359</updated>
     </task>
-    <task id="LOCAL-00026" summary="Adding more details">
-      <created>1649319361893</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
+    <task id="LOCAL-00120" summary="Improving tool">
+      <created>1668375784318</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
       <option name="project" value="LOCAL" />
-      <updated>1649319361893</updated>
+      <updated>1668375784319</updated>
     </task>
-    <task id="LOCAL-00027" summary="Adding more details">
-      <created>1649665890804</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
+    <task id="LOCAL-00121" summary="Improving tool">
+      <created>1668677972772</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
       <option name="project" value="LOCAL" />
-      <updated>1649665890804</updated>
+      <updated>1668677972773</updated>
     </task>
-    <task id="LOCAL-00028" summary="Correcting a bug">
-      <created>1649668382034</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
+    <task id="LOCAL-00122" summary="Improving firebase endpoint">
+      <created>1668680707702</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
       <option name="project" value="LOCAL" />
-      <updated>1649668382034</updated>
+      <updated>1668680707704</updated>
     </task>
-    <task id="LOCAL-00029" summary="Correcting a bug">
-      <created>1649713986213</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
+    <task id="LOCAL-00123" summary="Improving firebase endpoint">
+      <created>1668681001400</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
       <option name="project" value="LOCAL" />
-      <updated>1649713986213</updated>
+      <updated>1668681001400</updated>
     </task>
-    <task id="LOCAL-00030" summary="Reading files correctly">
-      <created>1649757673501</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
+    <task id="LOCAL-00124" summary="Changing tools">
+      <created>1669202661931</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
       <option name="project" value="LOCAL" />
-      <updated>1649757673502</updated>
+      <updated>1669202661933</updated>
     </task>
-    <task id="LOCAL-00031" summary="Correcting bugs">
-      <created>1649777774035</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
+    <task id="LOCAL-00125" summary="Changing tools">
+      <created>1669219516732</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
       <option name="project" value="LOCAL" />
-      <updated>1649777774036</updated>
+      <updated>1669219516735</updated>
     </task>
-    <task id="LOCAL-00032" summary="Correcting bugs">
-      <created>1649869862409</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
+    <task id="LOCAL-00126" summary="Starting the refactoring bot">
+      <created>1686997802492</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
       <option name="project" value="LOCAL" />
-      <updated>1649869862410</updated>
+      <updated>1686997802493</updated>
     </task>
-    <task id="LOCAL-00033" summary="Correcting bugs">
-      <created>1649938597076</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
+    <task id="LOCAL-00127" summary="Only missing move method and introduce parameter object">
+      <created>1687011273259</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
       <option name="project" value="LOCAL" />
-      <updated>1649938597076</updated>
+      <updated>1687011273260</updated>
     </task>
-    <task id="LOCAL-00034" summary="Correcting bugs">
-      <created>1649946309446</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
+    <task id="LOCAL-00128" summary="Move Method maybe done">
+      <created>1687012245933</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
       <option name="project" value="LOCAL" />
-      <updated>1649946309446</updated>
+      <updated>1687012245933</updated>
     </task>
-    <task id="LOCAL-00035" summary="Correcting bugs">
-      <created>1649964759882</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
+    <task id="LOCAL-00129" summary="problems with reading files">
+      <created>1687185576300</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
       <option name="project" value="LOCAL" />
-      <updated>1649964759882</updated>
+      <updated>1687185576300</updated>
     </task>
-    <task id="LOCAL-00036" summary="Correcting bugs">
-      <created>1651912376843</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
+    <task id="LOCAL-00130" summary="getting all refactorings">
+      <created>1687257073224</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
       <option name="project" value="LOCAL" />
-      <updated>1651912376844</updated>
+      <updated>1687257073227</updated>
     </task>
-    <task id="LOCAL-00037" summary="Correcting how to start the tool">
-      <created>1652704795213</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
+    <task id="LOCAL-00131" summary="correcting how refactorings are applied">
+      <created>1687295796211</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
       <option name="project" value="LOCAL" />
-      <updated>1652704795213</updated>
+      <updated>1687295796211</updated>
     </task>
-    <task id="LOCAL-00038" summary="Correcting the configuration menu">
-      <created>1653121245758</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
+    <task id="LOCAL-00132" summary="correcting how introduce parameter object + inheritance to delegation refactorings are applied">
+      <created>1687341883265</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
       <option name="project" value="LOCAL" />
-      <updated>1653121245759</updated>
+      <updated>1687341883268</updated>
     </task>
-    <task id="LOCAL-00039" summary="Changing .gitignore">
-      <created>1653121390036</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
+    <task id="LOCAL-00133" summary="correcting how move method refactorings are applied">
+      <created>1687356803452</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
       <option name="project" value="LOCAL" />
-      <updated>1653121390036</updated>
+      <updated>1687356803452</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00134" summary="correcting how extract class refactorings are applied">
+      <created>1687363893079</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1687363893079</updated>
+    </task>
+    <task id="LOCAL-00135" summary="improving overall flow">
+      <created>1687364225153</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1687364225154</updated>
+    </task>
+    <task id="LOCAL-00136" summary="Extract method finished">
+      <created>1687367286149</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1687367286149</updated>
+    </task>
+    <task id="LOCAL-00137" summary="Crawler done">
+      <created>1687438855940</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1687438855941</updated>
+    </task>
+    <task id="LOCAL-00138" summary="Crawler done">
+      <created>1687548884319</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1687548884320</updated>
+    </task>
+    <task id="LOCAL-00139" summary="bot correctly applying extract method">
+      <created>1688052423574</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1688052423575</updated>
+    </task>
+    <task id="LOCAL-00140" summary="correcting extract class + move method (bot)">
+      <created>1688369738475</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1688369738476</updated>
+    </task>
+    <task id="LOCAL-00141" summary="correcting bot">
+      <created>1688394067219</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1688394067219</updated>
+    </task>
+    <task id="LOCAL-00142" summary="correcting bot">
+      <created>1688396454798</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1688396454798</updated>
+    </task>
+    <task id="LOCAL-00143" summary="correcting bot">
+      <created>1688544565458</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1688544565459</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -705,27 +965,35 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Correcting some bugs" />
-    <MESSAGE value="Correcting extract method" />
-    <MESSAGE value="Firebase Working!!!" />
-    <MESSAGE value="Changing the refactoring panel" />
-    <MESSAGE value="Adding code to implement move method refactoring" />
-    <MESSAGE value="Adding code to implement introduce parameter object refactoring" />
-    <MESSAGE value="Correcting the code" />
-    <MESSAGE value="Starting to implement cognitive complexity" />
-    <MESSAGE value="With refactorings and metrics saved in cache" />
-    <MESSAGE value="Changing code and some usability issues" />
-    <MESSAGE value="Optimizing imports" />
-    <MESSAGE value="Changing code because of the experiments" />
-    <MESSAGE value="New metrics to be used in the experiments" />
-    <MESSAGE value="Correcting metrics" />
-    <MESSAGE value="Adding more details" />
-    <MESSAGE value="Correcting a bug" />
-    <MESSAGE value="Reading files correctly" />
-    <MESSAGE value="Correcting bugs" />
-    <MESSAGE value="Correcting how to start the tool" />
-    <MESSAGE value="Correcting the configuration menu" />
-    <MESSAGE value="Changing .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changing .gitignore" />
+    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
+    <MESSAGE value="configuration menu done" />
+    <MESSAGE value="correcting small details" />
+    <MESSAGE value="correcting bug" />
+    <MESSAGE value="Improving Move Method" />
+    <MESSAGE value="Improving tool" />
+    <MESSAGE value="Improving firebase endpoint" />
+    <MESSAGE value="Changing tools" />
+    <MESSAGE value="Starting the refactoring bot" />
+    <MESSAGE value="Only missing move method and introduce parameter object" />
+    <MESSAGE value="Introduce parameter object maybe done" />
+    <MESSAGE value="Move Method maybe done" />
+    <MESSAGE value="problems with reading files" />
+    <MESSAGE value="getting all refactorings" />
+    <MESSAGE value="correcting how refactorings are applied" />
+    <MESSAGE value="correcting how introduce parameter object refactorings are applied" />
+    <MESSAGE value="correcting how introduce parameter object + inheritance to delegation refactorings are applied" />
+    <MESSAGE value="correcting how move method refactorings are applied" />
+    <MESSAGE value="correcting how extract class refactorings are applied" />
+    <MESSAGE value="improving overall flow" />
+    <MESSAGE value="Extract method finished" />
+    <MESSAGE value="Bot done" />
+    <MESSAGE value="Crawler done" />
+    <MESSAGE value="bot correctly applying extract method" />
+    <MESSAGE value="correcting extract class + move method (bot)" />
+    <MESSAGE value="correcting bot" />
+    <option name="LAST_COMMIT_MESSAGE" value="correcting bot" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/LiveRefactoring$LiveRefactoring.ic" NAME="LiveRefactoring Coverage Results" MODIFIED="1687202627894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

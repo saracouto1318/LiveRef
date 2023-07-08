@@ -1,0 +1,30 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>liverefactoring</id>
+    <name>Live Refactoring</name>
+    <vendor email="saracouto1318@gmail.com">Sara Fernandes</vendor>
+
+    <description><![CDATA[
+    This plugin aims to assess code quality metrics, in real-time, to detect and apply refactoring opportunities on the source code,
+    to improve its quality, faster.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+
+    <!--icon="SdkIcons.Sdk_default_icon"->-->
+    <actions>
+        <group id="org.intellij.sdk.action.DynamicActionGroup" class="liverefactoring.DynamicActionGroup"
+               popup="true" text="Live Refactorings" description="Live Refactoring Java ">
+            <add-to-group group-id="ToolsMenu"/>
+        </group>
+    </actions>
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="liverefactoring.PopUpAction"/>
+    </extensions>
+
+    <!--<<extensions defaultExtensionNs="com.intellij">
+        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="liverefactoring.ui.MarkerProvider" />
+    </extensions>-->
+</idea-plugin>

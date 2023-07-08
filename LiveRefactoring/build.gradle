@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '0.7.2'
+    id 'org.jetbrains.intellij' version "0.7.2"
 }
 
 group 'org.liverefactoring'
@@ -18,8 +18,10 @@ dependencies {
     compile group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
     compile group: 'ch.qos.logback', name:'logback-classic', version: '1.0.9'
     compile group: 'ch.qos.logback', name:'logback-core', version: '1.0.9'
+    compile "org.antlr:antlr4-intellij-adaptor:0.1"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'org.eclipse.jgit:org.eclipse.jgit:5.4.2.201908231537-r'
+    implementation 'org.apache.commons:commons-math3:3.6.1'
 }
 
 apply plugin: 'java'
@@ -28,7 +30,7 @@ apply plugin: 'org.jetbrains.intellij'
 intellij {
     version = '2021.1.1'
     plugins 'java'
-    pluginName 'LiveRefactoring'
+    pluginName 'LiveRef-original'
     downloadSources true
     intellij.updateSinceUntilBuild false
 }
