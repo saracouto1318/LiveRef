@@ -67,8 +67,8 @@ To use this tool, we need to install it on IntelliJ IDE by following the next st
 
 ## Further Information
 
-* Folder [LiveRefactoring](/LiveRefactoring) contains the source code of our ***Live Refactoring Environment*** for **IntelliJ IDE 2021** or any other older version.
+* Folder [LiveRefactoring](/LiveRefactoring) contains the source code of our ***Live Refactoring Environment*** for **IntelliJ IDE 2021** or any other older version;
 
-* Folder [LiveRefactoring-2022](/LiveRefactoring-2022) contains the source code of our ***Live Refactoring Environment*** for **IntelliJ IDE 2022**.
+* Folder [LiveRefactoring-2022](/LiveRefactoring-2022) contains the source code of our ***Live Refactoring Environment*** for **IntelliJ IDE 2022**;
 
 * Folder [Experiments](/Experiments) contains the main artifacts used by the participants of our empirical experiments and the main results collected from them.
