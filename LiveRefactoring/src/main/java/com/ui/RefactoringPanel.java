@@ -1,33 +1,29 @@
 package com.ui;
 
+import com.analysis.candidates.*;
+import com.core.MyRange;
+import com.core.Severity;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.wm.IdeFocusManager;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiStatement;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.refactorings.candidates.*;
-import com.refactorings.candidates.utils.Severity;
-import com.utils.MyRange;
-import com.utils.ThresholdsCandidates;
-import com.utils.Utilities;
-import com.utils.Values;
+import com.utils.UtilitiesOverall;
+import com.utils.importantValues.Values;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class RefactoringPanel extends DialogWrapper {
-    public final JTextArea label = new JTextArea();
     public ArrayList<Severity> candidates;
     public Editor editor;
     public JTable refactorings = new JTable();
@@ -36,15 +32,35 @@ public class RefactoringPanel extends DialogWrapper {
     public int column = 0;
     public DefaultTableModel model = null;
     public int length = 0;
-    Utilities utils = new Utilities();
+    UtilitiesOverall utils = new UtilitiesOverall();
+
+    private class MyCustomAction extends DialogWrapperAction {
+        protected MyCustomAction() {
+            super("More Info");
+            putValue(Action.NAME, "More Info");
+        }
+
+        @Override
+        protected void doAction(ActionEvent e) {
+            Severity severity = (Severity) selectedCandidate();
+            MetricsTable table = new MetricsTable(severity, editor);
+            table.show();
+        }
+    }
 
     public RefactoringPanel(ArrayList<Severity> candidates, Editor editor) {
-        super(false);
+        super(true);
         this.editor = editor;
         this.candidates = candidates;
         setTitle("Live Refactoring Candidates");
         init();
     }
+
+    /*@NotNull
+    protected Action[] createLeftSideActions() {
+        MyCustomAction action = new MyCustomAction();
+        return new Action[] { action };
+    }*/
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
@@ -52,6 +68,9 @@ public class RefactoringPanel extends DialogWrapper {
 
         JPanel main = new JPanel(new GridLayout(1, 1));
         JPanel refactoringPanel = new JPanel(new GridLayout(1, 0));
+        JPanel panelTable = new JPanel();
+        panelTable.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Metrics Evolution", TitledBorder.CENTER, TitledBorder.TOP));
         //JPanel visibilityAndName = new JPanel(new GridLayout(1, 0));
 
         Border border = BorderFactory.createTitledBorder("Refactoring Opportunities");
@@ -60,11 +79,7 @@ public class RefactoringPanel extends DialogWrapper {
         ArrayList<String> columnNamesAux = new ArrayList<>();
         columnNamesAux.add("Refactoring");
         columnNamesAux.add("Lines");
-        if(Values.withColors)
-            columnNamesAux.add("Severity");
-
-        if(!ThresholdsCandidates.colorBlind && Values.withColors)
-            columnNamesAux.add("Color");
+        columnNamesAux.add("Severity");
         columnNamesAux.add("Number of Elements");
 
         String[] columnNames = new String[columnNamesAux.size()];
@@ -87,131 +102,72 @@ public class RefactoringPanel extends DialogWrapper {
         };
 
         for (Severity candidate : this.candidates) {
-            ImageIcon icon;
 
             if (candidate.candidate instanceof ExtractMethodCandidate) {
                 MyRange range = ((ExtractMethodCandidate) candidate.candidate).range;
-                icon = getImageIconByType(candidate.indexColorGutter, "EM");
 
-                Object[] obj;
                 int statements = 0;
                 for (PsiStatement node : ((ExtractMethodCandidate) candidate.candidate).nodes) {
                     statements += PsiTreeUtil.findChildrenOfType(node, PsiStatement.class).size();
                 }
-                if (!ThresholdsCandidates.colorBlind) {
-                    if(Values.withColors)
-                        obj = new Object[]{"Extract Method", range.start.line + " -> " + range.end.line,
-                                String.format("%.2f", candidate.severity),
-                                icon, statements
-                        };
-                    else
-                        obj = new Object[]{"Extract Method", range.start.line + " -> " + range.end.line, statements
-                        };
-                } else {
-                    if(Values.withColors)
-                        obj = new Object[]{"Extract Method", range.start.line + " -> " + range.end.line,
-                                String.format("%.2f", candidate.severity), statements
-                        };
-                    else
-                        obj = new Object[]{"Extract Method", range.start.line + " -> " + range.end.line, statements};
-                }
+                Object[] obj = new Object[]{"Extract Method", range.start.line + " -> " + range.end.line,
+                        String.format("%.2f", candidate.severity), statements
+                };
                 model.addRow(obj);
-            } else if (candidate.candidate instanceof ExtractVariableCandidate) {
+            }
+            else if (candidate.candidate instanceof ExtractVariableCandidate) {
                 MyRange range = ((ExtractVariableCandidate) candidate.candidate).range;
-                icon = getImageIconByType(candidate.indexColorGutter, "EV");
 
                 /*LogicalPosition start = ((ExtractVariableCandidate) candidate.candidate).range.start;
                 LogicalPosition end = ((ExtractVariableCandidate) candidate.candidate).range.end;*/
-                Object[] obj;
-                if (!ThresholdsCandidates.colorBlind) {
-                    if(Values.withColors)
-                        obj = new Object[]{"Extract Variable", range.start.line,
-                                String.format("%.2f", candidate.severity), icon, "1"};
-                    else
-                        obj = new Object[]{"Extract Variable", range.start.line, "1"};
-                } else {
-                    if(Values.withColors)
-                        obj = new Object[]{"Extract Variable", range.start.line,
-                                String.format("%.2f", candidate.severity), "1"};
-                    else
-                        obj = new Object[]{"Extract Variable", range.start.line, "1"};
-                }
-
-                model.addRow(obj);
-            } else if (candidate.candidate instanceof ExtractClassCandidate) {
-                icon = getImageIconByType(candidate.indexColorGutter, "EC");
-
-                /*LogicalPosition start = editor.offsetToLogicalPosition(((ExtractClassCandidate) candidate.candidate).targetEntities.get(0).getTextRange().getStartOffset());
-                LogicalPosition end = editor.offsetToLogicalPosition(((ExtractClassCandidate) candidate.candidate).targetEntities.get(((ExtractClassCandidate) candidate.candidate).targetEntities.size() - 1).getTextRange().getEndOffset());*/
-                Object[] obj;
-                if (!ThresholdsCandidates.colorBlind) {
-                    if(Values.withColors)
-                        obj = new Object[]{"Extract Class", "-",
-                                String.format("%.2f", candidate.severity), icon,
-                                Integer.toString(((ExtractClassCandidate) candidate.candidate).targetEntities.size())};
-                    else
-                        obj = new Object[]{"Extract Class", "-",
-                                Integer.toString(((ExtractClassCandidate) candidate.candidate).targetEntities.size())};
-
-                } else {
-                    if(Values.withColors)
-                        obj = new Object[]{"Extract Class", "-",
-                                String.format("%.2f", candidate.severity), Integer.toString(((ExtractClassCandidate) candidate.candidate).targetEntities.size())};
-                    else
-                        obj = new Object[]{"Extract Class", "-", Integer.toString(((ExtractClassCandidate) candidate.candidate).targetEntities.size())};
-                }
+                Object[] obj = new Object[]{"Extract Variable", "(" + range.start.line + ", " + range.start.column + ") -> (" + range.end.line + ", " + range.end.column + ")",
+                        String.format("%.2f", candidate.severity), "1"};
 
                 model.addRow(obj);
             }
-            if (candidate.candidate instanceof MoveMethodCandidate) {
-                MyRange range = ((MoveMethodCandidate) candidate.candidate).range;
-                icon = getImageIconByType(candidate.indexColorGutter, "MM");
+            else if (candidate.candidate instanceof ExtractClassCandidate) {
 
-                Object[] obj;
-                int statements = 0;
-                for (PsiStatement node : ((MoveMethodCandidate) candidate.candidate).nodes) {
-                    statements += PsiTreeUtil.findChildrenOfType(node, PsiStatement.class).size();
-                }
-                if (!ThresholdsCandidates.colorBlind) {
-                    if(Values.withColors)
-                        obj = new Object[]{"Move Method", range.start.line + " -> " + range.end.line,
-                                String.format("%.2f", candidate.severity),
-                                icon, statements
-                        };
-                    else
-                        obj = new Object[]{"Move Method", range.start.line + " -> " + range.end.line, statements};
-                } else {
-                    if(Values.withColors)
-                        obj = new Object[]{"Move Method", range.start.line + " -> " + range.end.line,
-                                String.format("%.2f", candidate.severity), statements
-                        };
-                    else
-                        obj = new Object[]{"Move Method", range.start.line + " -> " + range.end.line, statements
-                        };
-                }
+                /*LogicalPosition start = editor.offsetToLogicalPosition(((ExtractClassCandidate) candidate.candidate).targetEntities.get(0).getTextRange().getStartOffset());
+                LogicalPosition end = editor.offsetToLogicalPosition(((ExtractClassCandidate) candidate.candidate).targetEntities.get(((ExtractClassCandidate) candidate.candidate).targetEntities.size() - 1).getTextRange().getEndOffset());*/
+                Object[] obj = new Object[]{"Extract Class", "-",
+                        String.format("%.2f", candidate.severity), Integer.toString(((ExtractClassCandidate) candidate.candidate).targetMethods.size())};
+
+                model.addRow(obj);
+            }
+            else if (candidate.candidate instanceof MoveMethodCandidate) {
+                MyRange range = ((MoveMethodCandidate) candidate.candidate).range;
+
+                int statements = PsiTreeUtil.findChildrenOfType(((MoveMethodCandidate) candidate.candidate).method, PsiStatement.class).size();
+                Object[] obj = new Object[]{"Move Method (" + ((MoveMethodCandidate) candidate.candidate).originalClass.getName() + "-> " +
+                        ((MoveMethodCandidate) candidate.candidate).targetClass.getName() + ")", range.start.line + " -> " + range.end.line,
+                        String.format("%.2f", candidate.severity), statements
+                };
 
                 model.addRow(obj);
             }
             else if (candidate.candidate instanceof IntroduceParamObjCandidate) {
                 int line = editor.offsetToLogicalPosition(((IntroduceParamObjCandidate) candidate.candidate).method.getTextRange().getStartOffset()).line;
-                icon = getImageIconByType(candidate.indexColorGutter, "EV");
-
                 /*LogicalPosition start = ((ExtractVariableCandidate) candidate.candidate).range.start;
                 LogicalPosition end = ((ExtractVariableCandidate) candidate.candidate).range.end;*/
-                Object[] obj;
-                if (!ThresholdsCandidates.colorBlind) {
-                    if(Values.withColors)
-                        obj = new Object[]{"Introduce Parameter Obj", line,
-                                String.format("%.2f", candidate.severity), icon, "1"};
-                    else
-                        obj = new Object[]{"Introduce Parameter Obj", line, "1"};
-                } else {
-                    if(Values.withColors)
-                        obj = new Object[]{"Introduce Parameter Obj", line,
-                            String.format("%.2f", candidate.severity), "1"};
-                    else
-                        obj = new Object[]{"Introduce Parameter Obj", line, "1"};
-                }
+                Object[] obj = new Object[]{"Introduce Parameter Obj", line,
+                        String.format("%.2f", candidate.severity), "1"};
+
+                model.addRow(obj);
+            }
+            else if (candidate.candidate instanceof StringComparisonCandidate) {
+                MyRange range = ((StringComparisonCandidate) candidate.candidate).range;
+                /*LogicalPosition start = ((ExtractVariableCandidate) candidate.candidate).range.start;
+                LogicalPosition end = ((ExtractVariableCandidate) candidate.candidate).range.end;*/
+                Object[] obj = new Object[]{"String Comparison", range.start.line,
+                        String.format("%.2f", candidate.severity), "1"};
+
+                model.addRow(obj);
+            }
+            else if (candidate.candidate instanceof InheritanceToDelegationCandidate) {
+                int lineStart = editor.offsetToLogicalPosition(((InheritanceToDelegationCandidate)candidate.candidate)._class.getTextRange().getStartOffset()).line;
+                int lineEnd = editor.offsetToLogicalPosition(((InheritanceToDelegationCandidate)candidate.candidate)._class.getTextRange().getEndOffset()).line;
+                Object[] obj = new Object[]{"Inheritance To Delegation", "-",
+                        String.format("%.2f", candidate.severity), "1"};
 
                 model.addRow(obj);
             }
@@ -220,31 +176,17 @@ public class RefactoringPanel extends DialogWrapper {
         this.refactorings.setModel(model);
         this.refactorings.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-        if(!ThresholdsCandidates.colorBlind){
-            if(Values.withColors) {
-                this.refactorings.getColumnModel().getColumn(0).setPreferredWidth(140);
-                this.refactorings.getColumnModel().getColumn(1).setPreferredWidth(40);
-                this.refactorings.getColumnModel().getColumn(2).setPreferredWidth(1);
-                this.refactorings.getColumnModel().getColumn(3).setPreferredWidth(6);
-            }
-            else {
-                this.refactorings.getColumnModel().getColumn(0).setPreferredWidth(140);
-                this.refactorings.getColumnModel().getColumn(1).setPreferredWidth(40);
-                this.refactorings.getColumnModel().getColumn(2).setPreferredWidth(6);
-            }
+        if(!Values.colorBlind){
+            this.refactorings.getColumnModel().getColumn(0).setPreferredWidth(160);
+            this.refactorings.getColumnModel().getColumn(1).setPreferredWidth(60);
+            this.refactorings.getColumnModel().getColumn(2).setPreferredWidth(1);
+            this.refactorings.getColumnModel().getColumn(3).setPreferredWidth(6);
         }
         else {
-            if(Values.withColors) {
-                this.refactorings.getColumnModel().getColumn(0).setPreferredWidth(100);
-                this.refactorings.getColumnModel().getColumn(1).setPreferredWidth(40);
-                this.refactorings.getColumnModel().getColumn(2).setPreferredWidth(1);
-                this.refactorings.getColumnModel().getColumn(3).setPreferredWidth(6);
-            }
-            else{
-                this.refactorings.getColumnModel().getColumn(0).setPreferredWidth(100);
-                this.refactorings.getColumnModel().getColumn(1).setPreferredWidth(40);
-                this.refactorings.getColumnModel().getColumn(2).setPreferredWidth(6);
-            }
+            this.refactorings.getColumnModel().getColumn(0).setPreferredWidth(160);
+            this.refactorings.getColumnModel().getColumn(1).setPreferredWidth(60);
+            this.refactorings.getColumnModel().getColumn(2).setPreferredWidth(1);
+            this.refactorings.getColumnModel().getColumn(3).setPreferredWidth(6);
         }
 
         refactorings.addMouseListener(new MouseAdapter() {
@@ -258,7 +200,6 @@ public class RefactoringPanel extends DialogWrapper {
                     Object[] objects = getObjects(row);
                     name = getName(objects);
                     createHighlight(objects);
-                    //label.setText(createText(objects));
                 }
             }
         });
@@ -277,36 +218,18 @@ public class RefactoringPanel extends DialogWrapper {
         boxWithExecutors.add(main);
 
         Box box = Box.createHorizontalBox();
-        int height = 0;
+        int height;
 
         if(this.candidates.size() <= 2)
             height = 100;
         else if(this.candidates.size() < 5)
-            height = this.candidates.size() * 40;
+            height = this.candidates.size() * 36;
         else
-            height = 180;
+            height = 200;
 
-        box.setPreferredSize(new Dimension(400, height));
-        box.add(boxWithExecutors);
-
+        box.setPreferredSize(new Dimension(600, height));
+        box.add(main);
         return box;
-    }
-
-    public ImageIcon getImageIconByType(int index, String type){
-        ImageIcon icon = null;
-        try {
-            icon = utils.getIconCircle(index, type);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        assert icon != null;
-        Image img = icon.getImage();
-        Image resizedImage = img.getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
-
-        icon = new ImageIcon(resizedImage);
-
-        return icon;
     }
 
     public Object[] getObjects(int row) {
@@ -324,11 +247,10 @@ public class RefactoringPanel extends DialogWrapper {
                 result.append(option[i]).append(" ");
         }
 
-        result.toString().trim();
-        return result.toString();
+        return result.toString().trim();
     }
 
-    public void createHighlight(Object[] option) {
+    public Severity createHighlight(Object[] option) {
         for (Severity candidate : candidates) {
             if (((String) option[0]).contains("Extract Method") && candidate.candidate instanceof ExtractMethodCandidate) {
                 int lineStart = ((ExtractMethodCandidate) candidate.candidate).range.start.line;
@@ -343,7 +265,7 @@ public class RefactoringPanel extends DialogWrapper {
 
                 if (((String) option[1]).contains(Integer.toString(lineStart)) &&
                         ((String) option[1]).contains(Integer.toString(lineEnd)) &&
-                        (option[4]).toString().equals(Integer.toString(statements))) {
+                        (option[3]).toString().equals(Integer.toString(statements))) {
                     VisualPosition positionStart = new VisualPosition(lineStart, columnStart);
                     VisualPosition positionEnd = new VisualPosition(lineEnd, columnEnd);
                     int startOffSet = ((ExtractMethodCandidate) candidate.candidate).nodes.get(0).getTextRange().getStartOffset();
@@ -351,17 +273,17 @@ public class RefactoringPanel extends DialogWrapper {
 
                     editor.getSelectionModel().setSelection(positionStart, startOffSet, positionEnd, endOffSet);
                     IdeFocusManager.getInstance(editor.getProject()).requestFocus(editor.getSelectionModel().getEditor().getContentComponent(), true);
-
-                    break;
+                    return candidate;
                 }
-            } else if (((String) option[0]).contains("Extract Variable") && candidate.candidate instanceof ExtractVariableCandidate) {
+            }
+            else if (((String) option[0]).contains("Extract Variable") && candidate.candidate instanceof ExtractVariableCandidate) {
                 int lineStart = ((ExtractVariableCandidate) candidate.candidate).range.start.line;
                 int columnStart = ((ExtractVariableCandidate) candidate.candidate).range.start.column;
                 int lineEnd = ((ExtractVariableCandidate) candidate.candidate).range.end.line;
                 int columnEnd = ((ExtractVariableCandidate) candidate.candidate).range.end.column;
 
-                if (((String)option[1]).contains(Integer.toString(lineStart)) &&
-                        option[4].toString().equals("1")) {
+                if ((option[1].toString()).contains(Integer.toString(lineStart)) && (option[1].toString()).contains(Integer.toString(columnStart)) &&
+                        (option[1].toString()).contains(Integer.toString(lineEnd)) && (option[1].toString()).contains(Integer.toString(columnEnd)) && (option[3].toString()).equals("1")) {
 
                     VisualPosition positionStart = new VisualPosition(lineStart, columnStart);
                     VisualPosition positionEnd = new VisualPosition(lineEnd, columnEnd);
@@ -370,34 +292,8 @@ public class RefactoringPanel extends DialogWrapper {
 
                     editor.getSelectionModel().setSelection(positionStart, startOffSet, positionEnd, endOffSet);
                     IdeFocusManager.getInstance(editor.getProject()).requestFocus(editor.getSelectionModel().getEditor().getContentComponent(), true);
-
-                    break;
+                    return candidate;
                 }
-            } else if (((String) option[0]).contains("Extract Class") && candidate.candidate instanceof ExtractClassCandidate) {
-                LogicalPosition start = editor.offsetToLogicalPosition(((ExtractClassCandidate) candidate.candidate).targetEntities.get(0).getTextRange().getStartOffset());
-                LogicalPosition end = editor.offsetToLogicalPosition(((ExtractClassCandidate) candidate.candidate).targetEntities.get(((ExtractClassCandidate) candidate.candidate).targetEntities.size() - 1).getTextRange().getEndOffset());
-
-                if (((String)option[4]).contains(Integer.toString(start.line)) &&
-                        ((String)option[1]).contains(Integer.toString(end.line)) &&
-                        (option[4]).toString().equals(Integer.toString(((ExtractClassCandidate) candidate.candidate).targetEntities.size()))) {
-
-                    for (PsiField targetEntity : ((ExtractClassCandidate) candidate.candidate).targetAttributes) {
-                        int lineStart = editor.offsetToLogicalPosition(targetEntity.getTextRange().getStartOffset()).line;
-                        int columnStart = editor.offsetToLogicalPosition((targetEntity).getTextRange().getStartOffset()).column;
-                        int lineEnd = editor.offsetToLogicalPosition((targetEntity).getTextRange().getEndOffset()).line;
-                        int columnEnd = editor.offsetToLogicalPosition((targetEntity).getTextRange().getEndOffset()).column;
-                    }
-
-                    for (PsiMethod targetEntity : ((ExtractClassCandidate) candidate.candidate).targetMethods) {
-                        int lineStart = editor.offsetToLogicalPosition((targetEntity).getTextRange().getStartOffset()).line;
-                        int columnStart = editor.offsetToLogicalPosition((targetEntity).getTextRange().getStartOffset()).column;
-                        int lineEnd = editor.offsetToLogicalPosition((targetEntity).getTextRange().getEndOffset()).line;
-                        int columnEnd = editor.offsetToLogicalPosition((targetEntity).getTextRange().getEndOffset()).column;
-                    }
-
-                    break;
-                }
-
             }
             else if (((String) option[0]).contains("Introduce Parameter Obj") && candidate.candidate instanceof IntroduceParamObjCandidate) {
                 IntroduceParamObjCandidate param = (IntroduceParamObjCandidate)candidate.candidate;
@@ -408,7 +304,7 @@ public class RefactoringPanel extends DialogWrapper {
                 int columnEnd = editor.offsetToLogicalPosition(list.getTextRange().getEndOffset()).column;
 
                 if (((String)option[1]).contains(Integer.toString(lineStart)) &&
-                        option[4].toString().equals("1")) {
+                        option[3].toString().equals("1")) {
 
                     VisualPosition positionStart = new VisualPosition(lineStart, columnStart);
                     VisualPosition positionEnd = new VisualPosition(lineEnd, columnEnd);
@@ -417,37 +313,76 @@ public class RefactoringPanel extends DialogWrapper {
 
                     editor.getSelectionModel().setSelection(positionStart, startOffSet, positionEnd, endOffSet);
                     IdeFocusManager.getInstance(editor.getProject()).requestFocus(editor.getSelectionModel().getEditor().getContentComponent(), true);
-
-
-                    break;
+                    return candidate;
                 }
+
             }
-            if (((String) option[0]).contains("Move Method") && candidate.candidate instanceof MoveMethodCandidate) {
+            else if (((String) option[0]).contains("Move Method") && candidate.candidate instanceof MoveMethodCandidate) {
                 int lineStart = ((MoveMethodCandidate) candidate.candidate).range.start.line;
                 int columnStart = ((MoveMethodCandidate) candidate.candidate).range.start.column;
                 int lineEnd = ((MoveMethodCandidate) candidate.candidate).range.end.line;
                 int columnEnd = ((MoveMethodCandidate) candidate.candidate).range.end.column;
 
-                int statements = 0;
-                for (PsiStatement node : ((ExtractMethodCandidate) candidate.candidate).nodes) {
-                    statements += PsiTreeUtil.findChildrenOfType(node, PsiStatement.class).size();
-                }
-                if (((String)option[1]).contains(Integer.toString(lineStart)) &&
-                        ((String)option[1]).contains(Integer.toString(lineEnd)) &&
-                        (option[4]).toString().equals(Integer.toString(statements))) {
+                int statements = PsiTreeUtil.findChildrenOfType(((MoveMethodCandidate) candidate.candidate).method, PsiStatement.class).size();
+                if ((option[1].toString()).contains(Integer.toString(lineStart)) &&
+                        (option[1].toString()).contains(Integer.toString(lineEnd)) &&
+                        (option[3]).toString().equals(Integer.toString(statements))) {
 
                     VisualPosition positionStart = new VisualPosition(lineStart, columnStart);
                     VisualPosition positionEnd = new VisualPosition(lineEnd, columnEnd);
-                    int startOffSet = ((ExtractMethodCandidate) candidate.candidate).nodes.get(0).getTextRange().getStartOffset();
-                    int endOffSet = ((ExtractMethodCandidate) candidate.candidate).nodes.get(((ExtractMethodCandidate) candidate.candidate).nodes.size() - 1).getTextRange().getEndOffset();
+                    int startOffSet = ((MoveMethodCandidate) candidate.candidate).method.getTextRange().getStartOffset();
+                    int endOffSet = ((MoveMethodCandidate) candidate.candidate).method.getTextRange().getEndOffset();
 
                     editor.getSelectionModel().setSelection(positionStart, startOffSet, positionEnd, endOffSet);
                     IdeFocusManager.getInstance(editor.getProject()).requestFocus(editor.getSelectionModel().getEditor().getContentComponent(), true);
-
-                    break;
+                    return candidate;
                 }
             }
+            else if (((String) option[0]).contains("String Comparison") && candidate.candidate instanceof StringComparisonCandidate) {
+                int lineStart = ((StringComparisonCandidate) candidate.candidate).range.start.line;
+                int columnStart = ((StringComparisonCandidate) candidate.candidate).range.start.column;
+                int lineEnd = ((StringComparisonCandidate) candidate.candidate).range.end.line;
+                int columnEnd = ((StringComparisonCandidate) candidate.candidate).range.end.column;
+
+                if (((String)option[1]).contains(Integer.toString(lineStart)) &&
+                        option[3].toString().equals("1")) {
+
+                    VisualPosition positionStart = new VisualPosition(lineStart, columnStart);
+                    VisualPosition positionEnd = new VisualPosition(lineEnd, columnEnd);
+                    int startOffSet = ((StringComparisonCandidate) candidate.candidate).node.getTextRange().getStartOffset();
+                    int endOffSet = ((StringComparisonCandidate) candidate.candidate).node.getTextRange().getEndOffset();
+
+                    editor.getSelectionModel().setSelection(positionStart, startOffSet, positionEnd, endOffSet);
+                    IdeFocusManager.getInstance(editor.getProject()).requestFocus(editor.getSelectionModel().getEditor().getContentComponent(), true);
+                    return candidate;
+                }
+
+            }
+            else if (((String) option[0]).contains("Inheritance To Delegation") && candidate.candidate instanceof InheritanceToDelegationCandidate) {
+                InheritanceToDelegationCandidate candidateRefusedBequest = (InheritanceToDelegationCandidate)candidate.candidate;
+                int lineStart = editor.offsetToLogicalPosition(candidateRefusedBequest._class.getTextRange().getStartOffset()).line;
+                int columnStart = editor.offsetToLogicalPosition(candidateRefusedBequest._class.getTextRange().getStartOffset()).column;
+                int lineEnd = editor.offsetToLogicalPosition(candidateRefusedBequest._class.getTextRange().getEndOffset()).line;
+                int columnEnd = editor.offsetToLogicalPosition(candidateRefusedBequest._class.getTextRange().getEndOffset()).column;
+
+                if (((String)option[1]).contains(Integer.toString(lineStart)) &&
+                        ((String)option[1]).contains(Integer.toString(lineEnd)) &&
+                        (option[3]).toString().equals("1")) {
+
+                    VisualPosition positionStart = new VisualPosition(lineStart, columnStart);
+                    VisualPosition positionEnd = new VisualPosition(lineEnd, columnEnd);
+                    int startOffSet = candidateRefusedBequest._class.getTextRange().getStartOffset();
+                    int endOffSet = candidateRefusedBequest._class.getTextRange().getEndOffset();
+
+                    editor.getSelectionModel().setSelection(positionStart, startOffSet, positionEnd, endOffSet);
+                    IdeFocusManager.getInstance(editor.getProject()).requestFocus(editor.getSelectionModel().getEditor().getContentComponent(), true);
+                    return candidate;
+                }
+
+            }
         }
+
+        return null;
     }
 
     public Object selectedCandidate() {

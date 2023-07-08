@@ -5,17 +5,24 @@
 
     <description><![CDATA[
     This plugin aims to assess code quality metrics, in real-time, to detect and apply refactoring opportunities on the source code,
-    to improve its quality, faster
+    to improve its quality, faster.
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.java</depends>
-
-    <actions>
+    <!--<extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Quality Metrics" anchor="right" factoryClass="com.ui.metrics.WindowFactory"/>
+        <projectService id="metricsWindowService" serviceImplementation="com.ui.metrics.MetricsWindowService"/>
+    </extensions>-->
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.Bot"/>
+    </extensions>
+    <!--<actions>
         <group id="LiveRefactoring.Start" text="Live Refactoring" description="Live refactoring menu">
             <add-to-group group-id="MainMenu" anchor="last"/>
-            <action class="com.StartAnalysis" id="LiveRefactoring.Start.Action" text="Start Analysis"/>
-            <action class="com.ConfigureTool" id="LiveRefactoring.Config.Tool" text="Configure Tool"/>
+            <action class="com.StartTool" id="LiveRefactoring.Start.Action" text="Start Analysis"/>
+            <action class="com.ui.ConfigureTool" id="LiveRefactoring.Config.Tool" text="Configure Tool"/>
+           <action class="com.RunMetrics" id="LiveRefactoring.Start.Metrics" text="Run Metrics"/>
         </group>
-    </actions>
+    </actions>-->
 </idea-plugin>

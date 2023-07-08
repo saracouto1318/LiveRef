@@ -1,13 +1,19 @@
 package com.utils;
 
+import com.analysis.metrics.ClassMetrics;
+import com.analysis.metrics.FileMetrics;
+import com.analysis.metrics.MethodMetrics;
 import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.psi.*;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.metrics.ClassMetrics;
-import com.metrics.FileMetrics;
-import com.metrics.MethodMetrics;
+import com.utils.Halstead.Initiator;
+import com.utils.Halstead.MetricsEvaluator;
+import com.utils.importantValues.Values;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public final class MetricsUtils {
 
@@ -19,24 +25,37 @@ public final class MetricsUtils {
 
     public int increasesCyclomaticComplexity(PsiMethod method) {
         int counter = 0;
-
         if (method != null) {
             for (PsiSwitchStatement psiSwitchStatement : PsiTreeUtil.findChildrenOfType(method, PsiSwitchStatement.class)) {
-                if (Objects.requireNonNull(psiSwitchStatement.getBody()).getStatements().length > 0)
-                    counter++;
+                if(psiSwitchStatement.getBody() != null){
+                    for (PsiStatement statement : psiSwitchStatement.getBody().getStatements()) {
+                        if(statement.getText().contains("case"))
+                            counter++;
+                    }
+                }
             }
+
             counter += PsiTreeUtil.findChildrenOfType(method, PsiDoWhileStatement.class).size();
             counter += PsiTreeUtil.findChildrenOfType(method, PsiForeachStatement.class).size();
             counter += PsiTreeUtil.findChildrenOfType(method, PsiForStatement.class).size();
             counter += PsiTreeUtil.findChildrenOfType(method, PsiWhileStatement.class).size();
             counter += PsiTreeUtil.findChildrenOfType(method, PsiIfStatement.class).size();
-            counter += PsiTreeUtil.findChildrenOfType(method, PsiConditionalExpression.class).size();
-
-            for (PsiBinaryExpression psiBinaryExpression : PsiTreeUtil.findChildrenOfType(method, PsiBinaryExpression.class)) {
-                if (psiBinaryExpression.getText().contains("&&"))
-                    counter++;
+            if(method.getBody() != null) {
+                for (String s : method.getBody().getText().split("\n")) {
+                    if (s.contains("else") && !s.contains("else if"))
+                        counter++;
+                }
             }
 
+            counter += PsiTreeUtil.findChildrenOfType(method, PsiConditionalExpression.class).size();
+            counter += PsiTreeUtil.findChildrenOfType(method, PsiCatchSection.class).size();
+
+            for (PsiBinaryExpression psiBinaryExpression : PsiTreeUtil.findChildrenOfType(method, PsiBinaryExpression.class)) {
+                IElementType token = psiBinaryExpression.getOperationTokenType();
+                if (token.toString().trim().equals("EQEQ")) {
+                    counter++;
+                }
+            }
         }
 
         return counter;
@@ -46,19 +65,30 @@ public final class MetricsUtils {
         int counter = 0;
 
         for (PsiSwitchStatement psiSwitchStatement : PsiTreeUtil.findChildrenOfType(statement, PsiSwitchStatement.class)) {
-            if (Objects.requireNonNull(psiSwitchStatement.getBody()).getStatements().length > 0)
-                counter++;
+            if(psiSwitchStatement.getBody() != null){
+                for (PsiStatement stm : psiSwitchStatement.getBody().getStatements()) {
+                    if(stm.getText().contains("case"))
+                        counter++;
+                }
+            }
         }
         counter += PsiTreeUtil.findChildrenOfType(statement, PsiDoWhileStatement.class).size();
         counter += PsiTreeUtil.findChildrenOfType(statement, PsiForeachStatement.class).size();
         counter += PsiTreeUtil.findChildrenOfType(statement, PsiForStatement.class).size();
         counter += PsiTreeUtil.findChildrenOfType(statement, PsiWhileStatement.class).size();
         counter += PsiTreeUtil.findChildrenOfType(statement, PsiIfStatement.class).size();
+
+        if(statement.getText().contains("else") && !statement.getText().contains("else if"))
+            counter++;
+
         counter += PsiTreeUtil.findChildrenOfType(statement, PsiConditionalExpression.class).size();
+        counter += PsiTreeUtil.findChildrenOfType(statement, PsiCatchSection.class).size();
 
         for (PsiBinaryExpression psiBinaryExpression : PsiTreeUtil.findChildrenOfType(statement, PsiBinaryExpression.class)) {
-            if (psiBinaryExpression.getText().contains("&&"))
+            IElementType token = psiBinaryExpression.getOperationTokenType();
+            if (token.toString().trim().equals("EQEQ")) {
                 counter++;
+            }
         }
 
         return counter;
@@ -115,13 +145,12 @@ public final class MetricsUtils {
         if (methodCounter <= 1 || variableCounter == 0) {
             return 0;
         } else {
-            double result = (double)((1 / variableCounter) * methodsWhichAccessVariables - methodCounter) / (1 - methodCounter);
-            return result > 1 ? 1: result;
+            return (double)((1 / variableCounter) * methodsWhichAccessVariables - methodCounter) / (1 - methodCounter);
         }
     }
 
-    public void initializeHalsteadMetrics(MethodMetrics metrics, PsiMethod method) {
-        Set<String> uniqueOperators = new HashSet<>();
+    public void initializeHalsteadMetrics(MethodMetrics metrics, PsiMethod method)  {
+       /* Set<String> uniqueOperators = new HashSet<>();
         Set<String> uniqueOperands = new HashSet<>();
         int operators = 0;
         int operands = 0;
@@ -152,47 +181,110 @@ public final class MetricsUtils {
         metrics.halsteadTime = metrics.halsteadEffort / (double) 18;
         metrics.halsteadBugsDelivered = Math.pow(metrics.halsteadEffort, 2 / 3) / (double) 3000;
         metrics.halsteadMaintainability = Math.max(0.0, (171 - 5.2 * Math.log(metrics.halsteadVolume) - 0.23 * metrics.complexityOfMethod - 16.2 * Math.log(metrics.numberLinesOfCode)) * 100 / (double) 171);
+*/
+        Initiator initiator = new Initiator();
+        MetricsEvaluator evaluator = initiator.initiate(method);
+
+        metrics.halsteadLength = evaluator.PROGRAM_LENGTH;
+        metrics.halsteadVocabulary = evaluator.PROGRAM_VOCABULARY;
+        metrics.halsteadVolume = evaluator.VOLUME;
+        metrics.halsteadDifficulty = evaluator.DIFFICULTY;
+        metrics.halsteadEffort = evaluator.PROGRAM_EFFORT;
+        metrics.halsteadLevel = 1 / evaluator.DIFFICULTY;
+        metrics.halsteadTime = evaluator.PROGRAM_EFFORT / (double) 18;
+        metrics.halsteadBugsDelivered = Math.pow(evaluator.PROGRAM_EFFORT, 2 / 3) / (double) 3000;
+        metrics.halsteadMaintainability = Math.max(0.0, (171 - 5.2 * Math.log(evaluator.VOLUME) - 0.23 * metrics.complexityOfMethod - 16.2 * Math.log(metrics.numberLinesOfCode)) * 100 / (double) 171);
     }
+
 
     private boolean isFieldUsedOnNode(PsiField field, PsiMethod constructor) {
         String fieldString = field.getName();
-        String constructorString = Objects.requireNonNull(constructor.getBody()).getText();
+        if( constructor.getBody() != null) {
+            String constructorString = constructor.getBody().getText();
+            if (constructorString.contains("this.".concat(fieldString)))
+                return true;
 
-        return constructorString.contains(fieldString);
+            for (PsiElement psiElement : PsiTreeUtil.findChildrenOfType(constructor, PsiElement.class)) {
+                if (psiElement.getText().contains(fieldString))
+                    return true;
+            }
+        }
+        
+        return false;
     }
 
     public boolean isFieldUsedOnMethod(PsiField field, PsiMethod method) {
         String fieldString = field.getName();
-        String methodString = Objects.requireNonNull(method.getBody()).getText();
+        if( method.getBody() != null) {
+            String methodString = method.getBody().getText();
+            if (methodString.contains("this.".concat(fieldString)))
+                return true;
 
-        return methodString.contains(fieldString);
+            for (PsiStatement statement : method.getBody().getStatements()) {
+                for (PsiElement psiElement : statement.getChildren()) {
+                    if (psiElement.getText().contains(fieldString))
+                        return true;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean isIdentifierUsedOnNode(String variable, PsiMethod constructor) {
-        String constructorString = Objects.requireNonNull(constructor.getBody()).getText();
+        if(constructor.getBody() != null) {
+            String constructorString = constructor.getBody().getText();
+            if (constructorString.contains("this.".concat(variable)))
+                return true;
 
-        return constructorString.contains(variable);
+            for (PsiStatement statement : constructor.getBody().getStatements()) {
+                for (PsiElement psiElement : statement.getChildren()) {
+                    if (psiElement.getText().contains(variable))
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public boolean isIdentifierUsedOnMethod(String variable, PsiMethod method) {
-        String methodString = Objects.requireNonNull(method.getBody()).getText();
+        if(method.getBody() != null) {
+            String methodString = method.getBody().getText();
+            if (methodString.contains("this.".concat(variable)))
+                return true;
 
-        return methodString.contains(variable);
+            for (PsiStatement statement : method.getBody().getStatements()) {
+                for (PsiElement psiElement : statement.getChildren()) {
+                    if (psiElement.getText().contains(variable))
+                        return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private boolean doesMethodCallAnotherMethod(PsiMethod callerMethod, PsiMethod calledMethod) {
         String calledMethodString = calledMethod.getName();
-        String callerMethodString = Objects.requireNonNull(callerMethod.getBody()).getText();
+        if(callerMethod.getBody() != null) {
+            String callerMethodString = callerMethod.getBody().getText();
 
-        return callerMethodString.contains(calledMethodString);
+            return callerMethodString.contains(calledMethodString);
+        }
+        return false;
     }
 
     public int amountOfMethodCalls(PsiMethod callerMethod, PsiMethod calledMethod) {
         int count = 0;
+        int index = 0;
 
-        for (PsiMethodCallExpression psiMethodCallExpression : PsiTreeUtil.findChildrenOfType(callerMethod, PsiMethodCallExpression.class)) {
-            if (psiMethodCallExpression.getText().contains(calledMethod.getName())) {
-                count++;
+        if(callerMethod != null && calledMethod != null){
+            while (index != -1) {
+                index = callerMethod.getText().indexOf(calledMethod.getName()+"(", index);
+                if (index != -1) {
+                    count++;
+                    index += (calledMethod.getName()+"(").length();
+                }
             }
         }
 
@@ -202,9 +294,13 @@ public final class MetricsUtils {
     public int amountOfDictionaryOccurrencesInMethod(String vocabulary, PsiMethod method) {
         int count = 0;
 
-        for (PsiElement element : PsiTreeUtil.findChildrenOfType(method, PsiElement.class)) {
-            if (method != null && Objects.requireNonNull(method.getBody()).getText().contains(vocabulary))
-                count++;
+        if(method != null) {
+            if (method.getBody() != null) {
+                for (PsiElement ignored : PsiTreeUtil.findChildrenOfType(method, PsiElement.class)) {
+                    if (method.getBody().getText().contains(vocabulary))
+                        count++;
+                }
+            }
         }
 
         return count;
@@ -222,8 +318,8 @@ public final class MetricsUtils {
         return true;
     }
 
-    private ArrayList<Integer> getAllMethodsHalsteadLength(MethodMetrics[] methodMetrics) {
-        ArrayList<Integer> length = new ArrayList<>();
+    private ArrayList<Double> getAllMethodsHalsteadLength(MethodMetrics[] methodMetrics) {
+        ArrayList<Double> length = new ArrayList<>();
         for (MethodMetrics mm : methodMetrics) {
             length.add(mm.halsteadLength);
         }
@@ -231,8 +327,8 @@ public final class MetricsUtils {
         return length;
     }
 
-    private ArrayList<Integer> getAllMethodsHalsteadVocabulary(MethodMetrics[] methodMetrics) {
-        ArrayList<Integer> vocabulary = new ArrayList<>();
+    private ArrayList<Double> getAllMethodsHalsteadVocabulary(MethodMetrics[] methodMetrics) {
+        ArrayList<Double> vocabulary = new ArrayList<>();
         for (MethodMetrics mm : methodMetrics) {
             vocabulary.add(mm.halsteadVocabulary);
         }
@@ -461,9 +557,21 @@ public final class MetricsUtils {
     }
 
     public MethodMetrics getMetricsFirebase(FileMetrics metrics){
+        System.out.println(Values.lastRefactoring.method.getName());
         for (MethodMetrics methodMetric : metrics.methodMetrics) {
-            if(methodMetric.methodName.equals(Values.lastRefactoring.method.getName())){
-                return methodMetric;
+            if(methodMetric.method.getName().equals(Values.lastRefactoring.method.getName())){
+                System.out.println("aqui aqui");
+                if(methodMetric.method.getContainingClass() == null && Values.lastRefactoring.method.getContainingClass() == null){
+                    System.out.println("aqui aqui2");
+                    return methodMetric;
+                }
+                else if(methodMetric.method.getContainingClass() != null && Values.lastRefactoring.method.getContainingClass() != null){
+                    System.out.println("aqui aqui3");
+                    if(methodMetric.method.getContainingClass().getName().equals(Values.lastRefactoring.method.getContainingClass().getName())){
+                        System.out.println("aqui aqui4");
+                        return methodMetric;
+                    }
+                }
             }
         }
 
@@ -474,28 +582,29 @@ public final class MetricsUtils {
         HashMap<String, Object> map = new HashMap<>();
 
         MethodMetrics m1 = getMetricsFirebase(metrics);
-        map.put("MethodName", m1.methodName);
-        map.put("LOC", Integer.toString(m1.numberLinesOfCode));
-        map.put("isLong", Boolean.toString(m1.isLong));
-        map.put("Parameters", Integer.toString(m1.numParameters));
-        map.put("LCOM", Double.toString(m1.lackOfCohesionInMethod));
-        map.put("CC", Integer.toString(m1.complexityOfMethod));
-        map.put("CogC", Integer.toString(m1.cognitiveComplexity));
-        map.put("CogCPer", Double.toString(m1.cognitiveComplexityPercentage));
-        map.put("Length", Integer.toString(m1.halsteadLength));
-        map.put("Difficulty", Double.toString(m1.halsteadDifficulty));
-        map.put("Volume", Double.toString(m1.halsteadVolume));
-        map.put("Effort", Double.toString(m1.halsteadEffort));
-        map.put("Time", Double.toString(m1.halsteadTime));
-        map.put("Bugs", Double.toString(m1.halsteadBugsDelivered));
-        map.put("Maintainability", Double.toString(m1.halsteadMaintainability));
+        if (m1 != null){
+            map.put("MethodName", m1.methodName);
+            map.put("LOC", Integer.toString(m1.numberLinesOfCode));
+            map.put("isLong", Boolean.toString(m1.isLong));
+            map.put("Parameters", Integer.toString(m1.numParameters));
+            map.put("LCOM", Double.toString(m1.lackOfCohesionInMethod));
+            map.put("CC", Integer.toString(m1.complexityOfMethod));
+            map.put("CogC", Integer.toString(m1.cognitiveComplexity));
+            map.put("CogCPer", Double.toString(m1.cognitiveComplexityPercentage));
+            map.put("Length", Double.toString(m1.halsteadLength));
+            map.put("Difficulty", Double.toString(m1.halsteadDifficulty));
+            map.put("Volume", Double.toString(m1.halsteadVolume));
+            map.put("Effort", Double.toString(m1.halsteadEffort));
+            map.put("Time", Double.toString(m1.halsteadTime));
+            map.put("Bugs", Double.toString(m1.halsteadBugsDelivered));
+            map.put("Maintainability", Double.toString(m1.halsteadMaintainability));
+        }
 
         return map;
     }
 
     public HashMap<String, Object> getValuesMetricsFile(FileMetrics metrics){
         HashMap<String, Object> map = new HashMap<>();
-
         map.put("FileName", metrics.fileName);
         map.put("LOC", Integer.toString(metrics.numberOfCodeLines));
         map.put("LOCAvg", Double.toString(metrics.lines));
@@ -527,7 +636,7 @@ public final class MetricsUtils {
         map.put("CC", Integer.toString(m1.complexityOfMethod));
         map.put("CogC", Integer.toString(m1.cognitiveComplexity));
         map.put("CogCPer", Double.toString(m1.cognitiveComplexityPercentage));
-        map.put("Length", Integer.toString(m1.halsteadLength));
+        map.put("Length", Double.toString(m1.halsteadLength));
         map.put("Difficulty", Double.toString(m1.halsteadDifficulty));
         map.put("Volume", Double.toString(m1.halsteadVolume));
         map.put("Effort", Double.toString(m1.halsteadEffort));
@@ -542,6 +651,9 @@ public final class MetricsUtils {
         HashMap<String, Object> map = new HashMap<>();
 
         ClassMetrics old = null;
+        if(Values.lastRefactoring._class == null)
+            Values.lastRefactoring._class = Values.lastRefactoring.method.getContainingClass();
+
         for (ClassMetrics classMetric : metrics.classMetrics) {
             if(classMetric.className.equals(Values.lastRefactoring._class.getName())){
                 old = classMetric;
@@ -549,24 +661,26 @@ public final class MetricsUtils {
             }
         }
 
-        map.put("ClassName", old.className);
-        map.put("LOC", Integer.toString(old.numLinesCode));
-        map.put("numMethods", Integer.toString(old.numMethods));
-        map.put("numProperties", Integer.toString(old.numProperties));
-        map.put("numLongMethods", Integer.toString(old.numLongMethods));
-        map.put("numLongParameters", Integer.toString(old.longParameterList));
-        map.put("LCOM", Double.toString(old.lackOfCohesion));
-        map.put("CC", Double.toString(old.complexity));
-        map.put("CogC", Double.toString(old.cognitiveComplexity));
-        map.put("CogCPer", Double.toString(old.cognitiveComplexityPercentage));
-        map.put("Length", Double.toString(old.halsteadLength));
-        map.put("Difficulty", Double.toString(old.halsteadDifficulty));
-        map.put("Volume", Double.toString(old.halsteadVolume));
-        map.put("Effort", Double.toString(old.halsteadEffort));
-        map.put("Time", Double.toString(old.halsteadTime));
-        map.put("Bugs", Double.toString(old.halsteadBugsDelivered));
-        map.put("Maintainability", Double.toString(old.halsteadMaintainability));
+        if(old != null) {
 
+            map.put("ClassName", old.className);
+            map.put("LOC", Integer.toString(old.numLinesCode));
+            map.put("numMethods", Integer.toString(old.numMethods));
+            map.put("numProperties", Integer.toString(old.numProperties));
+            map.put("numLongMethods", Integer.toString(old.numLongMethods));
+            map.put("numLongParameters", Integer.toString(old.longParameterList));
+            map.put("LCOM", Double.toString(old.lackOfCohesion));
+            map.put("CC", Double.toString(old.complexity));
+            map.put("CogC", Double.toString(old.cognitiveComplexity));
+            map.put("CogCPer", Double.toString(old.cognitiveComplexityPercentage));
+            map.put("Length", Double.toString(old.halsteadLength));
+            map.put("Difficulty", Double.toString(old.halsteadDifficulty));
+            map.put("Volume", Double.toString(old.halsteadVolume));
+            map.put("Effort", Double.toString(old.halsteadEffort));
+            map.put("Time", Double.toString(old.halsteadTime));
+            map.put("Bugs", Double.toString(old.halsteadBugsDelivered));
+            map.put("Maintainability", Double.toString(old.halsteadMaintainability));
+        }
         return map;
     }
 
@@ -617,16 +731,18 @@ public final class MetricsUtils {
             if(statement instanceof PsiIfStatement){
                 complexity += nesting + 1;
                 nesting++;
-                if(((PsiIfStatement) statement).getElseBranch() != null){
-                    complexity += nesting + 1;
-                    nesting++;
-                }
+            }
+            if(statement.getText().contains("else") && !statement.getText().contains("else if")) {
+                complexity += nesting + 1;
+                nesting++;
             }
             if(statement instanceof PsiSwitchStatement){
                 if(((PsiSwitchStatement) statement).getBody().getStatements().length > 0) {
                     for (PsiStatement stm : ((PsiSwitchStatement) statement).getBody().getStatements()) {
-                        complexity += nesting + 1;
-                        nesting++;
+                        if(stm.getText().contains("case")) {
+                            complexity += nesting + 1;
+                            nesting++;
+                        }
                     }
                 }
             }
@@ -637,19 +753,25 @@ public final class MetricsUtils {
                 }
             }
             if(statement instanceof PsiBinaryExpression){
-                if(statement.getText().contains("||"))
-                    complexity++;
-                else if (statement.getText().contains("&&"))
-                    complexity++;
+                for (PsiPolyadicExpression psiPolyadicExpression : PsiTreeUtil.findChildrenOfType(statement, PsiPolyadicExpression.class)) {
+                    if(psiPolyadicExpression.getOperationTokenType().toString().trim().equals("EQEQ")){
+                        complexity++;
+                    }
+                }
             }
             if(statement instanceof PsiExpression){
-                if(statement.getText().contains("?") && statement.getText().contains(":")
-                        && statement.getText().toCharArray()[0] != '"' &&
-                        statement.getText().toCharArray()[statement.getText().toCharArray().length -1] != '"'){
+                for (PsiPolyadicExpression psiPolyadicExpression : PsiTreeUtil.findChildrenOfType(statement, PsiPolyadicExpression.class)) {
+                    if(psiPolyadicExpression.getOperationTokenType() == JavaTokenType.QUEST || psiPolyadicExpression.getOperationTokenType() == JavaTokenType.DOUBLE_COLON ){
+                        complexity += nesting + 1;
+                        nesting++;
+                    }
+                }
+                if(statement.getText().toCharArray()[0] != '"' && statement.getText().toCharArray()[statement.getText().toCharArray().length -1] != '"'){
                     complexity += nesting + 1;
                     nesting++;
                 }
             }
+
             if(statement instanceof PsiBreakStatement){
                 complexity++;
             }
@@ -668,8 +790,6 @@ public final class MetricsUtils {
                 }
             }
         }
-
-
         return complexity;
     }
 
@@ -696,16 +816,19 @@ public final class MetricsUtils {
         if(statement instanceof PsiIfStatement){
             complexity += nesting + 1;
             nesting++;
-            if(((PsiIfStatement) statement).getElseBranch() != null){
-                complexity += nesting + 1;
-                nesting++;
-            }
         }
+        if(statement.getText().contains("else") && !statement.getText().contains("else if")) {
+            complexity += nesting + 1;
+            nesting++;
+        }
+
         if(statement instanceof PsiSwitchStatement){
             if(((PsiSwitchStatement) statement).getBody().getStatements().length > 0) {
                 for (PsiStatement stm : ((PsiSwitchStatement) statement).getBody().getStatements()) {
-                    complexity += nesting + 1;
-                    nesting++;
+                    if(stm.getText().contains("case")) {
+                        complexity += nesting + 1;
+                        nesting++;
+                    }
                 }
             }
         }
@@ -716,15 +839,20 @@ public final class MetricsUtils {
             }
         }
         if(statement instanceof PsiBinaryExpression){
-            if(statement.getText().contains("||"))
-                complexity++;
-            else if (statement.getText().contains("&&"))
-                complexity++;
+            for (PsiPolyadicExpression psiPolyadicExpression : PsiTreeUtil.findChildrenOfType(statement, PsiPolyadicExpression.class)) {
+                if(psiPolyadicExpression.getOperationTokenType().toString().trim().equals("EQEQ")){
+                    complexity++;
+                }
+            }
         }
         if(statement instanceof PsiExpression){
-            if(statement.getText().contains("?") && statement.getText().contains(":")
-                    && statement.getText().toCharArray()[0] != '"' &&
-                    statement.getText().toCharArray()[statement.getText().toCharArray().length -1] != '"'){
+            for (PsiPolyadicExpression psiPolyadicExpression : PsiTreeUtil.findChildrenOfType(statement, PsiPolyadicExpression.class)) {
+                if(psiPolyadicExpression.getOperationTokenType() == JavaTokenType.QUEST || psiPolyadicExpression.getOperationTokenType() == JavaTokenType.DOUBLE_COLON ){
+                    complexity += nesting + 1;
+                    nesting++;
+                }
+            }
+            if(statement.getText().toCharArray()[0] != '"' && statement.getText().toCharArray()[statement.getText().toCharArray().length -1] != '"'){
                 complexity += nesting + 1;
                 nesting++;
             }
@@ -748,5 +876,19 @@ public final class MetricsUtils {
         }
 
         return complexity;
+    }
+
+    public HashMap<String, Object> getValuesMetricsUndo(FileMetrics fileMetrics) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        if(Values.lastRefactoring.type.equals("Extract Method") || Values.lastRefactoring.type.equals("Extract Variable") ||
+                Values.lastRefactoring.type.equals("Introduce Parameter Object") ||
+                Values.lastRefactoring.type.equals("String Comparison"))
+            return getValuesMetrics(fileMetrics);
+        else if(Values.lastRefactoring.type.equals("Extract Class") || Values.lastRefactoring.type.equals("Move Method") ||
+                Values.lastRefactoring.type.equals("Inheritance To Delegation")){
+            return getValuesMetricsFile(fileMetrics);
+        }
+        return map;
     }
 }

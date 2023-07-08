@@ -1,5 +1,8 @@
 package com.ui;
 
+import com.analysis.candidates.*;
+import com.core.Gutter;
+import com.core.Severity;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.psi.PsiElement;
@@ -7,10 +10,8 @@ import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiStatement;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.refactorings.candidates.*;
-import com.refactorings.candidates.utils.Severity;
-import com.utils.Utilities;
-import com.utils.Values;
+import com.utils.UtilitiesOverall;
+import com.utils.importantValues.Values;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class VisualRepresentation {
     public ArrayList<Gutter> gutters;
-    public Utilities utilities = new Utilities();
+    public UtilitiesOverall utils = new UtilitiesOverall();
 
     public VisualRepresentation() {
         this.gutters = new ArrayList<>();
@@ -26,44 +27,20 @@ public class VisualRepresentation {
             rangeHighlighter.setGutterIconRenderer(null);
         }
     }
-
     public void startVisualAnalysis(Editor editor, ArrayList<Severity> severities) throws IOException {
-        Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+
+        //Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
         for (Severity severity : severities) {
             if (severity.candidate instanceof ExtractMethodCandidate) {
                 ExtractMethodCandidate extract = (ExtractMethodCandidate) severity.candidate;
                 for (PsiStatement node : extract.nodes) {
                     int lineStart = editor.offsetToLogicalPosition(node.getTextRange().getStartOffset()).line;
                     int lineEnd = editor.offsetToLogicalPosition(node.getTextRange().getEndOffset()).line;
-                    String description = "Extract Method Candidate - Extract this block of code to a new method and replace the old code with a call to the method";
-                    ImageIcon icon = null;
-                    if(Values.withColors) {
-                        icon = utilities.getIcon(severity.indexColorGutter, "EM");
+                    String description = "Extract Method Candidate - It extracts this block of code to a new method and replaces the old code with a call to the method";
+                    Icon icon = utils.getIcon(severity.indexColorGutter);
 
-                        for(int line = lineStart; line <= lineEnd; line++) {
-                            Gutter gutter = new Gutter(line, icon, severity.severity, description, node);
-                            if (this.gutters.isEmpty()) {
-                                this.gutters.add(gutter);
-                            } else {
-                                boolean found = false;
-                                for (Gutter g : this.gutters) {
-                                    if (g.line == gutter.line) {
-                                        found = true;
-                                        if (gutter.severity > g.severity) {
-                                            this.gutters.set(this.gutters.indexOf(g), gutter);
-                                        }
-                                    }
-                                }
-
-                                if (!found)
-                                    this.gutters.add(gutter);
-                            }
-                        }
-                    }
-                    else {
-                        icon = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("images/colors/exclamation.png"));
-                        Gutter gutter = new Gutter(lineStart, icon, severity.severity, description, node);
-
+                    for (int line = lineStart; line <= lineEnd; line++) {
+                        Gutter gutter = new Gutter(line, icon, severity.severity, description, node);
                         if (this.gutters.isEmpty()) {
                             this.gutters.add(gutter);
                         } else {
@@ -71,8 +48,15 @@ public class VisualRepresentation {
                             for (Gutter g : this.gutters) {
                                 if (g.line == gutter.line) {
                                     found = true;
-                                    if (gutter.severity > g.severity) {
-                                        this.gutters.set(this.gutters.indexOf(g), gutter);
+                                    if(!g.description.contains("Extract Method") && !g.description.contains("Extract Variable") && !g.description.contains("String Comparison")) {
+                                        if (gutter.severity > g.severity) {
+                                            this.gutters.set(this.gutters.indexOf(g), gutter);
+                                        }
+                                    }
+                                    else{
+                                        if (gutter.severity < g.severity) {
+                                            this.gutters.set(this.gutters.indexOf(g), gutter);
+                                        }
                                     }
                                 }
                             }
@@ -82,21 +66,15 @@ public class VisualRepresentation {
                         }
                     }
                 }
-            } else if (severity.candidate instanceof ExtractClassCandidate) {
+            }
+            else if (severity.candidate instanceof ExtractClassCandidate) {
                 ExtractClassCandidate extract = (ExtractClassCandidate) severity.candidate;
                 for (PsiElement targetEntity : extract.targetEntities) {
-                    String description = "Extract Class Candidate - Create a new class and place the fields and methods responsible for the relevant functionality in it";
-                    ImageIcon icon = null;
-
-                    if(Values.withColors)
-                        icon = utilities.getIcon(severity.indexColorGutter, "EC");
-                    else {
-                        icon = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("images/colors/exclamation.png"));
-                    }
-
+                    String description = "Extract Class Candidate - It creates a new class and places the fields and methods responsible for the relevant functionality in it";
+                    Icon icon = utils.getIcon(severity.indexColorGutter);
                     Gutter gutter;
                     if (targetEntity instanceof PsiMethod) {
-                        for (PsiStatement element : PsiTreeUtil.findChildrenOfType(targetEntity, PsiStatement.class)) {
+                        for (PsiStatement element : PsiTreeUtil.findChildrenOfType((PsiMethod)targetEntity, PsiStatement.class)) {
                             int line = editor.offsetToLogicalPosition(targetEntity.getTextRange().getStartOffset()).line;
                             gutter = new Gutter(line, icon, severity.severity, description, element);
 
@@ -138,18 +116,13 @@ public class VisualRepresentation {
                         }
                     }
                 }
-            } else if (severity.candidate instanceof ExtractVariableCandidate) {
+            }
+            else if (severity.candidate instanceof ExtractVariableCandidate) {
                 ExtractVariableCandidate extract = (ExtractVariableCandidate) severity.candidate;
                 int line = extract.range.start.line;
-                String description = "Extract Variable Candidate - Place the result of the expression or its parts in separate variables that are self-explanatory";
-                ImageIcon icon = null;
+                String description = "Extract Variable Candidate - It places the result of the expression or its parts in separate variables that are self-explanatory";
+                Icon icon = utils.getIcon(severity.indexColorGutter);
 
-                if(Values.withColors)
-                    icon = utilities.getIcon(severity.indexColorGutter, "EV");
-                else {
-                    icon = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("images/colors/exclamation.png"));
-                }
-                
                 Gutter gutter = new Gutter(line, icon, severity.severity, description, extract.node);
 
                 if (this.gutters.isEmpty()) {
@@ -159,8 +132,15 @@ public class VisualRepresentation {
                     for (Gutter g : this.gutters) {
                         if (g.line == gutter.line) {
                             found = true;
-                            if (gutter.severity > g.severity) {
-                                this.gutters.set(this.gutters.indexOf(g), gutter);
+                            if(g.description.equals(gutter.description) || !g.description.contains("Extract Method")) {
+                                if (gutter.severity > g.severity) {
+                                    this.gutters.set(this.gutters.indexOf(g), gutter);
+                                }
+                            }
+                            else{
+                                if (gutter.severity < g.severity) {
+                                    this.gutters.set(this.gutters.indexOf(g), gutter);
+                                }
                             }
                         }
                     }
@@ -172,14 +152,8 @@ public class VisualRepresentation {
             else if (severity.candidate instanceof IntroduceParamObjCandidate) {
                 IntroduceParamObjCandidate parameterObject = (IntroduceParamObjCandidate) severity.candidate;
                 int line = editor.offsetToLogicalPosition(parameterObject.method.getTextRange().getStartOffset()).line;
-                String description = "Introduce Parameter Object Candidate - Replace these parameters with an object";
-                ImageIcon icon = null;
-
-                if(Values.withColors)
-                    icon = utilities.getIcon(severity.indexColorGutter, "IPO");
-                else {
-                    icon = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("images/colors/exclamation.png"));
-                }
+                String description = "Introduce Parameter Object Candidate - It replaces these parameters with an object";
+                Icon icon = utils.getIcon(severity.indexColorGutter);
 
                 Gutter gutter = new Gutter(line, icon, severity.severity, description, parameterObject.method.getParameterList());
 
@@ -200,58 +174,88 @@ public class VisualRepresentation {
                         this.gutters.add(gutter);
                 }
             }
-            if (severity.candidate instanceof MoveMethodCandidate) {
+            else if (severity.candidate instanceof MoveMethodCandidate) {
                 MoveMethodCandidate move = (MoveMethodCandidate) severity.candidate;
-                for (PsiStatement node : move.method.getBody().getStatements()) {
-                    int lineStart = editor.offsetToLogicalPosition(node.getTextRange().getStartOffset()).line;
-                    int lineEnd = editor.offsetToLogicalPosition(node.getTextRange().getEndOffset()).line;
-                    String description = "Move Method Candidate - Create a new method in the class that uses the method the most, then move code from the old method to there. Turn the code of the original method into a reference to the new method in the other class or else remove it entirely";
-                    ImageIcon icon = null;
-                    if(Values.withColors) {
-                        icon = utilities.getIcon(severity.indexColorGutter, "MM");
+                PsiElement node = PsiTreeUtil.findChildrenOfType(move.method, PsiElement.class).iterator().next();
+                int line = editor.offsetToLogicalPosition(node.getTextRange().getStartOffset()).line;
+                String description = "Move Method Candidate - It creates a new method in the class that uses the method the most, then moves code from the old method to there. It turns the code of the original method into a reference to the new method in the other class or else it removes it entirely";
+                Icon icon = utils.getIcon(severity.indexColorGutter);
 
-                        for(int line = lineStart; line <= lineEnd; line++) {
-                            Gutter gutter = new Gutter(line, icon, severity.severity, description, node);
+                Gutter gutter = new Gutter(line, icon, severity.severity, description, node);
 
-                            if (this.gutters.isEmpty()) {
-                                this.gutters.add(gutter);
-                            } else {
-                                boolean found = false;
-                                for (Gutter g : this.gutters) {
-                                    if (g.line == gutter.line) {
-                                        found = true;
-                                        if (gutter.severity > g.severity) {
-                                            this.gutters.set(this.gutters.indexOf(g), gutter);
-                                        }
-                                    }
-                                }
-
-                                if (!found)
-                                    this.gutters.add(gutter);
+                if (this.gutters.isEmpty()) {
+                    this.gutters.add(gutter);
+                } else {
+                    boolean found = false;
+                    for (Gutter g : this.gutters) {
+                        if (g.line == gutter.line) {
+                            found = true;
+                            if (gutter.severity > g.severity) {
+                                this.gutters.set(this.gutters.indexOf(g), gutter);
                             }
                         }
                     }
-                    else {
-                        icon = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("images/colors/exclamation.png"));
 
-                        Gutter gutter = new Gutter(lineStart, icon, severity.severity, description, node);
-                        if (this.gutters.isEmpty()) {
-                            this.gutters.add(gutter);
-                        } else {
-                            boolean found = false;
-                            for (Gutter g : this.gutters) {
-                                if (g.line == gutter.line) {
-                                    found = true;
-                                    if (gutter.severity > g.severity) {
-                                        this.gutters.set(this.gutters.indexOf(g), gutter);
-                                    }
+                    if (!found)
+                        this.gutters.add(gutter);
+                }
+            }
+            else if (severity.candidate instanceof StringComparisonCandidate) {
+                StringComparisonCandidate extract = (StringComparisonCandidate) severity.candidate;
+                int line = extract.range.start.line;
+                String description = "String Comparison Candidate - Replace the binary expression with '==' operator and string operands with 'equals()'";
+                Icon icon = utils.getIcon(severity.indexColorGutter);
+
+                Gutter gutter = new Gutter(line, icon, severity.severity, description, extract.node);
+
+                if (this.gutters.isEmpty()) {
+                    this.gutters.add(gutter);
+                } else {
+                    boolean found = false;
+                    for (Gutter g : this.gutters) {
+                        if (g.line == gutter.line) {
+                            found = true;
+                            if(g.description.equals(gutter.description) || !g.description.contains("Extract Method")) {
+                                if (gutter.severity > g.severity) {
+                                    this.gutters.set(this.gutters.indexOf(g), gutter);
                                 }
                             }
-
-                            if (!found)
-                                this.gutters.add(gutter);
+                            else{
+                                if (gutter.severity < g.severity) {
+                                    this.gutters.set(this.gutters.indexOf(g), gutter);
+                                }
+                            }
                         }
                     }
+
+                    if (!found)
+                        this.gutters.add(gutter);
+                }
+            }
+            else if (severity.candidate instanceof InheritanceToDelegationCandidate) {
+                InheritanceToDelegationCandidate extract = (InheritanceToDelegationCandidate) severity.candidate;
+                PsiElement targetEntity = (PsiElement) PsiTreeUtil.findChildrenOfType(extract._class, PsiElement.class).toArray()[0];
+                String description = "Inheritance To Delegation - It creates a field and puts a superclass object in it, delegates methods to the superclass object, and gets rid of the inheritance.";
+                Icon icon = utils.getIcon(severity.indexColorGutter);
+                Gutter gutter;
+                int line = editor.offsetToLogicalPosition(targetEntity.getTextRange().getStartOffset()).line;
+                gutter = new Gutter(line, icon, severity.severity, description, targetEntity);
+
+                if (this.gutters.isEmpty()) {
+                    this.gutters.add(gutter);
+                } else {
+                    boolean found = false;
+                    for (Gutter g : this.gutters) {
+                        if (g.line == line) {
+                            found = true;
+                            if (severity.severity > g.severity) {
+                                this.gutters.set(this.gutters.indexOf(g), gutter);
+                            }
+                        }
+                    }
+
+                    if (!found)
+                        this.gutters.add(gutter);
                 }
             }
         }

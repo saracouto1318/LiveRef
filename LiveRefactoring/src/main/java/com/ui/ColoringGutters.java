@@ -1,22 +1,22 @@
 package com.ui;
 
+import com.analysis.candidates.*;
+import com.analysis.refactorings.*;
+import com.core.Gutter;
+import com.core.Severity;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.markup.*;
+import com.intellij.openapi.editor.markup.GutterIconRenderer;
+import com.intellij.openapi.editor.markup.HighlighterLayer;
+import com.intellij.openapi.editor.markup.MarkupModel;
+import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiStatement;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.xdebugger.ui.DebuggerColors;
-import com.refactorings.*;
-import com.refactorings.candidates.*;
-import com.refactorings.candidates.utils.Severity;
-import com.utils.Utilities;
-import com.utils.Values;
+import com.utils.UtilitiesOverall;
+import com.utils.importantValues.Values;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ColoringGutters {
@@ -31,19 +31,21 @@ public class ColoringGutters {
     }
 
     public void initGutters() {
-        ArrayList<RangeHighlighter> highlithers = new ArrayList<>();
+        ArrayList<RangeHighlighter> highlighters = new ArrayList<>();
         for (Gutter gutter : this.gutters) {
-            MarkupModel markupModel = this.editor.getMarkupModel();
-            RangeHighlighter rangeHighlighter = markupModel.addLineHighlighter(gutter.line, HighlighterLayer.FIRST, null);
-            this.addGutterIcon(rangeHighlighter, gutter.node, gutter.icon, gutter.description);
-            highlithers.add(rangeHighlighter);
+            int lineEnd = this.editor.offsetToLogicalPosition(Values.currentFile.javaFile.getTextRange().getEndOffset()).line;
+            if(gutter.line <= lineEnd) {
+                MarkupModel markupModel = this.editor.getMarkupModel();
+                RangeHighlighter rangeHighlighter = markupModel.addLineHighlighter(gutter.line, HighlighterLayer.FIRST, null);
+                this.addGutterIcon(rangeHighlighter, gutter.icon, gutter.description);
+                highlighters.add(rangeHighlighter);
+            }
         }
 
-        Values.gutters = highlithers;
+        Values.gutters = highlighters;
     }
 
-    public void addGutterIcon(RangeHighlighter rangeHighlighter,
-                              final PsiElement element, Icon icon, String description) {
+    public void addGutterIcon(RangeHighlighter rangeHighlighter, Icon icon, String description) {
         rangeHighlighter.setGutterIconRenderer(new GutterIconRenderer() {
             public @NotNull Icon getIcon() {
                 return icon;
@@ -69,7 +71,7 @@ public class ColoringGutters {
 
             public AnAction getClickAction() {
                 ArrayList<Severity> clickedCandidates = new ArrayList<>();
-                Utilities utilities = new Utilities();
+                UtilitiesOverall utilitiesOverall = new UtilitiesOverall();
 
                 if (Values.isActive) {
                     if (editor != Values.editor) {
@@ -84,22 +86,23 @@ public class ColoringGutters {
                             //for (PsiStatement node : extract.nodes) {
                                 if(extract.range.start.line <= line && line <= extract.range.end.line){
                                 //if (editor.offsetToLogicalPosition(node.getTextRange().getStartOffset()).line == line) {
-                                    if (utilities.containsInArray(editor, severity, clickedCandidates))
+                                    if (utilitiesOverall.containsInArray(editor, severity, clickedCandidates))
                                         clickedCandidates.add(severity);
                                 }
                             //}
-                        } else if (severity.candidate instanceof ExtractVariableCandidate) {
+                        }
+                        else if (severity.candidate instanceof ExtractVariableCandidate) {
                             ExtractVariableCandidate extract = (ExtractVariableCandidate) severity.candidate;
                             if (editor.offsetToLogicalPosition(extract.node.getTextRange().getStartOffset()).line == line) {
-                                if (utilities.containsInArray(editor, severity, clickedCandidates))
+                                if (utilitiesOverall.containsInArray(editor, severity, clickedCandidates))
                                     clickedCandidates.add(severity);
                             }
-                        } else if (severity.candidate instanceof ExtractClassCandidate) {
+                        }
+                        else if (severity.candidate instanceof ExtractClassCandidate) {
                             ExtractClassCandidate extract = (ExtractClassCandidate) severity.candidate;
                             for (PsiElement targetEntity : extract.targetEntities) {
-                                if (editor.offsetToLogicalPosition(targetEntity.getTextRange().getStartOffset()).line <= line &&
-                                        editor.offsetToLogicalPosition(targetEntity.getTextRange().getEndOffset()).line >= line) {
-                                    if (utilities.containsInArray(editor, severity, clickedCandidates))
+                                if (editor.offsetToLogicalPosition(targetEntity.getTextRange().getStartOffset()).line == line) {
+                                    if (utilitiesOverall.containsInArray(editor, severity, clickedCandidates))
                                         clickedCandidates.add(severity);
                                 }
                             }
@@ -107,9 +110,9 @@ public class ColoringGutters {
                         if (severity.candidate instanceof MoveMethodCandidate) {
                             MoveMethodCandidate move = (MoveMethodCandidate) severity.candidate;
                             //for (PsiStatement node : extract.nodes) {
-                            if(move.range.start.line <= line && line <= move.range.end.line){
+                            if(move.range.start.line == line){
                                 //if (editor.offsetToLogicalPosition(node.getTextRange().getStartOffset()).line == line) {
-                                if (utilities.containsInArray(editor, severity, clickedCandidates))
+                                if (utilitiesOverall.containsInArray(editor, severity, clickedCandidates))
                                     clickedCandidates.add(severity);
                             }
                             //}
@@ -117,7 +120,22 @@ public class ColoringGutters {
                         else if (severity.candidate instanceof IntroduceParamObjCandidate) {
                             IntroduceParamObjCandidate paramObj = (IntroduceParamObjCandidate) severity.candidate;
                             if (editor.offsetToLogicalPosition(paramObj.method.getTextRange().getStartOffset()).line == line) {
-                                if (utilities.containsInArray(editor, severity, clickedCandidates))
+                                if (utilitiesOverall.containsInArray(editor, severity, clickedCandidates))
+                                    clickedCandidates.add(severity);
+                            }
+                        }
+                        else if (severity.candidate instanceof StringComparisonCandidate) {
+                            StringComparisonCandidate comparison = (StringComparisonCandidate) severity.candidate;
+                            if (editor.offsetToLogicalPosition(comparison.node.getTextRange().getStartOffset()).line == line) {
+                                if (utilitiesOverall.containsInArray(editor, severity, clickedCandidates))
+                                    clickedCandidates.add(severity);
+                            }
+                        }
+                        else if (severity.candidate instanceof InheritanceToDelegationCandidate) {
+                            InheritanceToDelegationCandidate refused = (InheritanceToDelegationCandidate) severity.candidate;
+                            int lineStart = editor.offsetToLogicalPosition(refused._class.getTextRange().getStartOffset()).line;
+                            if(lineStart == line){
+                                if (utilitiesOverall.containsInArray(editor, severity, clickedCandidates))
                                     clickedCandidates.add(severity);
                             }
                         }
@@ -146,6 +164,12 @@ public class ColoringGutters {
                         } else if (candidate instanceof MoveMethodCandidate) {
                             MoveMethod move = new MoveMethod(editor);
                             move.moveMethod((MoveMethodCandidate) candidate, severity.severity, severity.indexColorGutter);
+                        } else if (candidate instanceof StringComparisonCandidate) {
+                            StringComparison comparison = new StringComparison(editor);
+                            comparison.stringComparison((StringComparisonCandidate) candidate, severity.severity, severity.indexColorGutter);
+                        } else if (candidate instanceof InheritanceToDelegationCandidate) {
+                            InheritanceToDelegation inheritance = new InheritanceToDelegation(editor);
+                            inheritance.inheritanceToDelegation((InheritanceToDelegationCandidate) candidate, severity.severity, severity.indexColorGutter);
                         }
                     }
                 }
@@ -154,5 +178,4 @@ public class ColoringGutters {
             }
         });
     }
-
 }

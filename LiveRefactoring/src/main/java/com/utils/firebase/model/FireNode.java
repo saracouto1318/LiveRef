@@ -28,7 +28,6 @@ public class FireNode {
     }
 
     public static void printTree(FireNode source) {
-        System.out.println("Current Tree: " + source.getPath());
         for (FireNode data : source.getChildren()) {
             printTree(data);
         }
