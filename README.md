@@ -26,7 +26,7 @@ To use this tool, we need to install it on IntelliJ IDE by following the next st
 1. Launch the **IntelliJ IDE**;
 2. Select your IDE's preferences. There you will find the ***“Plugins”*** menu;
 3. Select the option of ___“Install Plugin from Disk”___ (see the following image);
-4. Search the folder where you place the **plugin distribution** and select its **.zip** folder depending of your IntelliJ IDE version ([LiveRef-2021.zip](/LiveRef-IntelliJ 2021.zip) or [LiveRef-2022.zip](/LiveRef-IntelliJ 2022.zip));
+4. Search the folder where you place the **plugin distribution** and select its **.zip** folder depending of your IntelliJ IDE version ([LiveRef-2021.zip](./LiveRef-IntelliJ-2021.zip) or [LiveRef-2022.zip](./LiveRef-IntelliJ-2022.zip));
 5. Then, IntelliJ will install the plugin. 
      
 
@@ -71,4 +71,4 @@ To use this tool, we need to install it on IntelliJ IDE by following the next st
 
 * Folder [LiveRefactoring-2022](/LiveRefactoring-2022) contains the source code of our ***Live Refactoring Environment*** for **IntelliJ IDE 2022**.
 
-*Folder [Experiments](/Experiments) contains the main artifacts used by the participants of our empirical experiments and the main results collected from them.
+* Folder [Experiments](/Experiments) contains the main artifacts used by the participants of our empirical experiments and the main results collected from them.
