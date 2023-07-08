@@ -63,6 +63,8 @@ To use this tool, we need to install it on IntelliJ IDE by following the next st
 5. After this action, the refactoring is automatically applied to the code, and the tool starts a new analysis.
 
 
+[Here](./LiveRefactoring/images/video.mp4) you can find a demonstration video that summarizes the main actions of this tool.
+
 ## Further Information
 
 * Folder [LiveRefactoring](/LiveRefactoring) contains the source code of our ***Live Refactoring Environment*** for **IntelliJ IDE 2021** or any other older version.
