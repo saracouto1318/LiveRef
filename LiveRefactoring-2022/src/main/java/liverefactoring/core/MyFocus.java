@@ -1,4 +1,4 @@
-package com.core;
+package liverefactoring.core;
 
 import com.intellij.openapi.editor.LogicalPosition;
 

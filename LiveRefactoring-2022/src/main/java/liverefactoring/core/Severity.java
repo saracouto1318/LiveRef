@@ -1,4 +1,4 @@
-package com.core;
+package liverefactoring.core;
 
 public class Severity {
     public Object candidate;

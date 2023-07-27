@@ -1,15 +1,15 @@
-package com.utils;
+package liverefactoring.utils;
 
-import com.analysis.metrics.ClassMetrics;
-import com.analysis.metrics.FileMetrics;
-import com.analysis.metrics.MethodMetrics;
+import liverefactoring.analysis.metrics.ClassMetrics;
+import liverefactoring.analysis.metrics.FileMetrics;
+import liverefactoring.analysis.metrics.MethodMetrics;
 import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.psi.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.utils.Halstead.Initiator;
-import com.utils.Halstead.MetricsEvaluator;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.Halstead.Initiator;
+import liverefactoring.utils.Halstead.MetricsEvaluator;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.ArrayList;
 import java.util.HashMap;

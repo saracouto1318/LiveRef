@@ -1,9 +1,9 @@
-package com.utils.JDeodorant.utils;
+package liverefactoring.utils.JDeodorant.utils;
 
 import com.intellij.psi.*;
-import com.utils.JDeodorant.AbstractVariable;
-import com.utils.JDeodorant.CompositeVariable;
-import com.utils.JDeodorant.PlainVariable;
+import liverefactoring.utils.JDeodorant.AbstractVariable;
+import liverefactoring.utils.JDeodorant.CompositeVariable;
+import liverefactoring.utils.JDeodorant.PlainVariable;
 
 import java.util.ArrayList;
 import java.util.Arrays;

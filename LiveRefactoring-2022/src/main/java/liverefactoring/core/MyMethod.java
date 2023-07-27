@@ -1,7 +1,7 @@
-package com.core;
+package liverefactoring.core;
 
 import com.intellij.psi.*;
-import com.utils.RefactorUtils;
+import liverefactoring.utils.RefactorUtils;
 
 import java.util.ArrayList;
 

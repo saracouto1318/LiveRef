@@ -1,15 +1,15 @@
-package com.analysis.refactorings;
+package liverefactoring.analysis.refactorings;
 
-import com.analysis.candidates.IntroduceParamObjCandidate;
-import com.core.LastRefactoring;
+import liverefactoring.analysis.candidates.IntroduceParamObjCandidate;
+import liverefactoring.core.LastRefactoring;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.refactoring.introduceparameterobject.IntroduceParameterObjectDialog;
-import com.utils.importantValues.ThresholdsCandidates;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.ArrayList;
 import java.util.List;

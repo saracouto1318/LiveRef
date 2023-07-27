@@ -1,8 +1,8 @@
-package com.utils.firebase.model.mapper;
+package liverefactoring.utils.firebase.model.mapper;
 
 
 import com.google.firebase.database.DataSnapshot;
-import com.utils.firebase.model.FireNode;
+import liverefactoring.utils.firebase.model.FireNode;
 
 import java.util.Iterator;
 

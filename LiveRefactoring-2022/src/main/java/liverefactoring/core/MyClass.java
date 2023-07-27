@@ -1,4 +1,4 @@
-package com.core;
+package liverefactoring.core;
 
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.project.Project;
@@ -8,8 +8,8 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.indexing.FileBasedIndex;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
 
 import java.util.*;
 
@@ -264,7 +264,7 @@ public class MyClass {
     public void getAllMethods(){
         RefactorUtils utils = new RefactorUtils();
         for (PsiMethod method : utils.getMethods(this._class)) {
-            if(utils.getAllStatements(method).size() > (2*ThresholdsCandidates.minNumStatements)){
+            if(utils.getAllStatements(method).size() > (2* ThresholdsCandidates.minNumStatements)){
                 MyMethod myMethod = new MyMethod(method);
                 if(this.isGetter(method))
                     myMethod.setGetter();

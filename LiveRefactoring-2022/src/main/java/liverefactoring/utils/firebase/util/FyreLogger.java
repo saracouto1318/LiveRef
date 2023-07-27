@@ -1,4 +1,4 @@
-package com.utils.firebase.util;
+package liverefactoring.utils.firebase.util;
 
 public class FyreLogger {
     private String tag;

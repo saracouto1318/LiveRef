@@ -3,8 +3,6 @@ package liverefactoring.ui;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.wm.WindowManager;
 import liverefactoring.core.Refactorings;
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.fileEditor.TextEditor;
@@ -19,7 +17,6 @@ import liverefactoring.utils.UtilitiesOverall;
 import liverefactoring.utils.importantValues.SelectedRefactorings;
 import liverefactoring.utils.importantValues.ThresholdsCandidates;
 import liverefactoring.utils.importantValues.Values;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -30,7 +27,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class ConfigureTool {
     UtilitiesOverall utils = new UtilitiesOverall();

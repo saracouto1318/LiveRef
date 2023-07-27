@@ -1,15 +1,15 @@
-package com.analysis.refactorings;
+package liverefactoring.analysis.refactorings;
 
-import com.analysis.candidates.StringComparisonCandidate;
-import com.core.LastRefactoring;
-import com.core.MyRange;
+import liverefactoring.analysis.candidates.StringComparisonCandidate;
+import liverefactoring.core.LastRefactoring;
+import liverefactoring.core.MyRange;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.psi.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.ArrayList;
 import java.util.List;

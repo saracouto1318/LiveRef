@@ -1,4 +1,4 @@
-package com.utils.importantValues;
+package liverefactoring.utils.importantValues;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiVariable;

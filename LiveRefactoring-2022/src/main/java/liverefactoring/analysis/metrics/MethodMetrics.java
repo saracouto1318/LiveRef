@@ -1,10 +1,10 @@
-package com.analysis.metrics;
+package liverefactoring.analysis.metrics;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
-import com.utils.MetricsUtils;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.MetricsUtils;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
 
 import java.util.Objects;
 

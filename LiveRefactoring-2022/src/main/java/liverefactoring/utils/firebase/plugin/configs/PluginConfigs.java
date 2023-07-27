@@ -1,4 +1,4 @@
-package com.utils.firebase.plugin.configs;
+package liverefactoring.utils.firebase.plugin.configs;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;

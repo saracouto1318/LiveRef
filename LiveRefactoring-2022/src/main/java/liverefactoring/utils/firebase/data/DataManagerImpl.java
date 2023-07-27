@@ -1,17 +1,17 @@
-package com.utils.firebase.data;
+package liverefactoring.utils.firebase.data;
 
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.utils.firebase.domain.DataManager;
-import com.utils.firebase.model.FireNode;
-import com.utils.firebase.model.ObserveContract;
-import com.utils.firebase.model.protocol.UpdateType;
-import com.utils.firebase.util.FyreLogger;
-import com.utils.firebase.util.PathExtractor;
-import com.utils.firebase.util.SnapshotParser;
+import liverefactoring.utils.firebase.domain.DataManager;
+import liverefactoring.utils.firebase.model.FireNode;
+import liverefactoring.utils.firebase.model.ObserveContract;
+import liverefactoring.utils.firebase.model.protocol.UpdateType;
+import liverefactoring.utils.firebase.util.FyreLogger;
+import liverefactoring.utils.firebase.util.PathExtractor;
+import liverefactoring.utils.firebase.util.SnapshotParser;
 
 import java.io.IOException;
 import java.util.Map;

@@ -1,8 +1,8 @@
-package com.analysis.refactorings;
+package liverefactoring.analysis.refactorings;
 
-import com.analysis.candidates.ExtractClassCandidate;
-import com.analysis.metrics.ClassMetrics;
-import com.core.LastRefactoring;
+import liverefactoring.analysis.candidates.ExtractClassCandidate;
+import liverefactoring.analysis.metrics.ClassMetrics;
+import liverefactoring.core.LastRefactoring;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
@@ -11,12 +11,12 @@ import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiReferenceExpressionImpl;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.ui.JDeodorant.ClassWrapper;
-import com.ui.JDeodorant.ExtractClassRefactoring;
-import com.utils.RefactorUtils;
-import com.utils.UtilitiesOverall;
-import com.utils.importantValues.ThresholdsCandidates;
-import com.utils.importantValues.Values;
+import liverefactoring.ui.JDeodorant.ClassWrapper;
+import liverefactoring.ui.JDeodorant.ExtractClassRefactoring;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.UtilitiesOverall;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.*;
 import java.util.stream.Stream;

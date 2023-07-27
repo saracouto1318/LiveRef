@@ -1,4 +1,4 @@
-package com.utils.Halstead;
+package liverefactoring.utils.Halstead;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiJavaToken;

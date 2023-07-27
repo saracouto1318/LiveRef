@@ -1,10 +1,10 @@
-package com.analysis.refactorings;
+package liverefactoring.analysis.refactorings;
 
-import com.analysis.candidates.ExtractMethodCandidate;
-import com.analysis.metrics.MethodMetrics;
-import com.core.Fragment;
-import com.core.LastRefactoring;
-import com.core.MyRange;
+import liverefactoring.analysis.candidates.ExtractMethodCandidate;
+import liverefactoring.analysis.metrics.MethodMetrics;
+import liverefactoring.core.Fragment;
+import liverefactoring.core.LastRefactoring;
+import liverefactoring.core.MyRange;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.psi.*;
@@ -13,9 +13,9 @@ import com.intellij.refactoring.HelpID;
 import com.intellij.refactoring.extractMethod.ExtractMethodHandler;
 import com.intellij.refactoring.extractMethod.ExtractMethodProcessor;
 import com.intellij.refactoring.extractMethod.PrepareFailedException;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.ThresholdsCandidates;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.ArrayList;
 import java.util.Arrays;

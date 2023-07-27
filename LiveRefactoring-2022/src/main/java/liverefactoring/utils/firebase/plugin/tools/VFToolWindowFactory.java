@@ -1,12 +1,12 @@
-package com.utils.firebase.plugin.tools;
+package liverefactoring.utils.firebase.plugin.tools;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
-import com.utils.firebase.domain.VisualFire;
-import com.utils.firebase.plugin.controller.TreeController;
-import com.utils.firebase.plugin.forms.VFContent;
+import liverefactoring.utils.firebase.domain.VisualFire;
+import liverefactoring.utils.firebase.plugin.controller.TreeController;
+import liverefactoring.utils.firebase.plugin.forms.VFContent;
 import org.jetbrains.annotations.NotNull;
 
 public class VFToolWindowFactory implements ToolWindowFactory {

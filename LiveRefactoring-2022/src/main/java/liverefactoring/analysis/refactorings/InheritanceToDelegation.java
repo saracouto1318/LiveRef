@@ -1,17 +1,17 @@
-package com.analysis.refactorings;
+package liverefactoring.analysis.refactorings;
 
-import com.analysis.candidates.InheritanceToDelegationCandidate;
-import com.analysis.metrics.ClassMetrics;
-import com.core.LastRefactoring;
+import liverefactoring.analysis.candidates.InheritanceToDelegationCandidate;
+import liverefactoring.analysis.metrics.ClassMetrics;
+import liverefactoring.core.LastRefactoring;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.refactoring.inheritanceToDelegation.InheritanceToDelegationDialog;
 import com.intellij.refactoring.util.classMembers.MemberInfo;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.ThresholdsCandidates;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.*;
 import java.util.stream.Stream;

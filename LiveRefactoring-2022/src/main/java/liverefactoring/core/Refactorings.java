@@ -1,4 +1,4 @@
-package com.core;
+package liverefactoring.core;
 
 public enum Refactorings {
     ExtractMethod,

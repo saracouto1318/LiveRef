@@ -1,10 +1,10 @@
-package com.analysis.metrics;
+package liverefactoring.analysis.metrics;
 
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.utils.MetricsUtils;
-import com.utils.RefactorUtils;
-import com.utils.UtilitiesOverall;
+import liverefactoring.utils.MetricsUtils;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.UtilitiesOverall;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;

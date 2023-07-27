@@ -1,8 +1,8 @@
-package com.analysis.candidates;
+package liverefactoring.analysis.candidates;
 
-import com.core.MyRange;
+import liverefactoring.core.MyRange;
 import com.intellij.psi.*;
-import com.utils.RefactorUtils;
+import liverefactoring.utils.RefactorUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

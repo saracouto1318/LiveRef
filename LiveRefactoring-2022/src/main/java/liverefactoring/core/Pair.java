@@ -1,4 +1,4 @@
-package com.core;
+package liverefactoring.core;
 
 import java.util.Objects;
 

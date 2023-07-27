@@ -1,14 +1,14 @@
-package com.utils.firebase.domain;
+package liverefactoring.utils.firebase.domain;
 
 
-import com.utils.firebase.data.DataManagerImpl;
-import com.utils.firebase.data.FirebaseManager;
-import com.utils.firebase.model.FireNode;
-import com.utils.firebase.model.ObserveContract;
-import com.utils.firebase.model.protocol.UpdateType;
-import com.utils.firebase.util.ClipboardManager;
-import com.utils.firebase.util.FireDataJSONConverter;
-import com.utils.firebase.util.FyreLogger;
+import liverefactoring.utils.firebase.data.DataManagerImpl;
+import liverefactoring.utils.firebase.data.FirebaseManager;
+import liverefactoring.utils.firebase.model.FireNode;
+import liverefactoring.utils.firebase.model.ObserveContract;
+import liverefactoring.utils.firebase.model.protocol.UpdateType;
+import liverefactoring.utils.firebase.util.ClipboardManager;
+import liverefactoring.utils.firebase.util.FireDataJSONConverter;
+import liverefactoring.utils.firebase.util.FyreLogger;
 
 import java.awt.*;
 import java.io.IOException;

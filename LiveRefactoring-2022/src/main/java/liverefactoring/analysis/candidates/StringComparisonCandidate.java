@@ -1,10 +1,10 @@
-package com.analysis.candidates;
+package liverefactoring.analysis.candidates;
 
-import com.analysis.metrics.MethodMetrics;
-import com.core.MyRange;
+import liverefactoring.analysis.metrics.MethodMetrics;
+import liverefactoring.core.MyRange;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.*;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.importantValues.Values;
 
 public class StringComparisonCandidate {
     public MyRange range;

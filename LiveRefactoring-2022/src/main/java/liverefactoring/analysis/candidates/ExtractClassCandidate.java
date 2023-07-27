@@ -1,12 +1,12 @@
-package com.analysis.candidates;
+package liverefactoring.analysis.candidates;
 
-import com.analysis.metrics.ClassMetrics;
-import com.analysis.metrics.MethodMetrics;
 import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.analysis.metrics.ClassMetrics;
+import liverefactoring.analysis.metrics.MethodMetrics;
 
 import java.util.ArrayList;
 import java.util.Collection;

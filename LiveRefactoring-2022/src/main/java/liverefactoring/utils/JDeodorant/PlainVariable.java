@@ -1,4 +1,4 @@
-package com.utils.JDeodorant;
+package liverefactoring.utils.JDeodorant;
 
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;

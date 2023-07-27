@@ -1,12 +1,12 @@
-package com.utils.importantValues;
+package liverefactoring.utils.importantValues;
 
-import com.core.Fragment;
-import com.core.MyAttribute;
-import com.core.MyMethod;
+import liverefactoring.core.Fragment;
+import liverefactoring.core.MyAttribute;
+import liverefactoring.core.MyMethod;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.utils.RefactorUtils;
-import com.utils.UtilitiesOverall;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.UtilitiesOverall;
 
 import java.util.ArrayList;
 import java.util.Arrays;

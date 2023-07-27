@@ -1,4 +1,4 @@
-package com.utils.firebase.model;
+package liverefactoring.utils.firebase.model;
 
 import java.util.ArrayList;
 

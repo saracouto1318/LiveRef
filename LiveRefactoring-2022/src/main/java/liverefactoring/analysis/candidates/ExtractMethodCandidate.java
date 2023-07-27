@@ -1,16 +1,16 @@
-package com.analysis.candidates;
+package liverefactoring.analysis.candidates;
 
-import com.analysis.metrics.FileMetrics;
-import com.analysis.metrics.MethodMetrics;
-import com.core.MyRange;
+import liverefactoring.analysis.metrics.FileMetrics;
+import liverefactoring.analysis.metrics.MethodMetrics;
+import liverefactoring.core.MyRange;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiStatement;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.utils.MetricsUtils;
-import com.utils.RefactorUtils;
-import com.utils.UtilitiesOverall;
+import liverefactoring.utils.MetricsUtils;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.UtilitiesOverall;
 
 import java.util.ArrayList;
 import java.util.Collections;

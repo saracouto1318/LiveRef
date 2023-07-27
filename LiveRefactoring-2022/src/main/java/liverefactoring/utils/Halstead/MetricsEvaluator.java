@@ -1,4 +1,4 @@
-package com.utils.Halstead;
+package liverefactoring.utils.Halstead;
 
 public class MetricsEvaluator {
 	public double PROGRAM_LENGTH,PROGRAM_VOCABULARY,ESTIMATED_LENGTH,PURITY_RATIO,VOLUME,DIFFICULTY,PROGRAM_EFFORT,PROGRAMMING_TIME;

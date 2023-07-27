@@ -1,10 +1,10 @@
-package com.utils.binaryData;
+package liverefactoring.utils.binaryData;
 
-import com.core.FeatureType;
-import com.core.Fragment;
+import liverefactoring.core.FeatureType;
+import liverefactoring.core.Fragment;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.utils.UtilitiesOverall;
+import liverefactoring.utils.UtilitiesOverall;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

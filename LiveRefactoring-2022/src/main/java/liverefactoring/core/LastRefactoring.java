@@ -1,6 +1,6 @@
-package com.core;
+package liverefactoring.core;
 
-import com.analysis.metrics.FileMetrics;
+import liverefactoring.analysis.metrics.FileMetrics;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;

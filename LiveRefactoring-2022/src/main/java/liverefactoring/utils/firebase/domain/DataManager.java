@@ -1,7 +1,7 @@
-package com.utils.firebase.domain;
+package liverefactoring.utils.firebase.domain;
 
-import com.utils.firebase.model.FireNode;
-import com.utils.firebase.model.ObserveContract;
+import liverefactoring.utils.firebase.model.FireNode;
+import liverefactoring.utils.firebase.model.ObserveContract;
 
 import java.io.IOException;
 import java.util.Map;

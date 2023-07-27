@@ -1,4 +1,4 @@
-package com.utils.firebase.util;
+package liverefactoring.utils.firebase.util;
 
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;

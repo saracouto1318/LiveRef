@@ -1,12 +1,12 @@
-package com.utils.clustering;
+package liverefactoring.utils.clustering;
 
-import com.analysis.candidates.ExtractMethodCandidate;
-import com.core.Cluster;
+import liverefactoring.analysis.candidates.ExtractMethodCandidate;
+import liverefactoring.core.Cluster;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiStatement;
-import com.utils.RefactorUtils;
-import com.utils.UtilitiesOverall;
-import com.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.UtilitiesOverall;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
 
 import java.util.ArrayList;
 import java.util.HashSet;

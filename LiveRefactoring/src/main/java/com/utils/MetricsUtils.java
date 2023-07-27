@@ -557,18 +557,13 @@ public final class MetricsUtils {
     }
 
     public MethodMetrics getMetricsFirebase(FileMetrics metrics){
-        System.out.println(Values.lastRefactoring.method.getName());
         for (MethodMetrics methodMetric : metrics.methodMetrics) {
             if(methodMetric.method.getName().equals(Values.lastRefactoring.method.getName())){
-                System.out.println("aqui aqui");
                 if(methodMetric.method.getContainingClass() == null && Values.lastRefactoring.method.getContainingClass() == null){
-                    System.out.println("aqui aqui2");
                     return methodMetric;
                 }
                 else if(methodMetric.method.getContainingClass() != null && Values.lastRefactoring.method.getContainingClass() != null){
-                    System.out.println("aqui aqui3");
                     if(methodMetric.method.getContainingClass().getName().equals(Values.lastRefactoring.method.getContainingClass().getName())){
-                        System.out.println("aqui aqui4");
                         return methodMetric;
                     }
                 }

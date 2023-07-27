@@ -1,4 +1,4 @@
-package com.core;
+package liverefactoring.core;
 
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiStatement;

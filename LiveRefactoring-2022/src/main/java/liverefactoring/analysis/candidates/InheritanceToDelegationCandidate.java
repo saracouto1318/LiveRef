@@ -1,6 +1,6 @@
-package com.analysis.candidates;
+package liverefactoring.analysis.candidates;
 
-import com.analysis.metrics.FileMetrics;
+import liverefactoring.analysis.metrics.FileMetrics;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
 

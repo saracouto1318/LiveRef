@@ -1,6 +1,6 @@
-package com.utils.firebase.model;
+package liverefactoring.utils.firebase.model;
 
-import com.utils.firebase.model.protocol.UpdateType;
+import liverefactoring.utils.firebase.model.protocol.UpdateType;
 
 import java.util.ArrayList;
 

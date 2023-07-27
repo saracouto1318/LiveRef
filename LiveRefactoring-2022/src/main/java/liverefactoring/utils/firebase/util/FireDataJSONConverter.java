@@ -1,6 +1,6 @@
-package com.utils.firebase.util;
+package liverefactoring.utils.firebase.util;
 
-import com.utils.firebase.model.FireNode;
+import liverefactoring.utils.firebase.model.FireNode;
 import net.minidev.json.JSONObject;
 
 public class FireDataJSONConverter {

@@ -1,8 +1,8 @@
-package com.utils.clustering;
+package liverefactoring.utils.clustering;
 
-import com.core.Pair;
-import com.utils.binaryData.DBPoint;
-import com.utils.importantValues.DistanceCalculator;
+import liverefactoring.core.Pair;
+import liverefactoring.utils.binaryData.DBPoint;
+import liverefactoring.utils.importantValues.DistanceCalculator;
 
 import java.util.ArrayList;
 import java.util.List;

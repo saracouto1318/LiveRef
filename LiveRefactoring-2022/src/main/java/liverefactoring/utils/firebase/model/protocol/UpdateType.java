@@ -1,4 +1,4 @@
-package com.utils.firebase.model.protocol;
+package liverefactoring.utils.firebase.model.protocol;
 
 public enum UpdateType {
     FIREBASE_INIT_SUCCESS,

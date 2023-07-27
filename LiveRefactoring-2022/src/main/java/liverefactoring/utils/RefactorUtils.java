@@ -1,7 +1,7 @@
-package com.utils;
+package liverefactoring.utils;
 
-import com.analysis.candidates.ExtractMethodCandidate;
-import com.analysis.metrics.MethodMetrics;
+import liverefactoring.analysis.candidates.ExtractMethodCandidate;
+import liverefactoring.analysis.metrics.MethodMetrics;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -9,12 +9,10 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.importantValues.Values;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
 
 import java.util.*;
-
-import static com.utils.importantValues.ThresholdsCandidates.lowerValue;
-import static com.utils.importantValues.ThresholdsCandidates.upperValue;
 
 public class RefactorUtils {
     public RefactorUtils() {
@@ -169,7 +167,7 @@ public class RefactorUtils {
             ArrayList<PsiMethod> methodsInRow = new ArrayList<>();
             for (int j = 0; j < matrix.size(); j++) {
                 if(j < methods.size()) {
-                    if (matrix.get(j) >= lowerValue && matrix.get(j) <= upperValue) {
+                    if (matrix.get(j) >= ThresholdsCandidates.lowerValue && matrix.get(j) <= ThresholdsCandidates.upperValue) {
                         methodsInRow.add(methods.get(j));
                     }
                 }

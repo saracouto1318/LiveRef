@@ -1,6 +1,7 @@
 package liverefactoring.ui;
 
 import liverefactoring.analysis.candidates.*;
+import liverefactoring.analysis.candidates.*;
 import liverefactoring.core.Gutter;
 import liverefactoring.core.Severity;
 import com.intellij.openapi.editor.Editor;

@@ -1,15 +1,13 @@
 package liverefactoring.ui;
 
 import liverefactoring.analysis.candidates.*;
+import liverefactoring.analysis.candidates.*;
 import liverefactoring.core.MyRange;
 import liverefactoring.core.Severity;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.openapi.editor.VisualPosition;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.wm.IdeFocusManager;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiParameterList;
 import com.intellij.psi.PsiStatement;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -24,8 +22,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class RefactoringPanel extends DialogWrapper {

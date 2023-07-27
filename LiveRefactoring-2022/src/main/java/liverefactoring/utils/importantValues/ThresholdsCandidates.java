@@ -1,4 +1,4 @@
-package com.utils.importantValues;
+package liverefactoring.utils.importantValues;
 
 public class ThresholdsCandidates {
     //Extract Class

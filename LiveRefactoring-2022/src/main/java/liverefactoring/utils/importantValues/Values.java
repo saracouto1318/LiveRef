@@ -1,15 +1,17 @@
-package com.utils.importantValues;
+package liverefactoring.utils.importantValues;
 
-import com.analysis.candidates.*;
-import com.analysis.metrics.ClassMetrics;
-import com.analysis.metrics.FileMetrics;
-import com.analysis.metrics.MethodMetrics;
-import com.core.LastRefactoring;
-import com.core.Severity;
+import liverefactoring.analysis.candidates.*;
+import liverefactoring.analysis.candidates.*;
+import liverefactoring.analysis.metrics.ClassMetrics;
+import liverefactoring.analysis.metrics.FileMetrics;
+import liverefactoring.analysis.metrics.MethodMetrics;
+import liverefactoring.core.LastRefactoring;
+import liverefactoring.core.Severity;
 import com.google.firebase.database.DatabaseReference;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
+import liverefactoring.utils.UtilitiesOverall;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -18,8 +20,6 @@ import java.util.List;
 
 public class Values {
     public static Editor editor = null;
-    public static int counterCrawler = 0;
-    public static AnActionEvent event = null;
     public static boolean isActive = false;
     public static boolean isRefactoring = false;
     public static ArrayList<RangeHighlighter> gutters = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Values {
     public static boolean isFirst = false;
     public static ArrayList<FileMetrics> openedFiles = new ArrayList<>();
     public static HashMap<String, ArrayList<Severity>> openedRefactorings = new HashMap<>();
-    public static HashMap<String, ArrayList<ArrayList<Object>>> metricsFile = new HashMap<>();
+    public static HashMap<String, ArrayList<ArrayList<Double>>> metricsFile = new HashMap<>();
     public static boolean colorBlind = false;
     public static String username = "username";
     public static final int numColors = 10;
@@ -64,6 +64,15 @@ public class Values {
     public static boolean afterRefactoring = false;
     public static int numSeconds = 5;
     public static String projectName = "unknown";
+    public static boolean started = false;
+    public static boolean enable = false;
+    public static boolean done = false;
+
+    public static int active = 0;
+    public static boolean undoActivated = false;
+    public static Instant startCoding = null;
+    public static int lastActive = 0;
+    public static boolean activationStatus = true;
 
 
     public void setLastRefactoring(LastRefactoring refactoring) {

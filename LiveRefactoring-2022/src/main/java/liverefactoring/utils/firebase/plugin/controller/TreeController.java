@@ -1,14 +1,14 @@
-package com.utils.firebase.plugin.controller;
+package liverefactoring.utils.firebase.plugin.controller;
 
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
-import com.utils.firebase.domain.VisualFire;
-import com.utils.firebase.model.FireNode;
-import com.utils.firebase.model.ObserveContract;
-import com.utils.firebase.model.protocol.UpdateType;
-import com.utils.firebase.plugin.configs.PluginConfigs;
-import com.utils.firebase.plugin.forms.VFContent;
-import com.utils.firebase.util.FyreLogger;
+import liverefactoring.utils.firebase.domain.VisualFire;
+import liverefactoring.utils.firebase.model.FireNode;
+import liverefactoring.utils.firebase.model.ObserveContract;
+import liverefactoring.utils.firebase.model.protocol.UpdateType;
+import liverefactoring.utils.firebase.plugin.configs.PluginConfigs;
+import liverefactoring.utils.firebase.plugin.forms.VFContent;
+import liverefactoring.utils.firebase.util.FyreLogger;
 
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;

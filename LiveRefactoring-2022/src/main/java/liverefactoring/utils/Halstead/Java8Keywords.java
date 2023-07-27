@@ -1,4 +1,4 @@
-package com.utils.Halstead;
+package liverefactoring.utils.Halstead;
 
 /*
  * NOTE: The following keywords are taken from http://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html

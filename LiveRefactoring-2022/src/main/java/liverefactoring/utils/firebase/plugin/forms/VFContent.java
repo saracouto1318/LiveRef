@@ -1,11 +1,11 @@
-package com.utils.firebase.plugin.forms;
+package liverefactoring.utils.firebase.plugin.forms;
 
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.utils.firebase.domain.VisualFire;
-import com.utils.firebase.plugin.configs.PluginConfigs;
+import liverefactoring.utils.firebase.domain.VisualFire;
+import liverefactoring.utils.firebase.plugin.configs.PluginConfigs;
 
 import javax.swing.*;
 

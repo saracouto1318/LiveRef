@@ -1,4 +1,4 @@
-package com.utils.binaryData;
+package liverefactoring.utils.binaryData;
 
 import java.util.ArrayList;
 

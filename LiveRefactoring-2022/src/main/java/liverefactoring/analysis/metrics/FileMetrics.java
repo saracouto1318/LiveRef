@@ -1,12 +1,12 @@
-package com.analysis.metrics;
+package liverefactoring.analysis.metrics;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
-import com.utils.RefactorUtils;
-import com.utils.UtilitiesOverall;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.UtilitiesOverall;
 
 import java.util.ArrayList;
 

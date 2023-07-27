@@ -87,10 +87,6 @@ public class ExtractClass{
         for (PsiClass c : sourceFile.getClasses()) {
             List<PsiMethod> methods = refactorUtils.getMethods(c);
             ClassMetrics classMetrics = Values.currentFile.getClassMetrics(c);
-            System.out.println(Values.currentFile.classMetrics.size());
-            for (ClassMetrics classMetric : Values.currentFile.classMetrics) {
-                System.out.println(classMetric.className);
-            }
             classMetrics.runMetricsExtractClass();
             boolean foreign = false;
             for (Integer checkForeignDatum : this.checkForeignData()) {
@@ -178,6 +174,9 @@ public class ExtractClass{
                 for (PsiClass allClass : allClasses) {
                     auxClasses.put(allClass, new Integer[]{0,0});
                 }
+
+                auxClasses.put(aClass,new Integer[]{0,0});
+
                 for (PsiMethod method : aClass.getMethods()) {
                     if (!method.isConstructor()) {
                         for (PsiReferenceExpressionImpl psiReferenceExpression : PsiTreeUtil.findChildrenOfType(method, PsiReferenceExpressionImpl.class)) {

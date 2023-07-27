@@ -1,6 +1,6 @@
-package com.utils.clustering;
+package liverefactoring.utils.clustering;
 
-import com.utils.binaryData.DBPoint;
+import liverefactoring.utils.binaryData.DBPoint;
 
 import java.util.List;
 

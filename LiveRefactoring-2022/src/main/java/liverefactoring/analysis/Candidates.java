@@ -1,12 +1,13 @@
-package com.analysis;
+package liverefactoring.analysis;
 
-import com.analysis.metrics.ClassMetrics;
-import com.analysis.metrics.FileMetrics;
-import com.analysis.metrics.MethodMetrics;
-import com.analysis.refactorings.*;
-import com.core.LastRefactoring;
-import com.core.Refactorings;
-import com.core.Severity;
+import liverefactoring.analysis.metrics.ClassMetrics;
+import liverefactoring.analysis.metrics.FileMetrics;
+import liverefactoring.analysis.metrics.MethodMetrics;
+import liverefactoring.analysis.refactorings.*;
+import liverefactoring.analysis.refactorings.*;
+import liverefactoring.core.LastRefactoring;
+import liverefactoring.core.Refactorings;
+import liverefactoring.core.Severity;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.markup.MarkupModel;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
@@ -21,11 +22,11 @@ import com.intellij.openapi.wm.WindowManager;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.ui.awt.RelativePoint;
-import com.utils.MetricsUtils;
-import com.utils.UtilitiesOverall;
-import com.utils.importantValues.SelectedRefactorings;
-import com.utils.importantValues.ThresholdsCandidates;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.MetricsUtils;
+import liverefactoring.utils.UtilitiesOverall;
+import liverefactoring.utils.importantValues.SelectedRefactorings;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.importantValues.Values;
 
 import java.io.PrintStream;
 import java.time.Duration;

@@ -1,4 +1,4 @@
-package com.utils.JDeodorant;
+package liverefactoring.utils.JDeodorant;
 
 public class ASTSlice {
     /*@NotNull

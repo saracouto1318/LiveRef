@@ -1,7 +1,7 @@
-package com.utils.firebase.data;
+package liverefactoring.utils.firebase.data;
 
 import com.google.firebase.database.*;
-import com.utils.firebase.util.FyreLogger;
+import liverefactoring.utils.firebase.util.FyreLogger;
 
 import java.util.HashMap;
 import java.util.Map;

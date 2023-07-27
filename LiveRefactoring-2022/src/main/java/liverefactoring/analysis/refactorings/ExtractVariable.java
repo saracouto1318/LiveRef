@@ -1,16 +1,16 @@
-package com.analysis.refactorings;
+package liverefactoring.analysis.refactorings;
 
-import com.analysis.candidates.ExtractVariableCandidate;
-import com.core.LastRefactoring;
-import com.core.MyRange;
+import liverefactoring.analysis.candidates.ExtractVariableCandidate;
+import liverefactoring.core.LastRefactoring;
+import liverefactoring.core.MyRange;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.refactoring.introduceVariable.IntroduceVariableHandler;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.ThresholdsCandidates;
-import com.utils.importantValues.Values;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.ThresholdsCandidates;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.ArrayList;
 import java.util.List;

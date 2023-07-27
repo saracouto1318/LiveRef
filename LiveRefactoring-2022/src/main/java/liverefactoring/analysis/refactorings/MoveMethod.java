@@ -1,20 +1,20 @@
-package com.analysis.refactorings;
+package liverefactoring.analysis.refactorings;
 
-import com.analysis.candidates.MoveMethodCandidate;
-import com.analysis.metrics.MethodMetrics;
-import com.core.LastRefactoring;
-import com.core.MyRange;
+import liverefactoring.analysis.candidates.MoveMethodCandidate;
+import liverefactoring.analysis.metrics.MethodMetrics;
+import liverefactoring.core.LastRefactoring;
+import liverefactoring.core.MyRange;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.LogicalPosition;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PropertyUtil;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.ui.MyMoveInstanceMethodDialog;
-import com.utils.JDeodorant.utils.PsiUtils;
-import com.utils.RefactorUtils;
-import com.utils.importantValues.MoveObject;
-import com.utils.importantValues.Values;
+import liverefactoring.ui.MyMoveInstanceMethodDialog;
+import liverefactoring.utils.JDeodorant.utils.PsiUtils;
+import liverefactoring.utils.RefactorUtils;
+import liverefactoring.utils.importantValues.MoveObject;
+import liverefactoring.utils.importantValues.Values;
 
 import java.util.ArrayList;
 import java.util.HashMap;

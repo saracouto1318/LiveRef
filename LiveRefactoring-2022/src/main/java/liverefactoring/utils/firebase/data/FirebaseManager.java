@@ -1,10 +1,10 @@
-package com.utils.firebase.data;
+package liverefactoring.utils.firebase.data;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.FirebaseDatabase;
-import com.utils.firebase.util.FyreLogger;
+import liverefactoring.utils.firebase.util.FyreLogger;
 
 import java.io.FileInputStream;
 import java.io.IOException;

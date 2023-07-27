@@ -1,6 +1,6 @@
-package com.utils.importantValues;
+package liverefactoring.utils.importantValues;
 
-import com.core.Refactorings;
+import liverefactoring.core.Refactorings;
 
 import java.util.ArrayList;
 

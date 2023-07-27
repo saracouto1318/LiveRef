@@ -1,4 +1,4 @@
-package com.utils.JDeodorant.math;
+package liverefactoring.utils.JDeodorant.math;
 
 import com.intellij.psi.PsiElement;
 

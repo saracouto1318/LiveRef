@@ -1,4 +1,4 @@
-package com.utils.JDeodorant.utils;
+package liverefactoring.utils.JDeodorant.utils;
 
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiPostfixExpression;

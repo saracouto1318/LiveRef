@@ -1,6 +1,6 @@
-package com.analysis.candidates;
+package liverefactoring.analysis.candidates;
 
-import com.core.MyRange;
+import liverefactoring.core.MyRange;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiMethodCallExpression;
