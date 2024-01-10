@@ -1,0 +1,22 @@
+Improvements by Refactoring
+
+Extract Method: 
+Lines of Code: -0.08524858882495041 Cyclomatic Complexity: -0.05909951442988616 Cognitive Complexity: -0.12914085842514364 Lack of Cohesion: 0.029267868991594864 Halstead Length: -0.03861599743018655 Halstead Volume: -0.05147243239469027 Halstead Effort: -0.10955740116273732 Halstead Difficulty: -0.04213905701197592 Halstead Time: -0.10955740116273732 Maintainability: 0.0005329714144835569
+
+Extract Variable: 
+Lines of Code: 0.0027161138215704293 Cyclomatic Complexity: -0.0005372734368497424 Cognitive Complexity: -0.0009177105084932744 Lack of Cohesion: -0.0015617485940123365 Halstead Length: 0.0011669000671758619 Halstead Volume: 0.001661263031222865 Halstead Effort: 0.005561516932646792 Halstead Difficulty: 0.0028482614755547847 Halstead Time: 0.005561516932646792 Maintainability: -0.000368234295261074
+
+Extract Class: 
+Lines of Code: -0.028568017760123188 Cyclomatic Complexity: -0.05309131953561155 Cognitive Complexity: -0.06310945627905798 Lack of Cohesion: -0.005566406250000005 Halstead Length: -0.031185084902452684 Halstead Volume: -0.04020204289094306 Halstead Effort: -0.08949494298949892 Halstead Difficulty: -0.05601819724585381 Halstead Time: -0.08949494298949892 Maintainability: 0.02009697027375528
+
+Move Method: 
+Lines of Code: 0.025060830957548987 Cyclomatic Complexity: -0.07037488027514839 Cognitive Complexity: -0.10650003770353522 Lack of Cohesion: -0.07902896903234219 Halstead Length: -0.046982651399800394 Halstead Volume: -0.0639156408035477 Halstead Effort: -0.12835854011683115 Halstead Difficulty: -0.05565099924612042 Halstead Time: -0.12835854011683115 Maintainability: 0.03483511508858468
+
+Introduce Parameter Object: 
+Lines of Code: -0.001626658074983851 Cyclomatic Complexity: -0.0001826220684352171 Cognitive Complexity: -0.0003606237816764131 Lack of Cohesion: -6.613756613756637e-05 Halstead Length: -0.029021594762656238 Halstead Volume: -0.038216196118684494 Halstead Effort: -0.03837798760149419 Halstead Difficulty: -0.00015437227301697275 Halstead Time: -0.03837798760149419 Maintainability: 0.003244112262146322
+
+Inheritance to Delegation: 
+Lines of Code: -0.7114345462123802 Cyclomatic Complexity: -0.23607921233760948 Cognitive Complexity: -0.2268190713734384 Lack of Cohesion: 0.6866339845721289 Halstead Length: -0.27560121725619097 Halstead Volume: -0.3547321171819356 Halstead Effort: -0.5386934658399508 Halstead Difficulty: -0.26787089464037017 Halstead Time: -0.5386934658399505 Maintainability: -0.0072233840398727295
+
+String Comparison: 
+Lines of Code: nan Cyclomatic Complexity: nan Cognitive Complexity: nan Lack of Cohesion: nan Halstead Length: nan Halstead Volume: nan Halstead Effort: nan Halstead Difficulty: nan Halstead Time: nan Maintainability: nan
